@@ -1,20 +1,19 @@
-# Hydrart Tattoo
+# Hydra Tattoo
 
-Landing y agenda online para Hydrart Tattoo, creada con HTML, CSS, JavaScript y Supabase.
+Sitio web editorial y agenda online de Hydra Tattoo. Incluye portada, artista, diseños disponibles, galería, cuidados, reservas, consulta de citas y panel administrativo.
 
-## Puesta en marcha
+## Configuración de Supabase
 
-1. Abre `supabase-schema.sql` en **Supabase → SQL Editor** y ejecútalo una sola vez.
-2. Abre `index.html` con un servidor local (por ejemplo, Live Server).
-3. Reemplaza los bloques de portada y galería cuando estén listas las fotografías.
+1. Ejecuta `supabase-schema.sql` en **Supabase > SQL Editor**.
+2. Ejecuta `supabase-storage-policies.sql`.
+3. En **Authentication > Users**, crea la usuaria administradora con el correo autorizado.
+4. Publica el repositorio con GitHub Pages, Netlify o Vercel.
 
-La URL y clave publicable de Supabase están en `app.js`. Esta clase de clave está diseñada para frontend; la seguridad depende de RLS. Nunca pongas aquí una `service_role`.
+La contraseña administrativa no se almacena en el frontend. Supabase Auth la gestiona de forma segura.
 
-## Agenda
+## Archivos principales
 
-- Calendario mensual y horarios disponibles.
-- Bloqueo visual de horarios ya reservados.
-- Solicitud con código privado `HYD-XXXXXX`.
-- Consulta básica del estado mediante el código.
-
-Las consultas públicas pasan por funciones RPC que solo devuelven fecha, hora y estado; los datos personales permanecen protegidos por RLS.
+- `index.html`: sitio, agenda y panel administrativo.
+- `supabase-schema.sql`: tablas y políticas de la agenda.
+- `supabase-storage-policies.sql`: bucket para referencias y comprobantes.
+- `assets/` y `disenos/`: recursos visuales.

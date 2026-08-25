@@ -1,49 +1,113 @@
--- Ejecutar una vez en Supabase > SQL Editor.
+-- Hydrart Tattoo · ejecutar una vez en Supabase Dashboard > SQL Editor.
 create table if not exists public.hydrart_settings (
   key text primary key,
-  value jsonb not null,
+  value jsonb not null default '{}'::jsonb,
   updated_at timestamptz not null default now()
 );
 
 create table if not exists public.hydrart_bookings (
-  id uuid primary key default gen_random_uuid(),
-  booking_code text not null unique,
-  booking_date date not null,
-  booking_time time not null,
+  id text primary key,
+  date date not null,
+  time text not null,
   client_name text not null,
-  instagram text not null,
-  phone text not null,
-  email text,
-  idea text not null,
-  status text not null default 'pending' check (status in ('pending','reviewing','confirmed','cancelled')),
+  client_email text not null,
+  client_phone text not null,
+  notes text default '',
+  image_url text,
+  payment_receipt_url text,
+  status text not null default 'Pendiente de Comprobante',
   created_at timestamptz not null default now()
 );
 
-create unique index if not exists hydrart_active_slot
-on public.hydrart_bookings (booking_date, booking_time)
-where status <> 'cancelled';
+-- Migra sin borrar datos si ya existía el esquema anterior
+-- (booking_date/booking_time, UUID y estados en inglés).
+alter table public.hydrart_bookings add column if not exists date date;
+alter table public.hydrart_bookings add column if not exists time text;
+alter table public.hydrart_bookings add column if not exists client_email text;
+alter table public.hydrart_bookings add column if not exists client_phone text;
+alter table public.hydrart_bookings add column if not exists notes text default '';
+alter table public.hydrart_bookings add column if not exists image_url text;
+alter table public.hydrart_bookings add column if not exists payment_receipt_url text;
 
-insert into public.hydrart_settings(key,value) values
-('schedule','{"1":["10:00","14:00","17:00"],"2":["10:00","14:00","17:00"],"3":["10:00","14:00","17:00"],"4":["10:00","14:00","17:00"],"5":["10:00","14:00"],"6":["11:00","15:00"]}'::jsonb)
+do $$
+begin
+  if exists (select 1 from information_schema.columns where table_schema='public' and table_name='hydrart_bookings' and column_name='booking_date') then
+    execute 'update public.hydrart_bookings set date = booking_date where date is null';
+  end if;
+  if exists (select 1 from information_schema.columns where table_schema='public' and table_name='hydrart_bookings' and column_name='booking_time') then
+    execute 'update public.hydrart_bookings set time = booking_time::text where time is null';
+  end if;
+  if exists (select 1 from information_schema.columns where table_schema='public' and table_name='hydrart_bookings' and column_name='email') then
+    execute 'update public.hydrart_bookings set client_email = email where client_email is null';
+  end if;
+  if exists (select 1 from information_schema.columns where table_schema='public' and table_name='hydrart_bookings' and column_name='phone') then
+    execute 'update public.hydrart_bookings set client_phone = phone where client_phone is null';
+  end if;
+  if exists (select 1 from information_schema.columns where table_schema='public' and table_name='hydrart_bookings' and column_name='idea') then
+    execute $sql$update public.hydrart_bookings set notes = idea where coalesce(notes, '') = ''$sql$;
+  end if;
+end $$;
+
+-- El frontend genera identificadores como RES-12345-abcd; por eso id debe ser texto.
+alter table public.hydrart_bookings alter column id drop default;
+alter table public.hydrart_bookings alter column id type text using id::text;
+alter table public.hydrart_bookings alter column status set default 'Pendiente de Comprobante';
+
+-- Las columnas obligatorias del esquema antiguo ya no forman parte del alta nueva.
+do $$
+declare legacy_column text;
+begin
+  foreach legacy_column in array array['booking_code','booking_date','booking_time','instagram','phone','email','idea'] loop
+    if exists (select 1 from information_schema.columns where table_schema='public' and table_name='hydrart_bookings' and column_name=legacy_column) then
+      execute format('alter table public.hydrart_bookings alter column %I drop not null', legacy_column);
+    end if;
+  end loop;
+end $$;
+
+-- Elimina únicamente checks antiguos de estados (pending/reviewing/etc.).
+do $$
+declare check_name text;
+begin
+  for check_name in
+    select conname from pg_constraint
+    where conrelid = 'public.hydrart_bookings'::regclass and contype = 'c'
+  loop
+    execute format('alter table public.hydrart_bookings drop constraint %I', check_name);
+  end loop;
+end $$;
+
+drop index if exists public.hydrart_active_slot;
+create unique index hydrart_active_slot on public.hydrart_bookings (date, time)
+where status not like 'Cancelada%';
+
+insert into public.hydrart_settings (key, value)
+values ('main_config', '{"daySchedules":{},"blockedDates":[],"blockedReasons":{}}'::jsonb)
 on conflict (key) do nothing;
 
 alter table public.hydrart_settings enable row level security;
 alter table public.hydrart_bookings enable row level security;
 
-create policy "Public can read schedule" on public.hydrart_settings for select using (key='schedule');
-create policy "Public can request booking" on public.hydrart_bookings for insert with check (status='pending');
+drop policy if exists "Hydrart public reads settings" on public.hydrart_settings;
+drop policy if exists "Hydrart admin manages settings" on public.hydrart_settings;
+drop policy if exists "Hydrart public reads bookings" on public.hydrart_bookings;
+drop policy if exists "Hydrart public requests bookings" on public.hydrart_bookings;
+drop policy if exists "Hydrart public updates booking flow" on public.hydrart_bookings;
+drop policy if exists "Hydrart admin deletes bookings" on public.hydrart_bookings;
 
-create or replace function public.hydrart_public_availability(from_date date)
-returns table (booking_date date, booking_time time, status text)
-language sql security definer set search_path = public
-as $$ select b.booking_date,b.booking_time,b.status from public.hydrart_bookings b where b.booking_date>=from_date and b.status<>'cancelled' $$;
+create policy "Hydrart public reads settings" on public.hydrart_settings for select to anon, authenticated using (true);
+create policy "Hydrart admin manages settings" on public.hydrart_settings for all to authenticated
+using ((auth.jwt() ->> 'email') = 'claudia.medel@gmail.com')
+with check ((auth.jwt() ->> 'email') = 'claudia.medel@gmail.com');
 
-create or replace function public.hydrart_lookup_booking(lookup_code text)
-returns table (booking_date date, booking_time time, status text)
-language sql security definer set search_path = public
-as $$ select b.booking_date,b.booking_time,b.status from public.hydrart_bookings b where b.booking_code=upper(trim(lookup_code)) limit 1 $$;
+create policy "Hydrart public reads bookings" on public.hydrart_bookings for select to anon, authenticated using (true);
+create policy "Hydrart public requests bookings" on public.hydrart_bookings for insert to anon, authenticated with check (true);
+create policy "Hydrart public updates booking flow" on public.hydrart_bookings for update to anon, authenticated using (true) with check (true);
+create policy "Hydrart admin deletes bookings" on public.hydrart_bookings for delete to authenticated
+using ((auth.jwt() ->> 'email') = 'claudia.medel@gmail.com');
 
-revoke all on function public.hydrart_public_availability(date) from public;
-revoke all on function public.hydrart_lookup_booking(text) from public;
-grant execute on function public.hydrart_public_availability(date) to anon, authenticated;
-grant execute on function public.hydrart_lookup_booking(text) to anon, authenticated;
+do $$ begin
+  alter publication supabase_realtime add table public.hydrart_settings;
+exception when duplicate_object then null; end $$;
+do $$ begin
+  alter publication supabase_realtime add table public.hydrart_bookings;
+exception when duplicate_object then null; end $$;
