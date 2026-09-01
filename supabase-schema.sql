@@ -112,6 +112,7 @@ drop policy if exists "Hydrart admin deletes bookings" on public.hydrart_booking
 drop policy if exists "Hydrart public requests quotes" on public.hydrart_quotes;
 drop policy if exists "Hydrart admin reads quotes" on public.hydrart_quotes;
 drop policy if exists "Hydrart admin updates quotes" on public.hydrart_quotes;
+drop policy if exists "Hydrart admin deletes quotes" on public.hydrart_quotes;
 
 create policy "Hydrart public reads settings" on public.hydrart_settings for select to anon, authenticated using (true);
 create policy "Hydrart admin manages settings" on public.hydrart_settings for all to authenticated
@@ -128,6 +129,8 @@ create policy "Hydrart admin reads quotes" on public.hydrart_quotes for select t
 using ((auth.jwt() ->> 'email') = 'claudia.medel@gmail.com');
 create policy "Hydrart admin updates quotes" on public.hydrart_quotes for update to authenticated
 using ((auth.jwt() ->> 'email') = 'claudia.medel@gmail.com') with check ((auth.jwt() ->> 'email') = 'claudia.medel@gmail.com');
+create policy "Hydrart admin deletes quotes" on public.hydrart_quotes for delete to authenticated
+using ((auth.jwt() ->> 'email') = 'claudia.medel@gmail.com');
 
 do $$ begin
   alter publication supabase_realtime add table public.hydrart_settings;

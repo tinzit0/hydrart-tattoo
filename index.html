@@ -1315,7 +1315,7 @@
         <!-- TAB 2: HORARIOS POR DÍAS -->
         <div id="tab-cotizaciones" class="admin-tab-panel">
             <div class="bg-studio/50 border border-white/5 rounded-3xl p-6 md:p-8">
-                <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/10"><div><h3 class="font-serif text-lg text-bone flex items-center gap-2"><i class="fa-solid fa-file-invoice-dollar text-accent"></i> Solicitudes de cotización</h3><p class="text-[11px] text-muted mt-2">Guardadas localmente y en Supabase cuando la tabla está configurada.</p></div><button type="button" onclick="clearLocalQuotes()" class="text-[10px] text-danger border border-danger/30 px-3 py-2 rounded-lg">Limpiar locales</button></div>
+                <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/10"><div><h3 class="font-serif text-lg text-bone flex items-center gap-2"><i class="fa-solid fa-file-invoice-dollar text-accent"></i> Solicitudes de cotización</h3><p class="text-[11px] text-muted mt-2">Guardadas localmente y en Supabase cuando la tabla está configurada.</p></div><button type="button" onclick="clearLocalQuotes()" class="text-[10px] text-danger border border-danger/30 px-3 py-2 rounded-lg">Eliminar cotizaciones</button></div>
                 <div class="overflow-x-auto"><table class="w-full text-left text-xs min-w-[820px]"><thead class="text-muted border-b border-white/10 uppercase tracking-wider font-bold font-mono text-[9px]"><tr><th class="pb-3">Fecha</th><th class="pb-3">Cliente</th><th class="pb-3">Diseño(s)</th><th class="pb-3">Detalle</th><th class="pb-3">Estado</th></tr></thead><tbody id="admin-quotes-table" class="divide-y divide-white/5 text-bone"></tbody></table></div>
             </div>
         </div>
@@ -2889,9 +2889,20 @@
         track.innerHTML = Array.from({length: 10}, (_, i) => { const n = String(i + 1).padStart(2, '0'), o = galleryOverrides[String(i + 1)] || {}; const image = o.image || `assets/gallery-new/trabajo-${n}.jpg`, label = o.label || `Fine line · ${n}`; return `<button type="button" class="gallery-slide" onclick="openLightbox('${image}')"><img src="${image}" alt="${escapeHTML(label)}" loading="lazy"><span>${escapeHTML(label)}</span></button>`; }).join('');
     }
 
-    function clearLocalQuotes() {
-        if (!confirm('¿Limpiar las cotizaciones guardadas en este navegador?')) return;
-        quotes = []; localStorage.removeItem('hydrart_quotes'); renderAdminQuotesTable();
+    async function clearLocalQuotes() {
+        if (!confirm('¿Eliminar todas las cotizaciones? Esta acción no se puede deshacer.')) return;
+        const currentQuotes = [...quotes];
+        quotes = [];
+        localStorage.removeItem('hydrart_quotes');
+        renderAdminQuotesTable();
+        try {
+            await Promise.all(currentQuotes.map(quote =>
+                supabaseClient.from('hydrart_quotes').delete().eq('id', quote.id)
+            ));
+            showToast('Cotizaciones eliminadas correctamente.', 'success');
+        } catch (_) {
+            showToast('Se limpiaron las locales, pero no se pudieron eliminar todas en Supabase.', 'error');
+        }
     }
 
     async function loadQuotesFromSupabase() {
