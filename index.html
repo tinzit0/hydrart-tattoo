@@ -525,6 +525,7 @@
         .quote-fact { background:rgba(255,255,255,.48); padding:18px; }
         .quote-fact strong { display:block; font-family:'Playfair Display',serif; font-size:21px; font-weight:500; margin-bottom:4px; }
         .selected-designs { display:flex; flex-wrap:wrap; gap:8px; min-height:46px; padding:10px; background:#fff; border:1px solid var(--line); }
+        .content-image-preview { width:100%; max-width:180px; aspect-ratio:1; object-fit:cover; border:1px solid var(--line); background:#e7eadf; display:block; margin-top:10px; }
         .selected-chip { display:inline-flex; align-items:center; gap:8px; background:#e6eadf; color:var(--ink); padding:7px 9px; font-size:10px; }
         .quote-form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
         .quote-field-full { grid-column:1/-1; }
@@ -1329,13 +1330,13 @@
               <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Categoría</label><input id="content-design-category" class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></div>
               <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Precio</label><input id="content-design-price" placeholder="Desde $30.000" class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></div>
               <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Tamaño mínimo</label><input id="content-design-min-size" placeholder="Ej: 8 cm" class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></div>
-              <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">URL de imagen</label><input id="content-design-image" placeholder="https://..." class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></div>
-              <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">O subir foto</label><input id="content-design-file" type="file" accept="image/*" class="w-full text-[10px] text-muted bg-studio border border-white/10 rounded-xl p-2"></div>
+               <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">URL de imagen</label><input id="content-design-image" placeholder="https://..." oninput="updateContentImagePreview('design')" class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"><img id="content-design-preview" class="content-image-preview" alt="Vista previa del diseño"></div>
+               <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">O subir foto</label><input id="content-design-file" type="file" accept="image/*" onchange="previewContentFile(this,'content-design-preview')" class="w-full text-[10px] text-muted bg-studio border border-white/10 rounded-xl p-2"></div>
               <label class="flex items-center gap-2 text-xs text-bone self-end pb-3"><input id="content-design-available" type="checkbox" checked> Disponible para reservar</label>
               <button class="btn-primary-action py-3 rounded-xl text-[10px] uppercase tracking-widest">Guardar diseño</button>
             </form>
             <div class="border-t border-white/10 pt-8"><h3 class="font-serif text-xl text-bone">Editar foto de galería</h3><p class="text-[11px] text-muted mt-2">Reemplaza la foto y el texto de cualquier trabajo publicado.</p>
-              <form onsubmit="saveGalleryContent(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5"><div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Trabajo</label><select id="content-gallery-code" onchange="loadGalleryContentForm()" class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></select></div><div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Texto</label><input id="content-gallery-label" required class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></div><div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">URL de imagen</label><input id="content-gallery-image" placeholder="https://..." class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></div><div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">O subir foto</label><input id="content-gallery-file" type="file" accept="image/*" class="w-full text-[10px] text-muted bg-studio border border-white/10 rounded-xl p-2"></div><button class="btn-primary-action py-3 rounded-xl text-[10px] uppercase tracking-widest md:col-start-3">Guardar foto</button></form>
+               <form onsubmit="saveGalleryContent(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5"><div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Trabajo</label><select id="content-gallery-code" onchange="loadGalleryContentForm()" class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></select></div><div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Texto</label><input id="content-gallery-label" required class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></div><div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">URL de imagen</label><input id="content-gallery-image" placeholder="https://..." oninput="updateContentImagePreview('gallery')" class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"><img id="content-gallery-preview" class="content-image-preview" alt="Vista previa de la foto"></div><div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">O subir foto</label><input id="content-gallery-file" type="file" accept="image/*" onchange="previewContentFile(this,'content-gallery-preview')" class="w-full text-[10px] text-muted bg-studio border border-white/10 rounded-xl p-2"></div><button class="btn-primary-action py-3 rounded-xl text-[10px] uppercase tracking-widest md:col-start-3">Guardar foto</button></form>
             </div>
           </div>
         </div>
@@ -2857,6 +2858,7 @@
         document.getElementById('content-design-min-size').value = override.minSize || meta.minSize;
         document.getElementById('content-design-image').value = override.image || '';
         document.getElementById('content-design-available').checked = meta.available;
+        updateContentImagePreview('design');
     }
     async function uploadContentImage(file, key) {
         if (!file) return '';
@@ -2876,7 +2878,23 @@
     }
     function loadGalleryContentForm() {
         const number = document.getElementById('content-gallery-code')?.value; if (!number) return;
-        const override = galleryOverrides[number] || {}; document.getElementById('content-gallery-label').value = override.label || `Trabajo · ${String(number).padStart(2, '0')}`; document.getElementById('content-gallery-image').value = override.image || `assets/gallery-new/trabajo-${String(number).padStart(2, '0')}.jpg`;
+        const override = galleryOverrides[number] || {}; document.getElementById('content-gallery-label').value = override.label || `Trabajo · ${String(number).padStart(2, '0')}`; document.getElementById('content-gallery-image').value = override.image || `assets/gallery-new/trabajo-${String(number).padStart(2, '0')}.jpg`; updateContentImagePreview('gallery');
+    }
+    function updateContentImagePreview(kind) {
+        const imageInput = document.getElementById(kind === 'design' ? 'content-design-image' : 'content-gallery-image');
+        const preview = document.getElementById(kind === 'design' ? 'content-design-preview' : 'content-gallery-preview');
+        if (!imageInput || !preview) return;
+        const value = imageInput.value.trim();
+        preview.src = value || (kind === 'design' ? `assets/designs/diseno-${String(Number(document.getElementById('content-design-code')?.value?.replace('HYD-', '') || 1)).padStart(3, '0')}.jpg` : `assets/gallery-new/trabajo-${String(document.getElementById('content-gallery-code')?.value || 1).padStart(2, '0')}.jpg`);
+        preview.classList.toggle('hidden', !preview.src);
+        preview.onerror = () => preview.classList.add('hidden');
+    }
+    function previewContentFile(input, previewId) {
+        const preview = document.getElementById(previewId);
+        const file = input?.files?.[0];
+        if (!preview || !file) return;
+        preview.src = URL.createObjectURL(file);
+        preview.classList.remove('hidden');
     }
     async function saveGalleryContent(event) {
         event.preventDefault(); const number = document.getElementById('content-gallery-code').value;
@@ -3829,7 +3847,10 @@
         try {
             if (window.supabase?.createClient) {
                 supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                loadDataFromSupabase(false).then(() => renderAllViews()).catch(() => {});
+                checkAdminSession().then(() => {
+                    if (currentUser) showAdminPanel();
+                    return loadDataFromSupabase(false);
+                }).then(() => renderAllViews()).catch(() => {});
             }
         } catch (_) {}
     });
