@@ -1695,8 +1695,14 @@
     }
 
     function addNewDesignTemplate() {
-        DESIGN_TOTAL += 1;
-        const code = designCode(DESIGN_TOTAL);
+        let reusableNumber = 0;
+        for (let number = 1; number <= DESIGN_TOTAL; number += 1) {
+            const codeCandidate = designCode(number);
+            if (designOverrides[codeCandidate]?.deleted === true) { reusableNumber = number; break; }
+        }
+        const number = reusableNumber || (DESIGN_TOTAL + 1);
+        if (!reusableNumber) DESIGN_TOTAL = number;
+        const code = designCode(number);
         designOverrides[code] = { title: `Nuevo diseño ${code}`, category: 'Por definir', price: 'Desde $30.000', minSize: 'Consultar tamaño mínimo', image: '', available: true };
         renderEditableContentForms();
         const selector = document.getElementById('content-design-code');
