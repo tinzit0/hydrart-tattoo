@@ -2855,8 +2855,8 @@
         if (galleryForm && !document.getElementById('delete-gallery-content')) {
             const b = document.createElement('button'); b.type = 'button'; b.id = 'delete-gallery-content'; b.className = 'py-3 px-3 rounded-xl text-[10px] uppercase tracking-widest text-danger border border-danger/30'; b.textContent = 'Eliminar'; b.onclick = deleteGalleryContent; galleryForm.appendChild(b);
         }
-        if (ds) { const current = ds.value; ds.innerHTML = Array.from({length: DESIGN_TOTAL}, (_, i) => `<option value="${designCode(i + 1)}">${designCode(i + 1)}</option>`).join(''); ds.value = current || designCode(1); loadDesignContentForm(); }
-        if (gs && !gs.options.length) { gs.innerHTML = Array.from({length: 10}, (_, i) => `<option value="${i + 1}">Trabajo ${String(i + 1).padStart(2, '0')}</option>`).join(''); loadGalleryContentForm(); }
+        if (ds) { const current = ds.value; ds.innerHTML = Array.from({length: DESIGN_TOTAL}, (_, i) => ({ number: i + 1, meta: getDesignMeta(i + 1) })).filter(item => !item.meta.deleted).map(item => `<option value="${designCode(item.number)}">${designCode(item.number)}</option>`).join(''); ds.value = [...ds.options].some(o => o.value === current) ? current : ds.options[0]?.value || ''; loadDesignContentForm(); }
+        if (gs) { const current = gs.value; gs.innerHTML = Array.from({length: 10}, (_, i) => ({ number: i + 1, override: galleryOverrides[String(i + 1)] || {} })).filter(item => !item.override.deleted).map(item => `<option value="${item.number}">Trabajo ${String(item.number).padStart(2, '0')}</option>`).join(''); gs.value = [...gs.options].some(o => o.value === current) ? current : gs.options[0]?.value || ''; loadGalleryContentForm(); }
     }
     async function deleteDesignContent() {
         const code = document.getElementById('content-design-code')?.value; if (!code || !confirm(`¿Ocultar ${code} del catálogo?`)) return;
