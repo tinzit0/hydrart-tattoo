@@ -5,11 +5,8 @@ compatibility_date = "2026-09-01"
 # internos del repositorio ni archivos de desarrollo como assets públicos.
 [assets]
 directory = "."
-exclude = [
-  ".git/**",
-  ".agents/**",
-  ".codex/**",
-  "node_modules/**",
-  "*.ps1",
-  "*.log"
+# Lista blanca: solo estos archivos forman parte del sitio publicado.
+include = [
+  "index.html",
+  "assets/**"
 ]
