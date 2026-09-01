@@ -19,6 +19,21 @@ create table if not exists public.hydrart_bookings (
   created_at timestamptz not null default now()
 );
 
+create table if not exists public.hydrart_quotes (
+  id text primary key,
+  client_name text not null,
+  client_phone text not null,
+  designs text not null default '',
+  idea text not null default '',
+  zone text not null default '',
+  size text not null default '',
+  style text not null default '',
+  color text not null default '',
+  status text not null default 'Nueva',
+  created_at timestamptz not null default now()
+);
+alter table public.hydrart_quotes add column if not exists client_instagram text not null default '';
+
 -- Migra sin borrar datos si ya existía el esquema anterior
 -- (booking_date/booking_time, UUID y estados en inglés).
 alter table public.hydrart_bookings add column if not exists date date;
@@ -86,6 +101,7 @@ on conflict (key) do nothing;
 
 alter table public.hydrart_settings enable row level security;
 alter table public.hydrart_bookings enable row level security;
+alter table public.hydrart_quotes enable row level security;
 
 drop policy if exists "Hydrart public reads settings" on public.hydrart_settings;
 drop policy if exists "Hydrart admin manages settings" on public.hydrart_settings;
@@ -93,6 +109,9 @@ drop policy if exists "Hydrart public reads bookings" on public.hydrart_bookings
 drop policy if exists "Hydrart public requests bookings" on public.hydrart_bookings;
 drop policy if exists "Hydrart public updates booking flow" on public.hydrart_bookings;
 drop policy if exists "Hydrart admin deletes bookings" on public.hydrart_bookings;
+drop policy if exists "Hydrart public requests quotes" on public.hydrart_quotes;
+drop policy if exists "Hydrart admin reads quotes" on public.hydrart_quotes;
+drop policy if exists "Hydrart admin updates quotes" on public.hydrart_quotes;
 
 create policy "Hydrart public reads settings" on public.hydrart_settings for select to anon, authenticated using (true);
 create policy "Hydrart admin manages settings" on public.hydrart_settings for all to authenticated
@@ -104,6 +123,11 @@ create policy "Hydrart public requests bookings" on public.hydrart_bookings for 
 create policy "Hydrart public updates booking flow" on public.hydrart_bookings for update to anon, authenticated using (true) with check (true);
 create policy "Hydrart admin deletes bookings" on public.hydrart_bookings for delete to authenticated
 using ((auth.jwt() ->> 'email') = 'claudia.medel@gmail.com');
+create policy "Hydrart public requests quotes" on public.hydrart_quotes for insert to anon, authenticated with check (true);
+create policy "Hydrart admin reads quotes" on public.hydrart_quotes for select to authenticated
+using ((auth.jwt() ->> 'email') = 'claudia.medel@gmail.com');
+create policy "Hydrart admin updates quotes" on public.hydrart_quotes for update to authenticated
+using ((auth.jwt() ->> 'email') = 'claudia.medel@gmail.com') with check ((auth.jwt() ->> 'email') = 'claudia.medel@gmail.com');
 
 do $$ begin
   alter publication supabase_realtime add table public.hydrart_settings;

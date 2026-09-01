@@ -7,6 +7,8 @@
     <meta name="theme-color" content="#f2efe7">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
     <title>Hydra Tattoo | Tatuaje botánico y ornamental</title>
     <meta name="description" content="Hydra Tattoo: tatuaje botánico y ornamental en Concepción, Chile.">
 
@@ -20,10 +22,12 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Supabase JS Client SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 
     <script>
-        tailwind.config = {
+        // Tailwind es opcional: la portada y sus botones también deben funcionar
+        // si el CDN no responde o se abre el HTML directamente como archivo local.
+        if (window.tailwind) window.tailwind.config = {
             theme: {
                 extend: {
                     colors: {
@@ -42,7 +46,7 @@
                     }
                 }
             }
-        }
+        };
     </script>
 
     <style>
@@ -268,7 +272,7 @@
         body { background:var(--ivory); color:var(--ink); }
         body::before { content:""; position:fixed; inset:0; z-index:-1; opacity:.28; pointer-events:none; background-image:radial-gradient(rgba(113,128,107,.08) .7px,transparent .7px); background-size:7px 7px; }
         main { display:flex; flex-direction:column; }
-        #estudio{order:1} #disenos{order:2} #galeria{order:3} #cuidados{order:4} #agendar{order:5} #pago-directo{order:6} #gestion-citas{order:7}
+        #estudio{order:1} #disenos{order:2} #cotizar{order:3} #galeria{order:4} #cuidados{order:5} #agendar{order:6} #pago-directo{order:7} #gestion-citas{order:8}
         .bg-studio, .bg-panel { background-color:var(--ivory)!important; }
         .text-bone { color:var(--ink)!important; }
         .text-muted { color:var(--muted-ink)!important; }
@@ -368,7 +372,7 @@
         .hero-video-veil { position:absolute; inset:0; z-index:2; pointer-events:none; background:linear-gradient(90deg,rgba(174,187,165,.34) 0%,rgba(174,187,165,.22) 38%,rgba(174,187,165,.09) 68%,rgba(174,187,165,.03) 100%); }
         #landing-container main > section { position:relative; padding-top:110px!important; padding-bottom:110px!important; }
         #landing-container main > section::before { position:absolute; top:44px; left:clamp(24px,6vw,90px); font-family:'Inter',sans-serif; font-size:9px; letter-spacing:.25em; color:var(--sage-deep); }
-        #estudio::before{content:'01 — LA ARTISTA'} #disenos::before{content:'02 — DISEÑOS'} #galeria::before{content:'03 — ARCHIVO'} #cuidados::before{content:'04 — CUIDADOS'} #agendar::before{content:'05 — RESERVA'} #pago-directo::before{content:'06 — ABONO'} #gestion-citas::before{content:'07 — CLIENTES'}
+        #estudio::before{content:'01 — LA ARTISTA'} #disenos::before{content:'02 — DISEÑOS'} #cotizar::before{content:'03 — COTIZACIÓN'} #galeria::before{content:'04 — ARCHIVO'} #cuidados::before{content:'05 — CUIDADOS'} #agendar::before{content:'06 — RESERVA'} #pago-directo::before{content:'07 — ABONO'} #gestion-citas::before{content:'08 — CLIENTES'}
         #estudio { background:#b8c3b0!important; color:#20251f!important; }
         #estudio::before { color:#455141!important; }
         #estudio h2, #estudio p { color:#20251f!important; text-align:left; }
@@ -381,7 +385,7 @@
         #estudio > div > div:last-child { grid-column:2; grid-row:3; justify-self:start; }
         #estudio a { border-radius:0!important; border-color:rgba(32,37,31,.35)!important; background:rgba(245,241,232,.16)!important; color:#20251f!important; }
         #disenos, #pago-directo { background:#dce1d5!important; }
-        #galeria, #cuidados, #agendar, #gestion-citas { background:#f5f1e8!important; }
+        #cotizar, #galeria, #cuidados, #agendar, #gestion-citas { background:#f5f1e8!important; }
         #disenos > div > div:first-child, #galeria > div > div:first-child, #cuidados > div > div:first-child, #pago-directo > div > div:first-child, #gestion-citas > div > div:first-child { text-align:left!important; margin-left:0; }
         #disenos h2, #galeria h2 { font-family:'Playfair Display',serif!important; text-transform:none!important; letter-spacing:-.02em!important; font-size:clamp(42px,6vw,78px)!important; line-height:1.06!important; }
         #disenos > div > div:first-child p, #galeria > div > div:first-child p { margin:34px 0 0!important; max-width:560px!important; line-height:1.8!important; }
@@ -408,7 +412,7 @@
         #landing-container header .inline-flex.rounded-full { border-radius:0!important; border:0!important; padding:0!important; background:transparent!important; box-shadow:none!important; backdrop-filter:none!important; -webkit-backdrop-filter:none!important; }
         #landing-container header .animate-pulse { display:none; }
         #landing-container header .btn-primary-action { min-width:190px; justify-content:space-between; padding:17px 22px!important; }
-        #landing-container header a[href="#galeria"] { border-radius:0!important; border-color:rgba(32,37,31,.35)!important; background:transparent!important; color:var(--ink)!important; padding:16px 22px!important; }
+        #landing-container header a[href="#disenos"] { border-radius:0!important; border-color:rgba(32,37,31,.35)!important; background:transparent!important; color:var(--ink)!important; padding:16px 22px!important; }
         #landing-container main > section > div { position:relative; z-index:1; }
         #landing-container main > section::after { content:''; position:absolute; top:0; right:6vw; width:1px; height:38px; background:currentColor; opacity:.18; }
         #landing-container main > section:nth-child(odd) { clip-path:polygon(0 0,calc(100% - 42px) 0,100% 42px,100% 100%,0 100%); }
@@ -474,8 +478,8 @@
         #landing-container header .reveal-item.flex { justify-content:center; }
         #landing-container header .inline-flex.rounded-full { justify-content:center!important; }
         .hero-video-veil { background:rgba(190,201,181,.42); }
-        #landing-container header a[href="#galeria"] { transition:background .3s ease,color .3s ease!important; }
-        #landing-container header a[href="#galeria"]:hover { background:rgba(244,241,233,.84)!important; }
+        #landing-container header a[href="#disenos"] { transition:background .3s ease,color .3s ease!important; }
+        #landing-container header a[href="#disenos"]:hover { background:rgba(244,241,233,.84)!important; }
         #estudio .artist-profile-crop { width:440px; border-color:rgba(32,37,31,.22); box-shadow:0 32px 70px rgba(32,37,31,.13); }
         #estudio .artist-profile-crop::after { border-color:rgba(244,241,233,.48); }
         #estudio > div { grid-template-columns:440px 1fr; gap:20px 96px; }
@@ -504,6 +508,81 @@
         @media(min-width:768px){ .empty-art-card,.gallery-slide{flex-basis:calc((100% - 44px)/3)} }
         @media(max-width:640px){ .carousel-shell{padding:0}.carousel-arrow{top:auto;bottom:-34px}.carousel-prev{left:calc(50% - 50px)}.carousel-next{right:calc(50% - 50px)}.bank-row{grid-template-columns:1fr 34px;gap:6px 12px;padding:12px 0}.bank-row>span{grid-column:1/-1}.bank-row strong{grid-column:1}.bank-row button{grid-column:2;grid-row:2} }
         @media(max-width:1023px){ #navbar{padding:14px 18px!important}#navbar>a{font-size:20px!important;margin-bottom:6px!important}#landing-container header .max-w-4xl{width:100%;margin:auto!important;align-items:flex-start!important;text-align:left;padding:110px 24px 40px}#landing-container header h1{font-size:clamp(58px,17vw,92px)!important}#landing-container header::after{display:none}.hero-edition{display:none}#estudio>div{display:block}#estudio .artist-profile-crop{width:min(88vw,400px);margin:0 0 48px}#estudio>div>div:last-child{margin-top:35px}#pago-directo .bank-card{display:block;padding:24px!important}#landing-container main>section{padding-top:90px!important;padding-bottom:80px!important;clip-path:none!important}#disenos .empty-art-card:nth-child(even),#galeria .empty-art-card:nth-child(odd){transform:none}#mobileMenu{background:#20251f!important}#mobileMenu .text-bone,#mobileMenu a{color:#f5f1e8!important}}
+
+        /* Catálogo seleccionable y cotizador */
+        .catalog-toolbar { display:flex; align-items:center; justify-content:space-between; gap:18px; margin-bottom:28px; }
+        .catalog-count { font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--sage-deep); }
+        .design-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px; }
+        .design-card { position:relative; border:1px solid var(--line); background:rgba(250,248,242,.8); overflow:hidden; transition:transform .3s ease,box-shadow .3s ease; }
+        .design-card:hover { transform:translateY(-4px); box-shadow:0 20px 50px rgba(61,70,57,.12); }
+        .design-card img { width:100%; aspect-ratio:1; object-fit:cover; display:block; cursor:zoom-in; }
+        .design-card-footer { padding:13px; display:flex; align-items:center; justify-content:space-between; gap:10px; border-top:1px solid var(--line); }
+        .design-code { font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted-ink); }
+        .design-add { padding:9px 12px; background:var(--sage-deep); color:#fff; font-size:9px; letter-spacing:.12em; text-transform:uppercase; transition:.2s ease; }
+        .design-add:hover,.design-add.added { background:var(--ink); }
+        .quote-layout { display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); gap:54px; align-items:start; }
+        .quote-facts { display:grid; gap:1px; margin-top:32px; border:1px solid var(--line); }
+        .quote-fact { background:rgba(255,255,255,.48); padding:18px; }
+        .quote-fact strong { display:block; font-family:'Playfair Display',serif; font-size:21px; font-weight:500; margin-bottom:4px; }
+        .selected-designs { display:flex; flex-wrap:wrap; gap:8px; min-height:46px; padding:10px; background:#fff; border:1px solid var(--line); }
+        .selected-chip { display:inline-flex; align-items:center; gap:8px; background:#e6eadf; color:var(--ink); padding:7px 9px; font-size:10px; }
+        .quote-form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+        .quote-field-full { grid-column:1/-1; }
+        #cotizar input,#cotizar select,#cotizar textarea { width:100%; min-height:48px; padding:12px 14px; border:1px solid var(--line); border-radius:0!important; font-size:12px; }
+        #cotizar label { display:block; margin-bottom:7px; color:var(--muted-ink); font-size:9px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; }
+        @media(max-width:900px){.design-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.quote-layout{grid-template-columns:1fr;gap:36px}}
+        @media(max-width:520px){.design-grid{grid-template-columns:1fr}.catalog-toolbar{align-items:flex-start;flex-direction:column}.quote-form-grid{grid-template-columns:1fr}.quote-field-full{grid-column:auto}}
+
+        /* Vistas públicas tipo página: portada + páginas de contenido */
+        body.route-page #landing-container > header, body.route-page #landing-container > footer { display:none!important; }
+        body.route-page #home-menu { display:none!important; }
+        body.route-page #landing-container main > section { display:none!important; min-height:calc(100vh - 88px); padding-top:140px!important; }
+        body.route-page #landing-container main > section.route-visible { display:block!important; }
+        body.route-page #navbar { position:relative!important; transform:none!important; }
+        body.route-page #landing-container main { min-height:calc(100vh - 88px); }
+        body:not(.route-page) #landing-container main > section { display:none!important; }
+        body:not(.route-page) #landing-container > footer { display:none!important; }
+        body:not(.route-page) #landing-container header > .relative.z-10,
+        body:not(.route-page) #landing-container header > .hero-edition,
+        body:not(.route-page) #landing-container header > .absolute.bottom-6 { display:none!important; }
+        #auth-nav-slot { display:none!important; }
+        body:not(.route-page) #public-nav-links, body:not(.route-page) #mobileBtn { display:flex!important; }
+        body:not(.route-page) #public-nav-links { align-items:center; }
+        /* Deja libre el extremo derecho para el botón de tres rayas. */
+        #public-nav-links { transform:translateX(-64px); }
+        @media(max-width:700px){#public-nav-links{transform:translateX(-20px);}}
+        .home-rotator { position:absolute; inset:0; z-index:5; display:grid; place-items:center; pointer-events:none; color:#20251f; }
+        .home-rotator-slide { position:absolute; width:min(760px,86vw); text-align:center; opacity:0; transform:translateY(16px); pointer-events:none; transition:opacity .8s ease,transform .8s ease; }
+        .home-rotator-slide.active { opacity:1; transform:translateY(0); pointer-events:auto; z-index:2; }
+        .home-rotator-slide[data-route] { cursor:pointer; }
+        .home-rotator-kicker { font-size:10px; letter-spacing:.3em; text-transform:uppercase; color:#455141; font-weight:600; }
+        .home-rotator-title { margin-top:14px; font:400 clamp(42px,8vw,94px)/.95 'Playfair Display',serif; letter-spacing:-.04em; }
+        .home-rotator-copy { max-width:500px; margin:22px auto 0; font:italic 17px/1.6 'Playfair Display',serif; }
+         .home-rotator-slide a { pointer-events:auto; display:inline-flex; margin-top:28px; padding:13px 22px; border:1px solid rgba(32,37,31,.3); color:#20251f; font-size:9px; letter-spacing:.18em; text-transform:uppercase; transition:.25s ease; }
+        .home-rotator-slide a:hover { color:#f5f1e8; background:#20251f; }
+        .corner-controls { position:absolute; inset:0; z-index:8; pointer-events:none; transition:opacity .35s ease; }
+        .corner-controls.hidden-controls { opacity:0; }
+        .corner-controls button { pointer-events:auto; position:absolute; width:42px; height:42px; border:1px solid rgba(32,37,31,.3); background:rgba(245,241,232,.54); color:#20251f; backdrop-filter:blur(8px); transition:.25s ease; }
+        .corner-controls button:hover { color:#f5f1e8; background:#20251f; }
+        .corner-prev { left:24px; top:50%; transform:translateY(-50%); } .corner-next { right:24px; top:50%; transform:translateY(-50%); }
+        .corner-controls button:hover { transform:translateY(-50%) scale(1.05); }
+        .corner-hint { position:absolute; right:78px; bottom:40px; font-size:8px; letter-spacing:.18em; text-transform:uppercase; color:rgba(32,37,31,.6); }
+        .home-rotator-progress { position:absolute; left:50%; bottom:34px; z-index:9; display:flex; gap:7px; transform:translateX(-50%); }
+        .home-rotator-progress i { width:28px; height:2px; background:rgba(32,37,31,.2); transition:.3s ease; }
+        .home-rotator-progress i.active { background:#20251f; }
+        @media(max-width:700px){.home-rotator-copy{font-size:15px;padding:0 20px}.corner-hint{display:none}.corner-prev{left:16px}.corner-next{right:16px}}
+        #home-menu { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--paper); }
+        #home-menu a { min-height:112px; padding:22px 18px; display:flex; flex-direction:column; justify-content:space-between; border-right:1px solid var(--line); color:var(--ink); transition:.25s ease; }
+        #home-menu a:last-child { border-right:0; }
+        #home-menu a:hover { background:#dce1d5; }
+        #home-menu small { font-size:9px; letter-spacing:.18em; color:var(--sage-deep); }
+        #home-menu strong { font-family:'Playfair Display',serif; font-size:19px; font-weight:400; }
+        @media(max-width:900px){#home-menu{grid-template-columns:repeat(3,1fr)}#home-menu a:nth-child(3){border-right:0}#home-menu a{border-bottom:1px solid var(--line)}}
+        @media(max-width:520px){#home-menu{grid-template-columns:repeat(2,1fr)}#home-menu a:nth-child(2n){border-right:0}#home-menu a:nth-child(3){border-right:1px solid var(--line)}}
+        .design-actions { display:flex; gap:6px; }
+        .design-actions .design-add { flex:1; white-space:nowrap; }
+        .design-actions .design-book { background:transparent; color:var(--ink); border:1px solid var(--line); }
+        .design-actions .design-book:hover { background:var(--ink); color:#fff; }
         @media(max-width:640px){
             #landing-container header { justify-content:center!important; padding:88px 0 28px!important; }
             #landing-container header .max-w-4xl { width:100%!important; margin:auto!important; padding:24px 22px!important; align-items:center!important; text-align:center!important; }
@@ -526,6 +605,7 @@
     <h2 class="font-cinzel text-xl tracking-[0.2em] text-bone uppercase font-light">Hydra Tattoo</h2>
     <p id="loading-status" class="text-muted text-xs mt-2 font-mono">Cargando experiencia...</p>
 </div>
+<script>window.setTimeout(function(){var loader=document.getElementById('pantalla-carga');if(loader)loader.classList.add('ocultar-carga');},2500);window.addEventListener('error',function(){var loader=document.getElementById('pantalla-carga');if(loader)loader.classList.add('ocultar-carga');});window.addEventListener('unhandledrejection',function(){var loader=document.getElementById('pantalla-carga');if(loader)loader.classList.add('ocultar-carga');});</script>
 
 <!-- TOASTS -->
 <div id="toast-container"></div>
@@ -538,12 +618,13 @@
 
     <div class="hidden md:flex items-center gap-6 font-sans text-[10px] md:text-xs font-semibold tracking-widest uppercase text-muted">
         <div id="public-nav-links" class="flex items-center gap-6">
-            <a href="#estudio" onclick="showPublicLanding()" class="nav-link hover:text-bone transition-colors">La artista</a>
-            <a href="#disenos" onclick="showPublicLanding()" class="nav-link hover:text-bone transition-colors">Diseños</a>
-            <a href="#galeria" onclick="showPublicLanding()" class="nav-link hover:text-bone transition-colors">Galería</a>
-            <a href="#cuidados" onclick="showPublicLanding()" class="nav-link hover:text-bone transition-colors">Cuidados</a>
-            <a href="#agendar" onclick="showPublicLanding()" class="nav-link hover:text-bone transition-colors">Agenda</a>
-            <a href="#gestion-citas" onclick="showPublicLanding()" class="nav-link text-accent hover:text-bone transition-colors flex items-center gap-1.5 cursor-pointer">
+            <a href="#estudio" onclick="navigateTo('artist')" class="nav-link hover:text-bone transition-colors">La artista</a>
+            <a href="#disenos" onclick="navigateTo('designs')" class="nav-link hover:text-bone transition-colors">Diseños</a>
+            <a href="#cotizar" onclick="navigateTo('quote')" class="nav-link hover:text-bone transition-colors">Cotizar</a>
+            <a href="#galeria" onclick="navigateTo('gallery')" class="nav-link hover:text-bone transition-colors">Galería</a>
+            <a href="#cuidados" onclick="navigateTo('care')" class="nav-link hover:text-bone transition-colors">Cuidados</a>
+            <a href="#agendar" onclick="navigateTo('agenda')" class="nav-link hover:text-bone transition-colors">Agenda</a>
+            <a href="#agendar" onclick="navigateTo('agenda')" class="nav-link text-accent hover:text-bone transition-colors flex items-center gap-1.5 cursor-pointer">
                 <i class="fa-solid fa-calendar-check text-xs"></i> Mis Citas
             </a>
             <!-- Botón directo a Subir Comprobante (MODAL) -->
@@ -575,12 +656,13 @@
     <button type="button" onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-muted hover:text-bone text-2xl p-2 cursor-pointer">
         <i class="fa-solid fa-xmark"></i>
     </button>
-    <a href="#estudio" onclick="showPublicLanding(); toggleMobileMenu();" class="hover:text-accent mobile-link transition-colors py-2 cursor-pointer">La artista</a>
-    <a href="#disenos" onclick="showPublicLanding(); toggleMobileMenu();" class="hover:text-accent mobile-link transition-colors py-2 cursor-pointer">Diseños disponibles</a>
-    <a href="#galeria" onclick="showPublicLanding(); toggleMobileMenu();" class="hover:text-accent mobile-link transition-colors py-2 cursor-pointer">Galería</a>
-    <a href="#cuidados" onclick="showPublicLanding(); toggleMobileMenu();" class="hover:text-accent mobile-link transition-colors py-2 cursor-pointer">Cuidados</a>
-    <a href="#agendar" onclick="showPublicLanding(); toggleMobileMenu();" class="hover:text-accent mobile-link transition-colors py-2 cursor-pointer">Agenda</a>
-    <a href="#gestion-citas" onclick="showPublicLanding(); toggleMobileMenu();" class="hover:text-accent text-accent transition-colors flex items-center gap-2 py-2 cursor-pointer mt-2">
+    <a href="#estudio" onclick="navigateTo('artist'); toggleMobileMenu();" class="hover:text-accent mobile-link transition-colors py-2 cursor-pointer">La artista</a>
+    <a href="#disenos" onclick="navigateTo('designs'); toggleMobileMenu();" class="hover:text-accent mobile-link transition-colors py-2 cursor-pointer">Diseños disponibles</a>
+    <a href="#cotizar" onclick="navigateTo('quote'); toggleMobileMenu();" class="hover:text-accent mobile-link transition-colors py-2 cursor-pointer">Cotizar</a>
+    <a href="#galeria" onclick="navigateTo('gallery'); toggleMobileMenu();" class="hover:text-accent mobile-link transition-colors py-2 cursor-pointer">Galería</a>
+    <a href="#cuidados" onclick="navigateTo('care'); toggleMobileMenu();" class="hover:text-accent mobile-link transition-colors py-2 cursor-pointer">Cuidados</a>
+    <a href="#agendar" onclick="navigateTo('agenda'); toggleMobileMenu();" class="hover:text-accent mobile-link transition-colors py-2 cursor-pointer">Agenda</a>
+    <a href="#agendar" onclick="navigateTo('agenda'); toggleMobileMenu();" class="hover:text-accent text-accent transition-colors flex items-center gap-2 py-2 cursor-pointer mt-2">
         <i class="fa-solid fa-calendar-check text-lg"></i> Mis Citas
     </a>
     <button type="button" onclick="openReceiptModal(); toggleMobileMenu();" class="hover:text-accent text-accent transition-colors flex items-center gap-2 py-2 cursor-pointer mt-1 bg-transparent border-none">
@@ -601,6 +683,20 @@
             <video id="hero-video-2" class="hero-video" muted playsinline preload="auto" src="assets/video2.mp4"></video>
             <div class="hero-video-veil"></div>
         </div>
+        <div id="home-rotator" class="home-rotator" aria-live="polite">
+          <article class="home-rotator-slide active"><span class="home-rotator-kicker">Hydra Tattoo · Concepción</span><h1 class="home-rotator-title">Conoce a Claudia</h1><p class="home-rotator-copy">Tatuaje botánico, ornamental y fine line. Piezas femeninas, delicadas y atemporales.</p><a href="#estudio" onclick="navigateTo('artist')">Ver perfil de Claudia</a></article>
+          <article class="home-rotator-slide" data-route="designs" onclick="openDesignsPage(event)"><span class="home-rotator-kicker">02 · Diseños disponibles</span><h2 class="home-rotator-title">Elige tu pieza</h2><p class="home-rotator-copy">Explora el catálogo y encuentra un diseño que fluya contigo.</p><a href="#disenos" onclick="openDesignsPage(event)">Ver diseños disponibles</a></article>
+          <article class="home-rotator-slide"><span class="home-rotator-kicker">03 · Cotización</span><h2 class="home-rotator-title">Tu idea, tu piel</h2><p class="home-rotator-copy">Cuéntame tu idea, zona, tamaño y color para preparar tu cotización.</p><a href="#cotizar" onclick="navigateTo('quote')">Solicitar cotización</a></article>
+          <article class="home-rotator-slide"><span class="home-rotator-kicker">04 · Agenda</span><h2 class="home-rotator-title">Reserva tu hora</h2><p class="home-rotator-copy">Selecciona una fecha disponible y continúa con tu comprobante de abono.</p><a href="#agendar" onclick="navigateTo('agenda')">Agendar hora</a></article>
+          <article class="home-rotator-slide"><span class="home-rotator-kicker">05 · Galería</span><h2 class="home-rotator-title">Trabajos realizados</h2><p class="home-rotator-copy">Conoce algunas piezas creadas por Claudia y descubre su manera de trabajar.</p><a href="#galeria" onclick="navigateTo('gallery')">Ver galería de fotos</a></article>
+          <article class="home-rotator-slide"><span class="home-rotator-kicker">06 · Cuidados</span><h2 class="home-rotator-title">Acompaña tu tatuaje</h2><p class="home-rotator-copy">Revisa las indicaciones para cuidar tu piel durante la cicatrización.</p><a href="#cuidados" onclick="navigateTo('care')">Ver cuidados</a></article>
+        </div>
+        <div id="corner-controls" class="corner-controls" aria-label="Controles de portada">
+          <button type="button" class="corner-prev" onclick="changeHomeSlide(-1)" aria-label="Opción anterior"><i class="fa-solid fa-arrow-left"></i></button>
+          <button type="button" class="corner-next" onclick="changeHomeSlide(1)" aria-label="Siguiente opción"><i class="fa-solid fa-arrow-right"></i></button>
+          <span class="corner-hint">Toca para ocultar controles</span>
+        </div>
+        <div id="home-rotator-progress" class="home-rotator-progress" aria-hidden="true"><i class="active"></i><i></i><i></i><i></i><i></i><i></i></div>
         <div class="hero-edition" aria-hidden="true"><span>Fine line</span><span>Blackwork</span><span>Concepción · 2026</span></div>
 
         <div class="relative z-10 max-w-4xl px-6 flex flex-col items-center">
@@ -636,14 +732,14 @@
 
             <div class="reveal-mask inline-mask">
                 <div class="reveal-item delay-3 flex flex-col sm:flex-row items-center gap-4">
-                    <a href="#agendar" onclick="showPublicLanding()"
+                    <a href="#agendar" onclick="navigateTo('agenda')"
                        class="btn-primary-action px-8 py-3.5 rounded-xl text-xs font-sans font-semibold uppercase tracking-[0.2em] text-white border border-accent/40 shadow-2xl flex items-center gap-2">
                         <span>Reservar Cita</span>
                         <i class="fa-solid fa-arrow-right text-[10px]"></i>
                     </a>
-                    <a href="#galeria" onclick="showPublicLanding()"
+                    <a href="#disenos" onclick="navigateTo('designs')"
                        class="px-8 py-3.5 rounded-xl text-xs font-sans font-semibold uppercase tracking-[0.2em] text-bone bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 backdrop-blur-md transition-all">
-                        Ver Galería
+                        Ver diseños disponibles
                     </a>
                 </div>
             </div>
@@ -657,6 +753,15 @@
         </div>
     </header>
 
+    <nav id="home-menu" aria-label="Explorar Hydra Tattoo">
+      <a href="#estudio" onclick="navigateTo('artist')"><small>01</small><strong>La artista</strong></a>
+      <a href="#disenos" onclick="navigateTo('designs')"><small>02</small><strong>Diseños disponibles</strong></a>
+      <a href="#cotizar" onclick="navigateTo('quote')"><small>03</small><strong>Cotizar</strong></a>
+      <a href="#galeria" onclick="navigateTo('gallery')"><small>04</small><strong>Galería</strong></a>
+      <a href="#cuidados" onclick="navigateTo('care')"><small>05</small><strong>Cuidados</strong></a>
+      <a href="#agendar" onclick="navigateTo('agenda')"><small>06</small><strong>Mis citas / comprobante</strong></a>
+    </nav>
+
     <main>
       <!-- SECCIÓN GALERÍA DE ALTA GAMA -->
       <section id="galeria" class="py-24 md:py-32 bg-panel relative border-y border-[rgba(255,255,255,0.02)]">
@@ -669,13 +774,16 @@
           <div class="carousel-shell">
             <button type="button" class="carousel-arrow carousel-prev" onclick="scrollCarousel('galeria-track',-1)" aria-label="Ver trabajos anteriores"><i class="fa-solid fa-arrow-left"></i></button>
             <div id="galeria-track" class="art-carousel" tabindex="0" aria-label="Galería de trabajos">
-              <button type="button" class="gallery-slide" onclick="openLightbox('assets/foto1.jpg')"><img src="assets/foto1.jpg" alt="Tatuaje de conejo alado en fineline" loading="lazy"><span>Fineline · 01</span></button>
-              <button type="button" class="gallery-slide" onclick="openLightbox('assets/foto2.jpg')"><img src="assets/foto2.jpg" alt="Tatuaje botánico floral" loading="lazy"><span>Botánico · 02</span></button>
-              <button type="button" class="gallery-slide" onclick="openLightbox('assets/foto3.jpg')"><img src="assets/foto3.jpg" alt="Tatuaje de colibrí y flor" loading="lazy"><span>Ilustrativo · 03</span></button>
-              <button type="button" class="gallery-slide" onclick="openLightbox('assets/foto4.jpg')"><img src="assets/foto4.jpg" alt="Tatuaje de frase manuscrita" loading="lazy"><span>Lettering · 04</span></button>
-              <button type="button" class="gallery-slide" onclick="openLightbox('assets/foto5.jpg')"><img src="assets/foto5.jpg" alt="Tatuaje tipográfico con fecha" loading="lazy"><span>Memorial · 05</span></button>
-              <button type="button" class="gallery-slide" onclick="openLightbox('assets/foto6.jpg')"><img src="assets/foto6.jpg" alt="Tatuaje ilustrativo personalizado" loading="lazy"><span>Personalizado · 06</span></button>
-              <button type="button" class="gallery-slide" onclick="openLightbox('assets/foto7.jpg')"><img src="assets/foto7.jpg" alt="Tatuaje de nombre manuscrito" loading="lazy"><span>Lettering · 07</span></button>
+              <button type="button" class="gallery-slide" onclick="openLightbox('assets/gallery-new/trabajo-01.jpg')"><img src="assets/gallery-new/trabajo-01.jpg" alt="Tatuaje realizado por Claudia Medel" loading="lazy"><span>Botánico · 01</span></button>
+              <button type="button" class="gallery-slide" onclick="openLightbox('assets/gallery-new/trabajo-02.jpg')"><img src="assets/gallery-new/trabajo-02.jpg" alt="Tatuaje de trazo fino realizado por Claudia Medel" loading="lazy"><span>Fine line · 02</span></button>
+              <button type="button" class="gallery-slide" onclick="openLightbox('assets/gallery-new/trabajo-03.jpg')"><img src="assets/gallery-new/trabajo-03.jpg" alt="Tatuaje ornamental realizado por Claudia Medel" loading="lazy"><span>Ornamental · 03</span></button>
+              <button type="button" class="gallery-slide" onclick="openLightbox('assets/gallery-new/trabajo-04.jpg')"><img src="assets/gallery-new/trabajo-04.jpg" alt="Detalle de tatuaje de Claudia Medel" loading="lazy"><span>Detalle · 04</span></button>
+              <button type="button" class="gallery-slide" onclick="openLightbox('assets/gallery-new/trabajo-05.jpg')"><img src="assets/gallery-new/trabajo-05.jpg" alt="Tatuaje personalizado realizado por Claudia Medel" loading="lazy"><span>Personalizado · 05</span></button>
+              <button type="button" class="gallery-slide" onclick="openLightbox('assets/gallery-new/trabajo-06.jpg')"><img src="assets/gallery-new/trabajo-06.jpg" alt="Tatuaje femenino y delicado" loading="lazy"><span>Fine line · 06</span></button>
+              <button type="button" class="gallery-slide" onclick="openLightbox('assets/gallery-new/trabajo-07.jpg')"><img src="assets/gallery-new/trabajo-07.jpg" alt="Tatuaje botánico personalizado" loading="lazy"><span>Botánico · 07</span></button>
+              <button type="button" class="gallery-slide" onclick="openLightbox('assets/gallery-new/trabajo-08.jpg')"><img src="assets/gallery-new/trabajo-08.jpg" alt="Tatuaje realizado en Hydra Tattoo" loading="lazy"><span>Hydra · 08</span></button>
+              <button type="button" class="gallery-slide" onclick="openLightbox('assets/gallery-new/trabajo-09.jpg')"><img src="assets/gallery-new/trabajo-09.jpg" alt="Pieza de tatuaje de trazo fino" loading="lazy"><span>Fine line · 09</span></button>
+              <button type="button" class="gallery-slide" onclick="openLightbox('assets/gallery-new/trabajo-10.jpg')"><img src="assets/gallery-new/trabajo-10.jpg" alt="Trabajo reciente de Claudia Medel" loading="lazy"><span>Hydra · 10</span></button>
             </div>
             <button type="button" class="carousel-arrow carousel-next" onclick="scrollCarousel('galeria-track',1)" aria-label="Ver trabajos siguientes"><i class="fa-solid fa-arrow-right"></i></button>
           </div>
@@ -688,20 +796,49 @@
           <div class="text-center mb-12">
             <span class="text-accent text-[10px] tracking-[0.3em] uppercase font-semibold block mb-2">Piezas únicas</span>
             <h2 class="font-cinzel text-2xl md:text-4xl text-bone tracking-widest font-normal uppercase">Diseños disponibles</h2>
-            <p class="text-muted text-sm max-w-xl mx-auto mt-5">Los nuevos diseños serán publicados aquí. Podrás recorrerlos lateralmente y solicitar el que conecte contigo.</p>
+            <p class="text-muted text-sm max-w-xl mx-auto mt-5">Explora el catálogo de piezas botánicas, ornamentales y animales. Cada diseño tiene un tamaño mínimo según su nivel de detalle y puede ajustarse en <em>freehand</em> para fluir con tu cuerpo.</p>
           </div>
-          <div class="carousel-shell">
-            <button type="button" class="carousel-arrow carousel-prev" onclick="scrollCarousel('disenos-track',-1)" aria-label="Ver diseños anteriores"><i class="fa-solid fa-arrow-left"></i></button>
-            <div id="disenos-track" class="art-carousel" tabindex="0" aria-label="Diseños disponibles">
-              <div class="empty-art-card"><span>Disponible · 01</span></div>
-              <div class="empty-art-card"><span>Disponible · 02</span></div>
-              <div class="empty-art-card"><span>Disponible · 03</span></div>
-              <div class="empty-art-card"><span>Disponible · 04</span></div>
-              <div class="empty-art-card"><span>Disponible · 05</span></div>
-              <div class="empty-art-card"><span>Disponible · 06</span></div>
+          <div class="catalog-toolbar">
+            <span id="catalog-count" class="catalog-count">97 diseños disponibles</span>
+            <a href="#cotizar" onclick="navigateTo('quote')" class="design-add" style="padding:12px 16px">Ver mi selección <span id="selection-count">(0)</span></a>
+          </div>
+          <div id="design-grid" class="design-grid" aria-live="polite"></div>
+          <div class="text-center mt-10"><button id="load-more-designs" type="button" onclick="loadMoreDesigns()" class="px-7 py-4 border border-[var(--line)] text-[10px] uppercase tracking-[.18em] hover:bg-[var(--ink)] hover:text-white transition">Ver más diseños</button></div>
+        </div>
+      </section>
+
+      <!-- COTIZADOR DE DISEÑOS E IDEAS -->
+      <section id="cotizar" class="py-24 md:py-32 relative border-y border-[rgba(255,255,255,0.02)]">
+        <div class="max-w-7xl mx-auto px-6 quote-layout">
+          <div>
+            <span class="text-accent text-[10px] tracking-[0.3em] uppercase font-semibold block mb-3">Cotización personalizada</span>
+            <h2 class="font-serif text-4xl md:text-6xl text-bone font-light leading-tight">Cuéntame tu idea</h2>
+            <p class="text-muted text-sm leading-loose mt-6">Puedes agregar uno o más diseños del catálogo o pedir una pieza creada desde tu idea, una referencia o directamente en <em>freehand</em>. Los diseños disponibles son modificables.</p>
+            <div class="quote-facts">
+              <div class="quote-fact"><strong>Desde $30.000</strong><span class="text-xs text-muted">Valor mínimo de tatuaje.</span></div>
+              <div class="quote-fact"><strong>Diseño único</strong><span class="text-xs text-muted">Personalizado y adaptado a tu anatomía.</span></div>
+              <div class="quote-fact"><strong>Negro o rojo</strong><span class="text-xs text-muted">Indica el color al solicitar tu cotización.</span></div>
             </div>
-            <button type="button" class="carousel-arrow carousel-next" onclick="scrollCarousel('disenos-track',1)" aria-label="Ver diseños siguientes"><i class="fa-solid fa-arrow-right"></i></button>
           </div>
+          <form id="quote-form" class="action-card p-6 md:p-9" onsubmit="sendQuoteRequest(event)">
+            <div class="mb-6">
+              <label>Diseños agregados</label>
+              <div id="selected-designs" class="selected-designs"><span id="empty-selection" class="text-[11px] text-muted self-center">Aún no agregas un diseño. También puedes cotizar una idea propia.</span></div>
+            </div>
+            <div class="quote-form-grid">
+              <div><label for="quote-name">Tu nombre *</label><input id="quote-name" required type="text" autocomplete="name" placeholder="Nombre y apellido"></div>
+              <div><label for="quote-phone">WhatsApp *</label><input id="quote-phone" required type="tel" autocomplete="tel" placeholder="+56 9 1234 5678"></div>
+              <div class="quote-field-full"><label for="quote-instagram">Instagram *</label><input id="quote-instagram" required type="text" autocomplete="username" placeholder="@tu_usuario"></div>
+              <div class="quote-field-full"><label for="quote-idea">Idea o referencia *</label><textarea id="quote-idea" required rows="4" placeholder="Describe tu idea o qué te gustó de los diseños seleccionados"></textarea></div>
+              <div><label for="quote-zone">Zona del cuerpo *</label><input id="quote-zone" required type="text" placeholder="Ej: antebrazo"></div>
+              <div><label for="quote-size">Tamaño aproximado *</label><input id="quote-size" required type="text" placeholder="Ej: 12 cm"></div>
+              <div><label for="quote-style">Estilo</label><select id="quote-style"><option>Botánico trazo fino</option><option>Ornamental</option><option>Fine line</option><option>Lettering</option><option>Animal</option><option>Otro / por definir</option></select></div>
+              <div><label for="quote-color">Color *</label><select id="quote-color" required><option>Solo negro</option><option>Solo rojo</option><option>Negro y rojo</option><option>Color / por conversar</option></select></div>
+              <div class="quote-field-full"><label for="quote-reference">Foto de referencia (opcional)</label><input id="quote-reference" type="file" accept="image/*"><p class="text-[9px] text-muted mt-2">La referencia se tendrá en cuenta al revisar tu solicitud.</p></div>
+            </div>
+            <button type="submit" class="btn-primary-action w-full mt-6 py-4 text-[10px] font-semibold uppercase tracking-[.18em]">Solicitar cotización</button>
+            <div id="quote-success" class="hidden mt-4 p-4 border border-emerald-600/30 bg-emerald-50 text-emerald-800 text-xs leading-relaxed" role="status">Tu solicitud fue recibida. Claudia revisará tus datos y se pondrá en contacto contigo.</div>
+          </form>
         </div>
       </section>
 
@@ -709,15 +846,19 @@
       <section id="estudio" class="py-20 md:py-32 relative bg-panel border-y border-[rgba(255,255,255,0.02)]">
         <div class="max-w-4xl mx-auto px-6 text-center">
             <div class="artist-profile-crop" aria-label="Retrato de Claudia Medel">
-                <img src="assets/artista.jpg" alt="Claudia Medel, artista de Hydra Tattoo">
+                <img src="assets/claudia-medel.jpg" alt="Claudia Medel tatuando en su estudio Hydra Tattoo">
             </div>
             <div class="reveal-mask mb-4">
                 <span class="reveal-item delay-1 text-accent text-[10px] tracking-[0.3em] uppercase font-semibold block mb-3">La artista</span>
-                <h2 class="reveal-item delay-1 font-serif text-3xl md:text-4xl text-bone font-light">Claudia · Hydra Tattoo</h2>
+                <h2 class="reveal-item delay-1 font-serif text-3xl md:text-4xl text-bone font-light">Claudia Medel · Hydra Tattoo</h2>
             </div>
             <div class="reveal-mask mb-12">
                 <p class="reveal-item delay-2 font-sans text-muted text-sm md:text-base leading-relaxed md:leading-loose max-w-3xl mx-auto font-light mt-4">
-                    Claudia crea piezas personalizadas en fineline y blackwork, cuidando cada trazo para que el resultado se sienta propio y atemporal. Su trabajo combina precisión, sensibilidad y una mirada cercana, desde la primera idea hasta el último detalle del tatuaje.
+                    Tengo 28 años y llevo 4 años dedicándome al tatuaje. Mi especialidad es el tatuaje botánico, ornamental y <em>fine line</em>. Me inspiran la naturaleza, las flores silvestres, las hojas, las enredaderas y las texturas orgánicas para crear piezas femeninas, delicadas y atemporales, con trazo fino y atención en cada detalle.
+                    <br><br>
+                    Cada tatuaje lo trabajo de forma personalizada y única para ti. Puedo crear el diseño desde tu idea, una imagen de referencia o en <em>freehand</em>, dibujando directamente sobre tu piel para que la composición fluya con tu cuerpo de manera natural. También realizo <em>lettering</em> de trazo fino, frases y palabras con caligrafía sutil.
+                    <br><br>
+                    Mi estudio está en Concepción centro. Es un espacio íntimo, tranquilo y seguro, pensado para que vivas tu tatuaje como una experiencia única. Gracias por estar aquí y por considerar mi arte para acompañar tu piel.
                 </p>
             </div>
 
@@ -1131,6 +1272,8 @@
             <button type="button" onclick="switchAdminTab('bloqueos')" data-tab="bloqueos" class="admin-tab-btn px-5 py-3 text-muted hover:text-bone whitespace-nowrap cursor-pointer flex items-center gap-2">
                 <i class="fa-solid fa-plane-departure"></i> Bloqueos y Vacaciones
             </button>
+            <button type="button" onclick="switchAdminTab('cotizaciones')" data-tab="cotizaciones" class="admin-tab-btn px-5 py-3 text-muted hover:text-bone whitespace-nowrap cursor-pointer flex items-center gap-2"><i class="fa-solid fa-file-invoice-dollar"></i> Cotizaciones <span id="admin-quotes-counter" class="text-[9px] bg-accent/20 px-2 py-0.5 rounded-full">0</span></button>
+            <button type="button" onclick="switchAdminTab('contenido')" data-tab="contenido" class="admin-tab-btn px-5 py-3 text-muted hover:text-bone whitespace-nowrap cursor-pointer flex items-center gap-2"><i class="fa-solid fa-pen-to-square"></i> Contenido</button>
         </div>
 
         <!-- TAB 1: AGENDAMIENTOS -->
@@ -1170,6 +1313,33 @@
         </div>
 
         <!-- TAB 2: HORARIOS POR DÍAS -->
+        <div id="tab-cotizaciones" class="admin-tab-panel">
+            <div class="bg-studio/50 border border-white/5 rounded-3xl p-6 md:p-8">
+                <div class="flex items-center justify-between mb-6 pb-4 border-b border-white/10"><div><h3 class="font-serif text-lg text-bone flex items-center gap-2"><i class="fa-solid fa-file-invoice-dollar text-accent"></i> Solicitudes de cotización</h3><p class="text-[11px] text-muted mt-2">Guardadas localmente y en Supabase cuando la tabla está configurada.</p></div><button type="button" onclick="clearLocalQuotes()" class="text-[10px] text-danger border border-danger/30 px-3 py-2 rounded-lg">Limpiar locales</button></div>
+                <div class="overflow-x-auto"><table class="w-full text-left text-xs min-w-[820px]"><thead class="text-muted border-b border-white/10 uppercase tracking-wider font-bold font-mono text-[9px]"><tr><th class="pb-3">Fecha</th><th class="pb-3">Cliente</th><th class="pb-3">Diseño(s)</th><th class="pb-3">Detalle</th><th class="pb-3">Estado</th></tr></thead><tbody id="admin-quotes-table" class="divide-y divide-white/5 text-bone"></tbody></table></div>
+            </div>
+        </div>
+
+        <div id="tab-contenido" class="admin-tab-panel">
+          <div class="bg-studio/50 border border-white/5 rounded-3xl p-6 md:p-8 space-y-8">
+            <div><h3 class="font-serif text-xl text-bone">Editar diseños disponibles</h3><p class="text-[11px] text-muted mt-2">Cambia nombre, categoría, precio, tamaño mínimo, disponibilidad o imagen. Usa una URL pública para reemplazar la foto.</p></div>
+            <form onsubmit="saveDesignContent(event)" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Código</label><select id="content-design-code" onchange="loadDesignContentForm()" class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></select><button type="button" onclick="addNewDesignTemplate()" class="text-[9px] text-accent mt-2 underline">+ Agregar nuevo diseño</button></div>
+              <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Nombre</label><input id="content-design-title" required class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></div>
+              <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Categoría</label><input id="content-design-category" class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></div>
+              <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Precio</label><input id="content-design-price" placeholder="Desde $30.000" class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></div>
+              <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Tamaño mínimo</label><input id="content-design-min-size" placeholder="Ej: 8 cm" class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></div>
+              <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">URL de imagen</label><input id="content-design-image" placeholder="https://..." class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></div>
+              <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">O subir foto</label><input id="content-design-file" type="file" accept="image/*" class="w-full text-[10px] text-muted bg-studio border border-white/10 rounded-xl p-2"></div>
+              <label class="flex items-center gap-2 text-xs text-bone self-end pb-3"><input id="content-design-available" type="checkbox" checked> Disponible para reservar</label>
+              <button class="btn-primary-action py-3 rounded-xl text-[10px] uppercase tracking-widest">Guardar diseño</button>
+            </form>
+            <div class="border-t border-white/10 pt-8"><h3 class="font-serif text-xl text-bone">Editar foto de galería</h3><p class="text-[11px] text-muted mt-2">Reemplaza la foto y el texto de cualquier trabajo publicado.</p>
+              <form onsubmit="saveGalleryContent(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5"><div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Trabajo</label><select id="content-gallery-code" onchange="loadGalleryContentForm()" class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></select></div><div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Texto</label><input id="content-gallery-label" required class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></div><div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">URL de imagen</label><input id="content-gallery-image" placeholder="https://..." class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></div><div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">O subir foto</label><input id="content-gallery-file" type="file" accept="image/*" class="w-full text-[10px] text-muted bg-studio border border-white/10 rounded-xl p-2"></div><button class="btn-primary-action py-3 rounded-xl text-[10px] uppercase tracking-widest md:col-start-3">Guardar foto</button></form>
+            </div>
+          </div>
+        </div>
+
         <div id="tab-config" class="admin-tab-panel">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 <div class="lg:col-span-7 bg-studio/50 border border-white/5 rounded-3xl p-6 md:p-8">
@@ -1352,7 +1522,17 @@
     const MONTH_NAMES_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
     const SUPABASE_URL = 'https://kxldsjodgfonrrlwjbws.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_J5s_2YqtASIYSqu2k00SGA_copdr39x';
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    function createSupabaseFallback() {
+        const query = () => ({ select() { return this; }, eq() { return this; }, order() { return this; }, then(resolve) { resolve({ data: [], error: null }); }, insert() { return Promise.resolve({ data: null, error: null }); }, upsert() { return Promise.resolve({ data: null, error: null }); }, update() { return Promise.resolve({ data: null, error: null }); }, delete() { return this; } });
+        return { from: query, auth: { getSession: async () => ({ data: { session: null } }), signInWithPassword: async () => ({ error: null }), signOut: async () => ({}), onAuthStateChange: () => ({ data: { subscription: { unsubscribe() {} } } }) }, storage: { from: () => ({ upload: async () => ({ error: new Error('Storage no disponible') }), getPublicUrl: () => ({ data: { publicUrl: '' } }) }) }, channel: () => ({ on() { return this; }, subscribe() { return this; } }) };
+    }
+    let supabaseClient;
+    try {
+        supabaseClient = window.supabase?.createClient ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : createSupabaseFallback();
+    } catch (error) {
+        console.warn('Supabase no disponible; se usará el modo local.', error);
+        supabaseClient = createSupabaseFallback();
+    }
 
     const ADMIN_EMAIL = "claudia.medel@gmail.com";
 
@@ -1363,8 +1543,25 @@
         }[char]));
     }
 
-    let config = { daySchedules: {}, blockedDates: [], blockedReasons: {} };
+    let config = { daySchedules: {}, blockedDates: [], blockedReasons: {}, content: { designs: {}, gallery: {} } };
     let bookings = [];
+    const readStoredJSON = (key, fallback) => { try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)); } catch (_) { return fallback; } };
+    let quotes = readStoredJSON('hydrart_quotes', []);
+    const designOverrides = readStoredJSON('hydrart_design_overrides', {});
+    const galleryOverrides = readStoredJSON('hydrart_gallery_overrides', {});
+
+    function getDesignMeta(number) {
+        const code = designCode(number), override = (config.content?.designs || {})[code] || designOverrides[code] || {};
+        return { code, image: override.image || `assets/designs/diseno-${String(number).padStart(3, '0')}.jpg`, title: override.title || `Diseño ${code}`, category: override.category || 'Botánico / ornamental', price: override.price || 'Desde $30.000', minSize: override.minSize || 'Consultar tamaño mínimo', available: override.available !== false };
+    }
+    async function saveContentConfig() {
+        config.content = { designs: designOverrides, gallery: galleryOverrides };
+        localStorage.setItem('hydrart_design_overrides', JSON.stringify(designOverrides));
+        localStorage.setItem('hydrart_gallery_overrides', JSON.stringify(galleryOverrides));
+        await saveState();
+        renderDesignCatalog();
+        showToast('Contenido actualizado.', 'success');
+    }
     let currentUser = null; // se define al validar la sesión real de Supabase Auth (ver checkAdminSession)
 
     let selectedClientDate = getLocalDateString(new Date());
@@ -1451,10 +1648,155 @@
     function scrollCarousel(trackId, direction) {
         const track = document.getElementById(trackId);
         if (!track) return;
-        const card = track.querySelector('.empty-art-card');
+        const card = track.querySelector('.empty-art-card, .gallery-slide');
         const distance = card ? card.getBoundingClientRect().width + 22 : track.clientWidth * 0.8;
         track.scrollBy({ left: direction * distance, behavior: 'smooth' });
     }
+
+    // CATÁLOGO DE DISEÑOS Y COTIZADOR
+    let DESIGN_TOTAL = Math.max(97, ...Object.keys(designOverrides).map(code => Number(String(code).replace('HYD-', '')) || 0));
+    const selectedDesigns = new Set();
+    let visibleDesigns = 20;
+
+    function designCode(number) {
+        return `HYD-${String(number).padStart(3, '0')}`;
+    }
+
+    function renderDesignCatalog() {
+        const grid = document.getElementById('design-grid');
+        if (!grid) return;
+        const countLabel = document.getElementById('catalog-count');
+        if (countLabel) countLabel.textContent = `${DESIGN_TOTAL} diseños disponibles`;
+        grid.innerHTML = Array.from({ length: visibleDesigns }, (_, index) => {
+            const number = index + 1;
+            const meta = getDesignMeta(number);
+            const code = meta.code;
+            const image = meta.image;
+            return `<article class="design-card">
+                <img src="${image}" alt="${escapeHTML(meta.title)}" loading="lazy" onclick="openDesignDetail(${number})" title="Ver información del diseño">
+                <div class="design-card-footer">
+                    <div><span class="design-code">${escapeHTML(meta.title)} · ${escapeHTML(meta.category)}</span><br><span class="text-[10px] text-muted">${escapeHTML(meta.price)} · ${escapeHTML(meta.minSize)}</span></div>
+                    <div class="design-actions">
+                      <button type="button" class="design-add design-book" ${meta.available ? `onclick="startBookingForDesign('${code}')"` : 'disabled'}>${meta.available ? 'Agendar' : 'No disponible'}</button>
+                      <button type="button" class="design-add" onclick="startQuoteForDesign('${code}')">Cotizar</button>
+                    </div>
+                </div>
+            </article>`;
+        }).join('');
+        const loadButton = document.getElementById('load-more-designs');
+        if (loadButton) loadButton.classList.toggle('hidden', visibleDesigns >= DESIGN_TOTAL);
+    }
+
+    function loadMoreDesigns() {
+        visibleDesigns = Math.min(DESIGN_TOTAL, visibleDesigns + 20);
+        renderDesignCatalog();
+    }
+
+    function addNewDesignTemplate() {
+        DESIGN_TOTAL += 1;
+        const code = designCode(DESIGN_TOTAL);
+        designOverrides[code] = { title: `Nuevo diseño ${code}`, category: 'Por definir', price: 'Desde $30.000', minSize: 'Consultar tamaño mínimo', image: '', available: true };
+        renderEditableContentForms();
+        const selector = document.getElementById('content-design-code');
+        if (selector) { selector.value = code; loadDesignContentForm(); }
+        showToast(`${code} creado. Completa la información y guarda.`, 'info');
+    }
+
+    function openDesignDetail(number) {
+        const meta = getDesignMeta(number);
+        const detail = window.open('', '_blank');
+        if (!detail) { showToast('Permite las ventanas emergentes para ver el detalle.', 'error'); return; }
+        const safe = value => escapeHTML(value), baseUrl = window.location.href.split('#')[0].split('?')[0];
+        detail.document.write(`<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${safe(meta.title)} · Hydra Tattoo</title><style>body{margin:0;background:#f2efe7;color:#292d29;font-family:Inter,Arial,sans-serif;display:grid;place-items:center;min-height:100vh;padding:28px;box-sizing:border-box}.card{max-width:920px;width:100%;background:#faf8f2;border:1px solid #cbd3c3;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:0;box-shadow:0 24px 70px #59655122}.photo{background:#e7eadf;display:grid;place-items:center;min-height:420px}.photo img{width:100%;height:100%;max-height:80vh;object-fit:contain}.info{padding:clamp(26px,5vw,58px);display:flex;flex-direction:column;justify-content:center}.kicker{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#71806b}.code{font-size:10px;color:#7b8278;margin-top:14px}.title{font:400 clamp(34px,5vw,60px)/1 'Georgia',serif;margin:18px 0}.row{padding:14px 0;border-bottom:1px solid #d9dfd3;font-size:13px}.row b{display:block;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#71806b;margin-bottom:5px}.actions{display:flex;gap:10px;margin-top:28px;flex-wrap:wrap}a{padding:13px 16px;text-decoration:none;border:1px solid #71806b;color:#292d29;font-size:10px;letter-spacing:.12em;text-transform:uppercase}a.primary{background:#71806b;color:#fff}@media(max-width:700px){.card{grid-template-columns:1fr}.photo{min-height:300px}}</style></head><body><main class="card"><div class="photo"><img src="${safe(meta.image)}" alt="${safe(meta.title)}"></div><section class="info"><span class="kicker">Diseño disponible · Hydra Tattoo</span><span class="code">${safe(meta.code)}</span><h1 class="title">${safe(meta.title)}</h1><div class="row"><b>Categoría</b>${safe(meta.category)}</div><div class="row"><b>Precio</b>${safe(meta.price)}</div><div class="row"><b>Tamaño mínimo</b>${safe(meta.minSize)}</div><div class="row"><b>Disponibilidad</b>${meta.available ? 'Disponible para reservar' : 'No disponible'}</div><div class="actions">${meta.available ? `<a class="primary" href="${baseUrl}#agendar" target="_self">Agendar este diseño</a>` : ''}<a href="${baseUrl}#cotizar" target="_self">Cotizar diseño</a></div></section></main></body></html>`);
+        detail.document.close();
+    }
+
+    function toggleDesignSelection(code) {
+        if (selectedDesigns.has(code)) selectedDesigns.delete(code);
+        else selectedDesigns.add(code);
+        renderDesignCatalog();
+        renderSelectedDesigns();
+        showToast(selectedDesigns.has(code) ? `${code} agregado a tu cotización.` : `${code} eliminado.`, 'info');
+    }
+
+    function removeQuotedDesign(code) {
+        selectedDesigns.delete(code);
+        renderDesignCatalog();
+        renderSelectedDesigns();
+    }
+
+    function startQuoteForDesign(code) {
+        selectedDesigns.add(code);
+        renderDesignCatalog();
+        renderSelectedDesigns();
+        navigateTo('quote');
+    }
+
+    function startBookingForDesign(code) {
+        selectedDesigns.add(code);
+        renderDesignCatalog();
+        const notes = document.getElementById('client-notes');
+        if (notes) notes.value = `Diseño(s) disponible(s): ${[...selectedDesigns].join(', ')}. Me gustaría ajustar la composición en freehand si es necesario.`;
+        navigateTo('agenda');
+    }
+
+    function renderSelectedDesigns() {
+        const container = document.getElementById('selected-designs');
+        const counter = document.getElementById('selection-count');
+        if (counter) counter.textContent = `(${selectedDesigns.size})`;
+        if (!container) return;
+        if (!selectedDesigns.size) {
+            container.innerHTML = '<span id="empty-selection" class="text-[11px] text-muted self-center">Aún no agregas un diseño. También puedes cotizar una idea propia.</span>';
+            return;
+        }
+        container.innerHTML = [...selectedDesigns].map(code => `<span class="selected-chip">${code}<button type="button" onclick="removeQuotedDesign('${code}')" aria-label="Quitar ${code}">×</button></span>`).join('');
+    }
+
+    function sendQuoteRequest(event) {
+        event.preventDefault();
+        const designs = selectedDesigns.size ? [...selectedDesigns].join(', ') : 'Idea personalizada / sin diseño de catálogo';
+        const hasReference = document.getElementById('quote-reference').files.length > 0;
+        const message = [
+            'Hola Claudia, quiero solicitar una cotización:',
+            '',
+            `Nombre: ${document.getElementById('quote-name').value.trim()}`,
+            `WhatsApp: ${document.getElementById('quote-phone').value.trim()}`,
+            `Diseño(s): ${designs}`,
+            `Idea: ${document.getElementById('quote-idea').value.trim()}`,
+            `Zona: ${document.getElementById('quote-zone').value.trim()}`,
+            `Medida aproximada: ${document.getElementById('quote-size').value.trim()}`,
+            `Estilo: ${document.getElementById('quote-style').value}`,
+            `Color: ${document.getElementById('quote-color').value}`,
+            hasReference ? 'Tengo una foto de referencia y la adjuntaré en este chat.' : ''
+        ].filter(Boolean).join('\n');
+        const quote = {
+            id: `COT-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+            client_name: document.getElementById('quote-name').value.trim(),
+            client_phone: document.getElementById('quote-phone').value.trim(),
+            client_instagram: document.getElementById('quote-instagram').value.trim(),
+            designs, idea: document.getElementById('quote-idea').value.trim(),
+            zone: document.getElementById('quote-zone').value.trim(),
+            size: document.getElementById('quote-size').value.trim(),
+            style: document.getElementById('quote-style').value,
+            color: document.getElementById('quote-color').value,
+            status: 'Nueva', created_at: new Date().toISOString()
+        };
+        quotes.unshift(quote);
+        localStorage.setItem('hydrart_quotes', JSON.stringify(quotes));
+        supabaseClient.from('hydrart_quotes').insert(quote).then(() => {}).catch(() => {});
+        const success = document.getElementById('quote-success');
+        if (success) { success.classList.remove('hidden'); success.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+        showToast('Tu solicitud de cotización fue recibida correctamente.', 'success');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        renderDesignCatalog();
+        renderSelectedDesigns();
+        initHomeRotator();
+        preventRouteAnchorJumps();
+        const initialRoute = { '#estudio':'artist', '#disenos':'designs', '#cotizar':'quote', '#galeria':'gallery', '#cuidados':'care', '#agendar':'agenda' }[window.location.hash];
+        if (initialRoute) navigateTo(initialRoute);
+    });
 
     async function copyTextToClipboard(text) {
         if (navigator.clipboard && window.isSecureContext) {
@@ -1578,7 +1920,9 @@
             const { data: settingsRows } = await supabaseClient.from('hydrart_settings').select('*').eq('key', 'main_config');
             if (settingsRows && settingsRows.length > 0) {
                 const loadedConfig = settingsRows.sort((a, b) => (b.id || 0) - (a.id || 0))[0].value || {};
-                config = { daySchedules: loadedConfig.daySchedules || {}, blockedDates: loadedConfig.blockedDates || [], blockedReasons: loadedConfig.blockedReasons || {} };
+                config = { daySchedules: loadedConfig.daySchedules || {}, blockedDates: loadedConfig.blockedDates || [], blockedReasons: loadedConfig.blockedReasons || {}, content: loadedConfig.content || { designs: designOverrides, gallery: galleryOverrides } };
+                Object.assign(designOverrides, config.content.designs || {});
+                Object.assign(galleryOverrides, config.content.gallery || {});
             } else {
                 await supabaseClient.from('hydrart_settings').upsert({ key: 'main_config', value: config }, { onConflict: 'key' });
             }
@@ -1591,6 +1935,8 @@
                 }));
             }
             dataLoaded = true;
+            renderDesignCatalog();
+            renderGalleryContent();
             setSyncStatus('synced');
         } catch (err) {
             console.error("Error al cargar Supabase:", err);
@@ -1725,11 +2071,90 @@
 
     function handleAdminNavClick() { if (currentUser) showAdminPanel(); else showLoginView(); }
 
+    function openDesignsPage(event) {
+        if (event) event.preventDefault();
+        const landing = document.getElementById('landing-container');
+        document.body.classList.add('route-page');
+        landing.querySelectorAll('main > section').forEach(section => section.classList.toggle('route-visible', section.id === 'disenos'));
+        history.replaceState({ page: 'designs' }, '', '#disenos');
+        renderDesignCatalog();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return false;
+    }
+
+    function navigateTo(page) {
+        const routes = { home: null, artist: 'estudio', designs: 'disenos', quote: 'cotizar', gallery: 'galeria', care: 'cuidados', agenda: 'agendar' };
+        const target = routes[page];
+        const landing = document.getElementById('landing-container');
+        if (!landing) return;
+        document.body.classList.toggle('route-page', Boolean(target));
+        landing.querySelectorAll('main > section').forEach(section => {
+            const agendaCompanion = page === 'agenda' && ['pago-directo', 'gestion-citas'].includes(section.id);
+            section.classList.toggle('route-visible', section.id === target || agendaCompanion);
+        });
+        if (target) history.replaceState({ page }, '', `#${target}`);
+        else {
+            history.replaceState({}, '', window.location.pathname);
+            homeSlideIndex = 0;
+            renderHomeSlide();
+            scheduleHomeSlide();
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (page === 'designs') renderDesignCatalog();
+    }
+
+    let homeSlideIndex = 0;
+    let homeSlideTimer = null;
+    function renderHomeSlide() {
+        const slides = document.querySelectorAll('.home-rotator-slide');
+        if (!slides.length) return;
+        slides.forEach((slide, index) => slide.classList.toggle('active', index === homeSlideIndex));
+        document.querySelectorAll('#home-rotator-progress i').forEach((dot, index) => dot.classList.toggle('active', index === homeSlideIndex));
+    }
+    function scheduleHomeSlide() {
+        window.clearTimeout(homeSlideTimer);
+        homeSlideTimer = window.setTimeout(() => {
+            if (!document.body.classList.contains('route-page')) {
+                changeHomeSlide(1, false);
+            }
+        }, 5000);
+    }
+    function changeHomeSlide(delta = 1, manual = true) {
+        const slides = document.querySelectorAll('.home-rotator-slide');
+        if (!slides.length) return;
+        homeSlideIndex = (homeSlideIndex + delta + slides.length) % slides.length;
+        renderHomeSlide();
+        if (manual) scheduleHomeSlide();
+    }
+    function toggleCornerControls() {
+        const controls = document.getElementById('corner-controls');
+        if (controls) controls.classList.toggle('hidden-controls');
+    }
+    function initHomeRotator() {
+        const header = document.querySelector('#landing-container > header');
+        if (!header) return;
+        renderHomeSlide();
+        scheduleHomeSlide();
+        header.addEventListener('click', event => {
+            if (event.target.closest('a,button')) return;
+            toggleCornerControls();
+        });
+    }
+
+    function preventRouteAnchorJumps() {
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            if (link.getAttribute('onclick')?.includes('navigateTo')) {
+                link.addEventListener('click', event => event.preventDefault());
+            }
+        });
+    }
+
     function showPublicLanding() {
         document.getElementById('landing-container').classList.remove('hidden');
         document.getElementById('admin-container').classList.add('hidden');
         document.getElementById('login-container').classList.add('hidden');
         document.getElementById('public-nav-links').classList.remove('hidden');
+        navigateTo('home');
         renderAllViews();
     }
 
@@ -2409,6 +2834,77 @@
         }
     }
 
+    function renderAdminQuotesTable() {
+        const table = document.getElementById('admin-quotes-table');
+        const counter = document.getElementById('admin-quotes-counter');
+        if (counter) counter.textContent = quotes.length;
+        if (!table) return;
+        if (!quotes.length) { table.innerHTML = '<tr><td colspan="5" class="py-10 text-center text-muted">Aún no hay solicitudes de cotización guardadas.</td></tr>'; return; }
+        table.innerHTML = quotes.map(q => `<tr><td class="py-4 font-mono text-[10px] text-muted">${new Date(q.created_at).toLocaleString('es-CL')}</td><td class="py-4"><strong>${escapeHTML(q.client_name)}</strong><br><span class="text-muted text-[10px]">WhatsApp: ${escapeHTML(q.client_phone)}<br>Instagram: ${escapeHTML(q.client_instagram || '—')}</span></td><td class="py-4 font-mono text-[10px]">${escapeHTML(q.designs)}</td><td class="py-4 max-w-xs text-[11px] text-muted">${escapeHTML(q.style)} · ${escapeHTML(q.color)}<br>${escapeHTML(q.zone)} · ${escapeHTML(q.size)}<br>${escapeHTML(q.idea)}</td><td class="py-4"><span class="sync-indicator">${escapeHTML(q.status)}</span></td></tr>`).join('');
+    }
+
+    function renderEditableContentForms() {
+        const ds = document.getElementById('content-design-code'), gs = document.getElementById('content-gallery-code');
+        if (ds) { const current = ds.value; ds.innerHTML = Array.from({length: DESIGN_TOTAL}, (_, i) => `<option value="${designCode(i + 1)}">${designCode(i + 1)}</option>`).join(''); ds.value = current || designCode(1); loadDesignContentForm(); }
+        if (gs && !gs.options.length) { gs.innerHTML = Array.from({length: 10}, (_, i) => `<option value="${i + 1}">Trabajo ${String(i + 1).padStart(2, '0')}</option>`).join(''); loadGalleryContentForm(); }
+    }
+    function loadDesignContentForm() {
+        const code = document.getElementById('content-design-code')?.value; if (!code) return;
+        const number = Number(code.replace('HYD-', '')), meta = getDesignMeta(number), override = designOverrides[code] || {};
+        document.getElementById('content-design-title').value = override.title || meta.title;
+        document.getElementById('content-design-category').value = override.category || meta.category;
+        document.getElementById('content-design-price').value = override.price || meta.price;
+        document.getElementById('content-design-min-size').value = override.minSize || meta.minSize;
+        document.getElementById('content-design-image').value = override.image || '';
+        document.getElementById('content-design-available').checked = meta.available;
+    }
+    async function uploadContentImage(file, key) {
+        if (!file) return '';
+        try {
+            const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+            const path = `content/${key}-${Date.now()}.${ext}`;
+            const { error } = await supabaseClient.storage.from('tattoo-ideas').upload(path, file, { upsert: true, contentType: file.type || 'image/jpeg' });
+            if (error) return '';
+            return supabaseClient.storage.from('tattoo-ideas').getPublicUrl(path).data.publicUrl || '';
+        } catch (_) { return ''; }
+    }
+    async function saveDesignContent(event) {
+        event.preventDefault(); const code = document.getElementById('content-design-code').value;
+        const uploaded = await uploadContentImage(document.getElementById('content-design-file').files[0], code);
+        designOverrides[code] = { title: document.getElementById('content-design-title').value.trim(), category: document.getElementById('content-design-category').value.trim(), price: document.getElementById('content-design-price').value.trim(), minSize: document.getElementById('content-design-min-size').value.trim(), image: uploaded || document.getElementById('content-design-image').value.trim(), available: document.getElementById('content-design-available').checked };
+        await saveContentConfig();
+    }
+    function loadGalleryContentForm() {
+        const number = document.getElementById('content-gallery-code')?.value; if (!number) return;
+        const override = galleryOverrides[number] || {}; document.getElementById('content-gallery-label').value = override.label || `Trabajo · ${String(number).padStart(2, '0')}`; document.getElementById('content-gallery-image').value = override.image || `assets/gallery-new/trabajo-${String(number).padStart(2, '0')}.jpg`;
+    }
+    async function saveGalleryContent(event) {
+        event.preventDefault(); const number = document.getElementById('content-gallery-code').value;
+        const uploaded = await uploadContentImage(document.getElementById('content-gallery-file').files[0], `gallery-${number}`);
+        galleryOverrides[number] = { label: document.getElementById('content-gallery-label').value.trim(), image: uploaded || document.getElementById('content-gallery-image').value.trim() };
+        await saveContentConfig(); renderGalleryContent();
+    }
+    function renderGalleryContent() {
+        const track = document.getElementById('galeria-track'); if (!track) return;
+        track.innerHTML = Array.from({length: 10}, (_, i) => { const n = String(i + 1).padStart(2, '0'), o = galleryOverrides[String(i + 1)] || {}; const image = o.image || `assets/gallery-new/trabajo-${n}.jpg`, label = o.label || `Fine line · ${n}`; return `<button type="button" class="gallery-slide" onclick="openLightbox('${image}')"><img src="${image}" alt="${escapeHTML(label)}" loading="lazy"><span>${escapeHTML(label)}</span></button>`; }).join('');
+    }
+
+    function clearLocalQuotes() {
+        if (!confirm('¿Limpiar las cotizaciones guardadas en este navegador?')) return;
+        quotes = []; localStorage.removeItem('hydrart_quotes'); renderAdminQuotesTable();
+    }
+
+    async function loadQuotesFromSupabase() {
+        try {
+            const { data, error } = await supabaseClient.from('hydrart_quotes').select('*').order('created_at', { ascending: false });
+            if (error || !data) return;
+            const byId = new Map([...data, ...quotes].map(q => [q.id, q]));
+            quotes = [...byId.values()].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            localStorage.setItem('hydrart_quotes', JSON.stringify(quotes));
+            renderAdminQuotesTable();
+        } catch (_) {}
+    }
+
     function renderAdminAgendasTable() {
         const tbody = document.getElementById('admin-bookings-table');
         const counter = document.getElementById('booking-counter');
@@ -2587,6 +3083,9 @@
         renderBlockedRangesList();
         renderSavedExceptionsList();
         renderAdminAgendasTable();
+        renderAdminQuotesTable();
+        renderEditableContentForms();
+        loadQuotesFromSupabase();
     }
 
     function adminCalNavigate(delta) {
@@ -3230,7 +3729,7 @@
         const monthFilter = document.getElementById('admin-month-filter');
         if (monthFilter) monthFilter.value = "";
 
-        renderAllViews();
+        try { renderAllViews(); } catch (error) { console.error('Error al preparar la página:', error); }
         hideLoadingScreen();
 
         // 2. Verificar sesión real de admin y traer datos de Supabase en segundo plano
@@ -3284,9 +3783,12 @@
                         daySchedules: loadedConfig.daySchedules || {},
                         blockedDates: loadedConfig.blockedDates || [],
                         blockedReasons: loadedConfig.blockedReasons || {},
+                        content: loadedConfig.content || { designs: designOverrides, gallery: galleryOverrides },
                     };
                     if (JSON.stringify(newConfig) !== JSON.stringify(config)) {
                         config = newConfig;
+                        Object.assign(designOverrides, config.content?.designs || {});
+                        Object.assign(galleryOverrides, config.content?.gallery || {});
                         shouldUpdate = true;
                     }
                 }
@@ -3309,6 +3811,16 @@
                 })
                 .subscribe();
         } catch (e) {}
+    });
+
+    // Si la librería remota llega después, se actualiza sin bloquear la portada.
+    window.addEventListener('load', () => {
+        try {
+            if (window.supabase?.createClient) {
+                supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                loadDataFromSupabase(false).then(() => renderAllViews()).catch(() => {});
+            }
+        } catch (_) {}
     });
 </script>
 
