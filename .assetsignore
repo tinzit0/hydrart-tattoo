@@ -1,0 +1,9 @@
+.git/
+.agents/
+.codex/
+node_modules/
+*.log
+*.ps1
+README.md
+supabase-schema.sql
+supabase-storage-policies.sql

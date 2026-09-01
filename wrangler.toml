@@ -1,0 +1,15 @@
+name = "hydrart-tattoo"
+compatibility_date = "2026-09-01"
+
+# Publicar el sitio desde la raíz del proyecto, pero nunca subir metadatos
+# internos del repositorio ni archivos de desarrollo como assets públicos.
+[assets]
+directory = "."
+exclude = [
+  ".git/**",
+  ".agents/**",
+  ".codex/**",
+  "node_modules/**",
+  "*.ps1",
+  "*.log"
+]
