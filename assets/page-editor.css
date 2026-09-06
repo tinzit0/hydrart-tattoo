@@ -1,0 +1,18 @@
+#navbar { position:fixed!important; top:0!important; left:0; width:100%; z-index:40; transform:none!important; }
+.design-preview { display:block; width:100%; padding:0; border:0; background:transparent; cursor:pointer; }
+.design-actions { flex-wrap:wrap; }
+.page-edit-button { display:inline-block; margin:8px; padding:7px 12px; border:1px solid #71806b; background:#faf8f2; color:#292d29; font:12px Arial,sans-serif; cursor:pointer; }
+.storage-image-button { display:inline-block; padding:10px 14px; border:1px solid #71806b; border-radius:8px; background:#71806b; color:#fff; font:11px Arial,sans-serif; cursor:pointer; }
+.storage-image-button:hover { background:#596b5d; }
+.storage-file-input { display:none; }
+.content-sheet { width:min(900px,94vw); max-height:85dvh; overflow:auto; padding:24px; background:#faf8f2; color:#292d29; border:1px solid #71806b; }
+.content-sheet::backdrop { background:#20251faa; }
+.sheet-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+.sheet-grid img { width:100%; max-height:60vh; object-fit:contain; }
+.content-sheet h2 { font:32px Georgia,serif; margin:16px 0; }
+.content-sheet p { margin:14px 0; white-space:pre-wrap; }
+.content-sheet label { display:block; margin:12px 0; }
+.content-sheet input:not([type=checkbox]), .content-sheet textarea { display:block; width:100%; box-sizing:border-box; padding:10px; border:1px solid #71806b; color:#292d29; background:white; }
+.content-sheet button { padding:10px 14px; margin:6px 6px 6px 0; border:1px solid #71806b; cursor:pointer; }
+.sheet-close { float:right; }
+@media(max-width:650px) { .sheet-grid { grid-template-columns:1fr; } .sheet-grid img { max-height:35vh; } }

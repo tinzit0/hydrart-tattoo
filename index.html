@@ -539,7 +539,7 @@
         body.route-page #home-menu { display:none!important; }
         body.route-page #landing-container main > section { display:none!important; min-height:calc(100vh - 88px); padding-top:140px!important; }
         body.route-page #landing-container main > section.route-visible { display:block!important; }
-        body.route-page #navbar { position:relative!important; transform:none!important; }
+        body.route-page #navbar { position:fixed!important; transform:none!important; }
         body.route-page #landing-container main { min-height:calc(100vh - 88px); }
         body:not(.route-page) #landing-container main > section { display:none!important; }
         body:not(.route-page) #landing-container > footer { display:none!important; }
@@ -596,6 +596,7 @@
             .hero-video-veil { background:rgba(190,201,181,.48); }
         }
     </style>
+<link rel="stylesheet" href="assets/page-editor.css">
 </head>
 
 <body>
@@ -1323,20 +1324,20 @@
 
         <div id="tab-contenido" class="admin-tab-panel">
           <div class="bg-studio/50 border border-white/5 rounded-3xl p-6 md:p-8 space-y-8">
-            <div><h3 class="font-serif text-xl text-bone">Editar diseños disponibles</h3><p class="text-[11px] text-muted mt-2">Cambia nombre, categoría, precio, tamaño mínimo, disponibilidad o imagen. Usa una URL pública para reemplazar la foto.</p></div>
+            <div><h3 class="font-serif text-xl text-bone">Editar diseños disponibles</h3><p class="text-[11px] text-muted mt-2">Cambia nombre, categoría, precio, tamaño mínimo y disponibilidad. Selecciona una imagen desde los archivos de tu dispositivo.</p></div>
             <form onsubmit="saveDesignContent(event)" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Código</label><select id="content-design-code" onchange="loadDesignContentForm()" class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></select><button type="button" onclick="addNewDesignTemplate()" class="text-[9px] text-accent mt-2 underline">+ Agregar nuevo diseño</button></div>
               <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Nombre</label><input id="content-design-title" required class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></div>
               <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Categoría</label><input id="content-design-category" class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></div>
               <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Precio</label><input id="content-design-price" placeholder="Desde $30.000" class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></div>
               <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Tamaño mínimo</label><input id="content-design-min-size" placeholder="Ej: 8 cm" class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></div>
-               <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">URL de imagen</label><input id="content-design-image" placeholder="https://..." oninput="updateContentImagePreview('design')" class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"><img id="content-design-preview" class="content-image-preview" alt="Vista previa del diseño"></div>
-               <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">O subir foto</label><input id="content-design-file" type="file" accept="image/*" onchange="previewContentFile(this,'content-design-preview')" class="w-full text-[10px] text-muted bg-studio border border-white/10 rounded-xl p-2"></div>
+               <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Imagen seleccionada</label><img id="content-design-preview" class="content-image-preview" alt="Vista previa del diseño"></div>
+               <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Seleccionar imagen desde almacenamiento</label><button type="button" class="storage-image-button" onclick="document.getElementById('content-design-file').click()">+ Añadir imagen</button><input id="content-design-file" type="file" accept="image/jpeg,image/png,image/webp,image/gif" onchange="previewContentFile(this,'content-design-preview')" class="storage-file-input"></div>
               <label class="flex items-center gap-2 text-xs text-bone self-end pb-3"><input id="content-design-available" type="checkbox" checked> Disponible para reservar</label>
               <button class="btn-primary-action py-3 rounded-xl text-[10px] uppercase tracking-widest">Guardar diseño</button>
             </form>
             <div class="border-t border-white/10 pt-8"><h3 class="font-serif text-xl text-bone">Editar foto de galería</h3><p class="text-[11px] text-muted mt-2">Reemplaza la foto y el texto de cualquier trabajo publicado.</p>
-               <form onsubmit="saveGalleryContent(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5"><div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Trabajo</label><select id="content-gallery-code" onchange="loadGalleryContentForm()" class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></select></div><div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Texto</label><input id="content-gallery-label" required class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></div><div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">URL de imagen</label><input id="content-gallery-image" placeholder="https://..." oninput="updateContentImagePreview('gallery')" class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"><img id="content-gallery-preview" class="content-image-preview" alt="Vista previa de la foto"></div><div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">O subir foto</label><input id="content-gallery-file" type="file" accept="image/*" onchange="previewContentFile(this,'content-gallery-preview')" class="w-full text-[10px] text-muted bg-studio border border-white/10 rounded-xl p-2"></div><button class="btn-primary-action py-3 rounded-xl text-[10px] uppercase tracking-widest md:col-start-3">Guardar foto</button></form>
+               <form onsubmit="saveGalleryContent(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5"><div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Trabajo</label><select id="content-gallery-code" onchange="loadGalleryContentForm()" class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></select></div><div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Texto</label><input id="content-gallery-label" required class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></div><div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Imagen seleccionada</label><img id="content-gallery-preview" class="content-image-preview" alt="Vista previa de la foto"></div><div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Seleccionar imagen desde almacenamiento</label><button type="button" class="storage-image-button" onclick="document.getElementById('content-gallery-file').click()">+ Añadir imagen</button><input id="content-gallery-file" type="file" accept="image/jpeg,image/png,image/webp,image/gif" onchange="previewContentFile(this,'content-gallery-preview')" class="storage-file-input"></div><button class="btn-primary-action py-3 rounded-xl text-[10px] uppercase tracking-widest md:col-start-3">Guardar foto</button></form>
             </div>
           </div>
         </div>
@@ -1553,15 +1554,17 @@
 
     function getDesignMeta(number) {
         const code = designCode(number), override = (config.content?.designs || {})[code] || designOverrides[code] || {};
-            return { code, image: override.image || `assets/designs/diseno-${String(number).padStart(3, '0')}.jpg`, title: override.title || `Diseño ${code}`, category: override.category || 'Botánico / ornamental', price: override.price || 'Desde $30.000', minSize: override.minSize || 'Consultar tamaño mínimo', available: override.available !== false, deleted: override.deleted === true };
+            return { code, image: override.image || `assets/designs/diseno-${String(number).padStart(3, '0')}.jpg`, title: override.title || `Diseño ${code}`, category: override.category || 'Botánico / ornamental', description: override.description || '', price: override.price || 'Desde $30.000', minSize: override.minSize || 'Consultar tamaño mínimo', available: override.available !== false, deleted: override.deleted === true };
     }
     async function saveContentConfig() {
-        config.content = { designs: designOverrides, gallery: galleryOverrides };
+        if (!currentUser) return false;
+        config.content = { ...config.content, designs: designOverrides, gallery: galleryOverrides };
+        if (!await saveState()) { showToast('No se pudo publicar el contenido. Intenta guardar nuevamente.', 'error'); return false; }
         localStorage.setItem('hydrart_design_overrides', JSON.stringify(designOverrides));
         localStorage.setItem('hydrart_gallery_overrides', JSON.stringify(galleryOverrides));
-        await saveState();
         renderDesignCatalog();
         showToast('Contenido actualizado.', 'success');
+        return true;
     }
     let currentUser = null; // se define al validar la sesión real de Supabase Auth (ver checkAdminSession)
 
@@ -1675,10 +1678,12 @@
             const code = meta.code;
             const image = meta.image;
             return `<article class="design-card">
-                <img src="${image}" alt="${escapeHTML(meta.title)}" loading="lazy" onclick="openDesignDetail(${number})" title="Ver información del diseño">
+                <button type="button" class="design-preview" onclick="openDesignDetail(${number})" aria-label="Ver detalle de ${escapeHTML(meta.title)}"><img src="${escapeHTML(image)}" alt="${escapeHTML(meta.title)}" loading="lazy"></button>
                 <div class="design-card-footer">
                     <div><span class="design-code">${escapeHTML(meta.title)} · ${escapeHTML(meta.category)}</span><br><span class="text-[10px] text-muted">${escapeHTML(meta.price)} · ${escapeHTML(meta.minSize)}</span></div>
                     <div class="design-actions">
+                      ${currentUser ? `<button type="button" class="design-add" onclick="showDesignSheet(${number}, true)">Editar</button>` : ''}
+                      <button type="button" class="design-add" onclick="openDesignDetail(${number})">Ver detalle</button>
                       <button type="button" class="design-add design-book" ${meta.available ? `onclick="startBookingForDesign('${code}')"` : 'disabled'}>${meta.available ? 'Agendar' : 'No disponible'}</button>
                       <button type="button" class="design-add" onclick="startQuoteForDesign('${code}')">Cotizar</button>
                     </div>
@@ -1710,14 +1715,7 @@
         showToast(`${code} creado. Completa la información y guarda.`, 'info');
     }
 
-    function openDesignDetail(number) {
-        const meta = getDesignMeta(number);
-        const detail = window.open('', '_blank');
-        if (!detail) { showToast('Permite las ventanas emergentes para ver el detalle.', 'error'); return; }
-        const safe = value => escapeHTML(value), baseUrl = window.location.href.split('#')[0].split('?')[0];
-        detail.document.write(`<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${safe(meta.title)} · Hydra Tattoo</title><style>body{margin:0;background:#f2efe7;color:#292d29;font-family:Inter,Arial,sans-serif;display:grid;place-items:center;min-height:100vh;padding:28px;box-sizing:border-box}.card{max-width:920px;width:100%;background:#faf8f2;border:1px solid #cbd3c3;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:0;box-shadow:0 24px 70px #59655122}.photo{background:#e7eadf;display:grid;place-items:center;min-height:420px}.photo img{width:100%;height:100%;max-height:80vh;object-fit:contain}.info{padding:clamp(26px,5vw,58px);display:flex;flex-direction:column;justify-content:center}.kicker{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#71806b}.code{font-size:10px;color:#7b8278;margin-top:14px}.title{font:400 clamp(34px,5vw,60px)/1 'Georgia',serif;margin:18px 0}.row{padding:14px 0;border-bottom:1px solid #d9dfd3;font-size:13px}.row b{display:block;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#71806b;margin-bottom:5px}.actions{display:flex;gap:10px;margin-top:28px;flex-wrap:wrap}a{padding:13px 16px;text-decoration:none;border:1px solid #71806b;color:#292d29;font-size:10px;letter-spacing:.12em;text-transform:uppercase}a.primary{background:#71806b;color:#fff}@media(max-width:700px){.card{grid-template-columns:1fr}.photo{min-height:300px}}</style></head><body><main class="card"><div class="photo"><img src="${safe(meta.image)}" alt="${safe(meta.title)}"></div><section class="info"><span class="kicker">Diseño disponible · Hydra Tattoo</span><span class="code">${safe(meta.code)}</span><h1 class="title">${safe(meta.title)}</h1><div class="row"><b>Categoría</b>${safe(meta.category)}</div><div class="row"><b>Precio</b>${safe(meta.price)}</div><div class="row"><b>Tamaño mínimo</b>${safe(meta.minSize)}</div><div class="row"><b>Disponibilidad</b>${meta.available ? 'Disponible para reservar' : 'No disponible'}</div><div class="actions">${meta.available ? `<a class="primary" href="${baseUrl}#agendar" target="_self">Agendar este diseño</a>` : ''}<a href="${baseUrl}#cotizar" target="_self">Cotizar diseño</a></div></section></main></body></html>`);
-        detail.document.close();
-    }
+    function openDesignDetail(number) { showDesignSheet(number); }
 
     function toggleDesignSelection(code) {
         if (selectedDesigns.has(code)) selectedDesigns.delete(code);
@@ -1998,6 +1996,8 @@
     }
 
     function renderAllViews() {
+        refreshPageEditing();
+        renderDesignCatalog();
         renderClientCalendar();
         renderClientSlots();
         const adminVisible = !document.getElementById('admin-container').classList.contains('hidden');
@@ -2066,6 +2066,8 @@
     }
 
     function updateAuthUI() {
+        refreshPageEditing();
+        renderDesignCatalog();
         const navSlot = document.getElementById('auth-nav-slot');
         const mobileLabel = document.getElementById('mobile-admin-label');
         if (currentUser) {
@@ -2093,6 +2095,11 @@
     function navigateTo(page) {
         const routes = { home: null, artist: 'estudio', designs: 'disenos', quote: 'cotizar', gallery: 'galeria', care: 'cuidados', agenda: 'agendar' };
         const target = routes[page];
+        document.getElementById('landing-container').classList.remove('hidden');
+        document.getElementById('admin-container').classList.add('hidden');
+        document.getElementById('login-container').classList.add('hidden');
+        document.getElementById('public-nav-links').classList.remove('hidden');
+        document.getElementById('navbar').classList.remove('-translate-y-full');
         const landing = document.getElementById('landing-container');
         if (!landing) return;
         document.body.classList.toggle('route-page', Boolean(target));
@@ -2862,7 +2869,7 @@
             const b = document.createElement('button'); b.type = 'button'; b.id = 'delete-gallery-content'; b.className = 'py-3 px-3 rounded-xl text-[10px] uppercase tracking-widest text-danger border border-danger/30'; b.textContent = 'Eliminar'; b.onclick = deleteGalleryContent; galleryForm.appendChild(b);
         }
         if (ds) { const current = ds.value; ds.innerHTML = Array.from({length: DESIGN_TOTAL}, (_, i) => ({ number: i + 1, meta: getDesignMeta(i + 1) })).filter(item => !item.meta.deleted).map(item => `<option value="${designCode(item.number)}">${designCode(item.number)}</option>`).join(''); ds.value = [...ds.options].some(o => o.value === current) ? current : ds.options[0]?.value || ''; loadDesignContentForm(); }
-        if (gs) { const current = gs.value; gs.innerHTML = Array.from({length: 10}, (_, i) => ({ number: i + 1, override: galleryOverrides[String(i + 1)] || {} })).filter(item => !item.override.deleted).map(item => `<option value="${item.number}">Trabajo ${String(item.number).padStart(2, '0')}</option>`).join(''); gs.value = [...gs.options].some(o => o.value === current) ? current : gs.options[0]?.value || ''; loadGalleryContentForm(); }
+        if (gs) { const current = gs.value, total = Math.max(10, ...Object.keys(galleryOverrides).map(Number).filter(Number.isFinite)); gs.innerHTML = Array.from({length: total}, (_, i) => ({ number: i + 1, override: galleryOverrides[String(i + 1)] || {} })).filter(item => !item.override.deleted).map(item => `<option value="${item.number}">Trabajo ${String(item.number).padStart(2, '0')}</option>`).join(''); gs.value = [...gs.options].some(o => o.value === current) ? current : gs.options[0]?.value || ''; loadGalleryContentForm(); }
     }
     async function deleteDesignContent() {
         const code = document.getElementById('content-design-code')?.value; if (!code || !confirm(`¿Ocultar ${code} del catálogo?`)) return;
@@ -2879,7 +2886,7 @@
         document.getElementById('content-design-category').value = override.category || meta.category;
         document.getElementById('content-design-price').value = override.price || meta.price;
         document.getElementById('content-design-min-size').value = override.minSize || meta.minSize;
-        document.getElementById('content-design-image').value = override.image || '';
+        document.getElementById('content-design-preview')?.setAttribute('data-existing-image', override.image || '');
         document.getElementById('content-design-available').checked = meta.available;
         updateContentImagePreview('design');
     }
@@ -2896,18 +2903,20 @@
     async function saveDesignContent(event) {
         event.preventDefault(); const code = document.getElementById('content-design-code').value;
         const uploaded = await uploadContentImage(document.getElementById('content-design-file').files[0], code);
-        designOverrides[code] = { title: document.getElementById('content-design-title').value.trim(), category: document.getElementById('content-design-category').value.trim(), price: document.getElementById('content-design-price').value.trim(), minSize: document.getElementById('content-design-min-size').value.trim(), image: uploaded || document.getElementById('content-design-image').value.trim(), available: document.getElementById('content-design-available').checked };
+        const existingImage = designOverrides[code]?.image || getDesignMeta(Number(code.replace('HYD-', ''))).image;
+        if (document.getElementById('content-design-file').files[0] && !uploaded) { showToast('No se pudo subir la imagen al almacenamiento.', 'error'); return; }
+        designOverrides[code] = { ...designOverrides[code], title: document.getElementById('content-design-title').value.trim(), category: document.getElementById('content-design-category').value.trim(), price: document.getElementById('content-design-price').value.trim(), minSize: document.getElementById('content-design-min-size').value.trim(), image: uploaded || existingImage, available: document.getElementById('content-design-available').checked };
         await saveContentConfig();
     }
     function loadGalleryContentForm() {
         const number = document.getElementById('content-gallery-code')?.value; if (!number) return;
-        const override = galleryOverrides[number] || {}; document.getElementById('content-gallery-label').value = override.label || `Trabajo · ${String(number).padStart(2, '0')}`; document.getElementById('content-gallery-image').value = override.image || `assets/gallery-new/trabajo-${String(number).padStart(2, '0')}.jpg`; updateContentImagePreview('gallery');
+        const override = galleryOverrides[number] || {}; document.getElementById('content-gallery-label').value = override.label || `Trabajo · ${String(number).padStart(2, '0')}`; document.getElementById('content-gallery-image')?.setAttribute('data-existing-image', override.image || `assets/gallery-new/trabajo-${String(number).padStart(2, '0')}.jpg`); updateContentImagePreview('gallery');
     }
     function updateContentImagePreview(kind) {
         const imageInput = document.getElementById(kind === 'design' ? 'content-design-image' : 'content-gallery-image');
         const preview = document.getElementById(kind === 'design' ? 'content-design-preview' : 'content-gallery-preview');
-        if (!imageInput || !preview) return;
-        const value = imageInput.value.trim();
+        if (!preview) return;
+        const value = imageInput?.value?.trim() || imageInput?.dataset.existingImage || preview.dataset.existingImage || '';
         preview.src = value || (kind === 'design' ? `assets/designs/diseno-${String(Number(document.getElementById('content-design-code')?.value?.replace('HYD-', '') || 1)).padStart(3, '0')}.jpg` : `assets/gallery-new/trabajo-${String(document.getElementById('content-gallery-code')?.value || 1).padStart(2, '0')}.jpg`);
         preview.classList.toggle('hidden', !preview.src);
         preview.onerror = () => preview.classList.add('hidden');
@@ -2922,12 +2931,15 @@
     async function saveGalleryContent(event) {
         event.preventDefault(); const number = document.getElementById('content-gallery-code').value;
         const uploaded = await uploadContentImage(document.getElementById('content-gallery-file').files[0], `gallery-${number}`);
-        galleryOverrides[number] = { label: document.getElementById('content-gallery-label').value.trim(), image: uploaded || document.getElementById('content-gallery-image').value.trim() };
+        const existingImage = galleryOverrides[number]?.image || `assets/gallery-new/trabajo-${String(number).padStart(2, '0')}.jpg`;
+        if (document.getElementById('content-gallery-file').files[0] && !uploaded) { showToast('No se pudo subir la imagen al almacenamiento.', 'error'); return; }
+        galleryOverrides[number] = { label: document.getElementById('content-gallery-label').value.trim(), image: uploaded || existingImage };
         await saveContentConfig(); renderGalleryContent();
     }
     function renderGalleryContent() {
         const track = document.getElementById('galeria-track'); if (!track) return;
-        track.innerHTML = Array.from({length: 10}, (_, i) => { const n = String(i + 1).padStart(2, '0'), o = galleryOverrides[String(i + 1)] || {}; if (o.deleted) return ''; const image = o.image || `assets/gallery-new/trabajo-${n}.jpg`, label = o.label || `Fine line · ${n}`; return `<button type="button" class="gallery-slide" onclick="openLightbox('${image}')"><img src="${image}" alt="${escapeHTML(label)}" loading="lazy"><span>${escapeHTML(label)}</span></button>`; }).join('');
+        const total = Math.max(10, ...Object.keys(galleryOverrides).map(Number).filter(Number.isFinite));
+        track.innerHTML = Array.from({length: total}, (_, i) => { const n = String(i + 1).padStart(2, '0'), o = galleryOverrides[String(i + 1)] || {}; if (o.deleted) return ''; const image = o.image || `assets/gallery-new/trabajo-${n}.jpg`, label = o.label || `Fine line · ${n}`; return `<button type="button" class="gallery-slide" onclick="openLightbox('${image}')"><img src="${image}" alt="${escapeHTML(label)}" loading="lazy"><span>${escapeHTML(label)}</span></button>`; }).join('');
     }
 
     async function clearLocalQuotes() {
@@ -3622,6 +3634,8 @@
     // No reinicia inputs enfocados por el usuario, solo refresca las vistas de solo-lectura.
     // ==========================================
     function renderAllViewsSilent() {
+        refreshPageEditing();
+        renderDesignCatalog();
         renderClientCalendar();
         renderClientSlots();
         const adminVisible = !document.getElementById('admin-container').classList.contains('hidden');
@@ -3700,7 +3714,7 @@
         } else {
             navbar.classList.add('bg-transparent', 'py-5'); navbar.classList.remove('bg-[#161b18]/95', 'backdrop-blur-md', 'border-b', 'border-white/5', 'py-3');
         }
-        if (scrollTop > lastScrollTop && scrollTop > 150) { navbar.classList.add('-translate-y-full'); } else { navbar.classList.remove('-translate-y-full'); }
+        navbar.classList.remove('-translate-y-full');
         lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
     });
 
@@ -3879,5 +3893,6 @@
     });
 </script>
 
+<script src="assets/page-editor.js"></script>
 </body>
 </html>
