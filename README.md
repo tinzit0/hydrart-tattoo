@@ -21,7 +21,21 @@ La ficha utiliza un diálogo dentro del sitio: evita los documentos HTML incrust
 
 Validación local: `node verify-site.cjs` (requiere Playwright y Chrome). Comprueba la ficha, la selección para Agenda, los controles de sesión, la edición, el menú fijo y el diálogo móvil. Las escrituras administrativas se simulan para no modificar datos reales.
 
-## Archivos principales
+## Horas acordadas por Instagram o WhatsApp
+
+En **Panel Admin > Citas > Registrar hora tomada**, la tatuadora puede ingresar cliente, teléfono, Instagram o correo opcional, fecha, hora y observaciones. Se guarda como **Confirmada** en la misma agenda y ocupa ese horario en la página, sin exigir que el cliente haga una reserva web ni aplicar el vencimiento de 15 minutos. Permite registrar horarios acordados fuera de los bloques publicados. Se rechazan horarios ya ocupados; si falla el guardado, se conservan los datos para reintentar.
+
+El buscador del panel filtra por nombre, teléfono, Instagram, código y notas, combinado con los filtros de mes y estado. **Limpiar** restablece todos los filtros.
+
+La portada usa un fondo beige sin videos, subtítulos rectos y accesos permanentes a las secciones; los fondos verdes son oliva claro.
+
+Las horas registradas manualmente aparecen como **Ocupado** en la agenda pública y en el calendario del panel, incluso fuera de los bloques publicados. Los días completos se pueden consultar sin permitir reservas. Cancelar una hora manual fuera del horario publicado no crea un nuevo cupo disponible.
+
+El registro manual permite adjuntar varias fotos del dispositivo, previsualizarlas y quitarlas antes de guardar (hasta 10 fotos de 10 MB). Las fotos se suben al almacenamiento existente y se abren individualmente desde la cita. Si una subida falla, se conservan los datos para reintentar. Por compatibilidad con el esquema actual, `image_url` conserva una URL para una foto o una lista JSON para varias; el lector admite ambos formatos sin migración SQL.
+
+El abono sugerido visible en la agenda y en la sección de transferencia es **$30.000 CLP**.
+
+## Archivos del sitio
 
 - `index.html`: sitio, agenda y panel administrativo.
 - `supabase-schema.sql`: tablas y políticas de la agenda.
