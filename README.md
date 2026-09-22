@@ -1,6 +1,6 @@
 # Hydra Tattoo
 
-Sitio web editorial y agenda online de Hydra Tattoo. Incluye portada, presentación de Claudia Medel, catálogo seleccionable de diseños disponibles, cotizador por WhatsApp, galería, cuidados, reservas, consulta de citas y panel administrativo.
+Sitio web y agenda online de Hydra Tattoo. Abre directamente en Diseños, sin portada ni pantalla de carga. Incluye presentación de Claudia Medel, catálogo seleccionable, cotizador por WhatsApp, galería, cuidados, reservas, consulta de citas y panel administrativo.
 
 ## Configuración de Supabase
 
@@ -21,13 +21,19 @@ La ficha utiliza un diálogo dentro del sitio: evita los documentos HTML incrust
 
 Validación local: `node verify-site.cjs` (requiere Playwright y Chrome). Comprueba la ficha, la selección para Agenda, los controles de sesión, la edición, el menú fijo y el diálogo móvil. Las escrituras administrativas se simulan para no modificar datos reales.
 
+Los estilos Tailwind se sirven desde `assets/tailwind.css`, ya compilado y versionado para publicar el sitio estático sin depender de un CDN de estilos. Al cambiar clases, ejecutar `npm ci` y `npm run build:css`. La configuración está en `tailwind.config.cjs` y no cambia la configuración de despliegue existente.
+
 ## Horas acordadas por Instagram o WhatsApp
 
 En **Panel Admin > Citas > Registrar hora tomada**, la tatuadora puede ingresar cliente, teléfono, Instagram o correo opcional, fecha, hora y observaciones. Se guarda como **Confirmada** en la misma agenda y ocupa ese horario en la página, sin exigir que el cliente haga una reserva web ni aplicar el vencimiento de 15 minutos. Permite registrar horarios acordados fuera de los bloques publicados. Se rechazan horarios ya ocupados; si falla el guardado, se conservan los datos para reintentar.
 
 El buscador del panel filtra por nombre, teléfono, Instagram, código y notas, combinado con los filtros de mes y estado. **Limpiar** restablece todos los filtros.
 
-La portada usa un fondo beige sin videos, subtítulos rectos y accesos permanentes a las secciones; los fondos verdes son oliva claro.
+Todas las vistas usan una paleta beige cálida, incluida la agenda y el administrador. El catálogo muestra ocho diseños por página con Anterior/Siguiente; permite ordenar por nombre A–Z/Z–A (alfabeto español) y precio ascendente/descendente en pesos chilenos. Cambiar el orden vuelve a la primera página. Las imágenes tienen carga diferida y dimensiones reservadas.
+
+Con una sesión administrativa, **Editar texto** permite cambiar el título, la descripción y los textos informativos. **Añadir diseño** y **Editar** permiten gestionar imagen desde archivos, nombre, categoría, descripción, precio, tamaño y visibilidad; también se puede eliminar desde la ficha. Desmarcar **Diseño visible** lo oculta del catálogo público, pero lo mantiene accesible al administrador. El panel de contenido ofrece los mismos campos. Las escrituras mantienen las políticas existentes de Supabase; la sincronización actualiza a los visitantes mediante Realtime y la consulta periódica existente. No se necesita migración SQL para estos cambios.
+
+Los atributos `data-text-key` conservan las claves históricas de los textos guardados; no deben renumerarse al reordenar secciones. Las pruebas del catálogo incluyen los cuatro ordenamientos, la última página, catálogo vacío, diseños ocultos y edición del título, además de las regresiones de agenda y vista móvil.
 
 Las horas registradas manualmente aparecen como **Ocupado** en la agenda pública y en el calendario del panel, incluso fuera de los bloques publicados. Los días completos se pueden consultar sin permitir reservas. Cancelar una hora manual fuera del horario publicado no crea un nuevo cupo disponible.
 

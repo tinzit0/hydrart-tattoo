@@ -4,7 +4,7 @@
     <!-- Identidad Hydra Tattoo -->
     <link rel="icon" type="image/svg+xml" href="assets/hydra-favicon.svg">
 
-    <meta name="theme-color" content="#f2efe7">
+    <meta name="theme-color" content="#ece1d2">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -20,49 +20,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/tailwind.css?v=menu-6">
     <!-- Supabase JS Client SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
 
-    <script>
-        // Tailwind es opcional: la portada y sus botones también deben funcionar
-        // si el CDN no responde o se abre el HTML directamente como archivo local.
-        if (window.tailwind) window.tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        studio: '#161b18',
-                        panel: '#1f2622',
-                        accent: '#62776a',
-                        accentHover: '#738b7d',
-                        muted: '#8b9690',
-                        bone: '#e0e6e2',
-                        danger: '#9e4242',
-                    },
-                    fontFamily: {
-                        cinzel: ['"Cinzel"', 'serif'],
-                        serif: ['"Playfair Display"', 'serif'],
-                        sans: ['"Inter"', 'sans-serif'],
-                    }
-                }
-            }
-        };
-    </script>
-
     <style>
         body {
-            background-color: #161b18;
-            color: #e0e6e2;
+            background-color: #352b23;
+            color: #f7f1e8;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
 
-        ::selection { background: #62776a; color: #ffffff; }
+        ::selection { background: #817264; color: #ffffff; }
         ::-webkit-scrollbar { width: 4px; height: 4px; }
-        ::-webkit-scrollbar-track { background: #161b18; }
-        ::-webkit-scrollbar-thumb { background: #37443d; }
-        ::-webkit-scrollbar-thumb:hover { background: #62776a; }
+        ::-webkit-scrollbar-track { background: #352b23; }
+        ::-webkit-scrollbar-thumb { background: #352b23; }
+        ::-webkit-scrollbar-thumb:hover { background: #817264; }
 
         /* PANTALLA DE CARGA (Acelerada) */
         #pantalla-carga {
@@ -70,7 +45,7 @@
             inset: 0;
             width: 100vw;
             height: 100vh;
-            background-color: #161b18;
+            background-color: #352b23;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -81,8 +56,8 @@
         .ocultar-carga { opacity: 0; visibility: hidden; pointer-events: none; }
         .spinner {
             width: 40px; height: 40px;
-            border: 1px solid rgba(224, 230, 226, 0.05);
-            border-top: 1px solid #62776a;
+            border: 1px solid rgba(247,241,232, 0.05);
+            border-top: 1px solid #817264;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             margin-bottom: 20px;
@@ -103,16 +78,16 @@
         /* NAVBAR */
         .navbar { transition: all 0.5s ease; background-color: transparent; padding: 20px 0; }
         .navbar.scrolled {
-            background-color: rgba(22, 27, 24, 0.95); backdrop-filter: blur(10px);
+            background-color: rgba(95,70,48, 0.95); backdrop-filter: blur(10px);
             padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.03);
         }
         .nav-link { position: relative; padding-bottom: 4px; cursor: pointer; transition: color 0.3s ease; }
         .nav-link::after {
             content: ''; position: absolute; width: 0; height: 1px; bottom: 0; left: 50%;
-            background-color: #62776a; transition: all 0.3s ease; transform: translateX(-50%);
+            background-color: #817264; transition: all 0.3s ease; transform: translateX(-50%);
         }
         .nav-link:hover::after, .nav-link.active::after { width: 100%; }
-        .nav-link.active { color: #e0e6e2; }
+        .nav-link.active { color: #f7f1e8; }
 
         /* ACORDEÓN */
         .faq-item { border-bottom: 1px solid rgba(255,255,255,0.04); }
@@ -124,11 +99,11 @@
             overflow: hidden;
             border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.06);
-            background: #121614;
+            background: #352b23;
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .gallery-card:hover {
-            border-color: rgba(98, 119, 106, 0.4);
+            border-color: rgba(95,70,48, 0.4);
             transform: translateY(-4px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
         }
@@ -144,7 +119,7 @@
         .gallery-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(22, 27, 24, 0.95) 0%, rgba(22, 27, 24, 0.3) 60%, transparent 100%);
+            background: linear-gradient(to top, rgba(95,70,48, 0.95) 0%, rgba(95,70,48, 0.3) 60%, transparent 100%);
             opacity: 0;
             transition: opacity 0.4s ease;
             display: flex;
@@ -157,33 +132,33 @@
         }
 
         .action-card {
-            background: linear-gradient(145deg, #1f2622 0%, #171d19 100%);
-            border: 1px solid rgba(98, 119, 106, 0.2);
+            background: linear-gradient(145deg, #352b23 0%, #352b23 100%);
+            border: 1px solid rgba(95,70,48, 0.2);
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .btn-primary-action {
-            background: #62776a;
+            background: #817264;
             transition: all 0.3s ease;
         }
         .btn-primary-action:hover:not(:disabled) {
-            background: #738b7d;
+            background: #706254;
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(98, 119, 106, 0.3);
+            box-shadow: 0 8px 20px rgba(95,70,48, 0.3);
         }
 
         .slot-btn {
-            border: 1px solid rgba(98, 119, 106, 0.3);
+            border: 1px solid rgba(95,70,48, 0.3);
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .slot-btn.selected {
-            background: #62776a;
+            background: #817264;
             color: #ffffff;
-            border-color: #62776a;
+            border-color: #817264;
             transform: scale(1.04);
-            box-shadow: 0 4px 14px rgba(98, 119, 106, 0.35);
+            box-shadow: 0 4px 14px rgba(95,70,48, 0.35);
         }
         .slot-btn:not(:disabled):hover {
-            border-color: #62776a;
+            border-color: #817264;
             transform: translateY(-1px);
         }
         .slot-btn:active:not(:disabled) { transform: scale(0.96); }
@@ -210,22 +185,22 @@
             font-size: 11px;
         }
         .cal-day:not(.cal-disabled):hover {
-            border-color: #62776a;
-            background: rgba(98, 119, 106, 0.12);
+            border-color: #817264;
+            background: rgba(95,70,48, 0.12);
             transform: translateY(-2px);
         }
         .cal-day.cal-selected {
-            background: #62776a;
-            border-color: #62776a;
+            background: #817264;
+            border-color: #817264;
             color: #fff;
             transform: scale(1.05);
-            box-shadow: 0 6px 18px rgba(98, 119, 106, 0.4);
+            box-shadow: 0 6px 18px rgba(95,70,48, 0.4);
         }
-        .cal-day.cal-today:not(.cal-selected) { border-color: rgba(224,230,226,0.4); }
+        .cal-day.cal-today:not(.cal-selected) { border-color: rgba(247,241,232,0.4); }
         .cal-day.cal-disabled { opacity: 0.28; cursor: not-allowed; }
         .cal-day.cal-empty { visibility: hidden; cursor: default; }
         .cal-dot { width: 5px; height: 5px; border-radius: 50%; position: absolute; bottom: 5px; }
-        .cal-dot-green { background: #4ade80; }
+        .cal-dot-available { background: #8a7864; }
         .cal-dot-yellow { background: #facc15; }
         .cal-dot-red { background: #f87171; }
         .cal-dot-gray { background: #6b7280; }
@@ -238,79 +213,79 @@
             position: fixed; bottom: 20px; right: 20px; z-index: 999998; display: flex; flex-direction: column; gap: 10px; max-width: calc(100vw - 40px);
         }
         .toast {
-            background: #1f2622; border: 1px solid rgba(98, 119, 106, 0.35); color: #e0e6e2; padding: 12px 16px; border-radius: 12px; font-size: 12px; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); min-width: 240px; max-width: 340px; transform: translateX(120%); opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background: #352b23; border: 1px solid rgba(95,70,48, 0.35); color: #f7f1e8; padding: 12px 16px; border-radius: 12px; font-size: 12px; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); min-width: 240px; max-width: 340px; transform: translateX(120%); opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .toast.toast-show { transform: translateX(0); opacity: 1; }
-        .toast.toast-success { border-color: rgba(74, 222, 128, 0.4); }
+        .toast.toast-success { border-color: rgba(247,241,232, 0.4); }
         .toast.toast-error { border-color: rgba(248, 113, 113, 0.45); }
-        .toast.toast-info { border-color: rgba(98, 119, 106, 0.4); }
+        .toast.toast-info { border-color: rgba(95,70,48, 0.4); }
         .toast-icon { font-size: 15px; flex-shrink: 0; }
-        .toast-success .toast-icon { color: #4ade80; }
+        .toast-success .toast-icon { color: #8a7864; }
         .toast-error .toast-icon { color: #f87171; }
-        .toast-info .toast-icon { color: #62776a; }
+        .toast-info .toast-icon { color: #817264; }
 
         /* TABS ADMIN */
-        .admin-tab-btn { transition: all 0.25s ease; border-bottom: 2px solid transparent; color: #8b9690; }
-        .admin-tab-btn.active { color: #e0e6e2; font-weight: 700; border-bottom-color: #62776a; }
+        .admin-tab-btn { transition: all 0.25s ease; border-bottom: 2px solid transparent; color: #d6c9b9; }
+        .admin-tab-btn.active { color: #f7f1e8; font-weight: 700; border-bottom-color: #817264; }
         .admin-tab-panel { display: none; animation: calFade 0.35s ease; }
         .admin-tab-panel.active { display: block; }
 
         .sync-indicator {
-            display: inline-flex; align-items: center; gap: 6px; font-size: 10px; color: #4ade80; background: rgba(74, 222, 128, 0.1); border: 1px solid rgba(74, 222, 128, 0.2); padding: 2px 10px; border-radius: 20px; font-weight: 600;
+            display: inline-flex; align-items: center; gap: 6px; font-size: 10px; color: #8a7864; background: rgba(247,241,232, 0.1); border: 1px solid rgba(247,241,232, 0.2); padding: 2px 10px; border-radius: 20px; font-weight: 600;
         }
         .sync-indicator.syncing { color: #facc15; border-color: rgba(250, 204, 21, 0.3); background: rgba(250, 204, 21, 0.1); }
 
         #lightbox-img { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); transform-origin: center center; }
 
         .gold-accent-text {
-            background: linear-gradient(135deg, #e0e6e2 0%, #a4b4a9 50%, #62776a 100%);
+            background: linear-gradient(135deg, #f7f1e8 0%, #d6c9b9 50%, #817264 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
         /* Identidad Hydra: marfil texturado, salvia y grafito */
-        :root { --ivory:#f2efe7; --paper:#faf8f2; --sage:#aebba5; --sage-deep:#71806b; --ink:#292d29; --muted-ink:#6f746d; --line:rgba(113,128,107,.24); }
+        :root { --ivory:#ece1d2; --paper:#f7f1e8; --beige:#d6c9b9; --accent-brown:#817264; --ink:#352b23; --muted-ink:#76634f; --line:rgba(95,70,48,.24); }
         body { background:var(--ivory); color:var(--ink); }
-        body::before { content:""; position:fixed; inset:0; z-index:-1; opacity:.28; pointer-events:none; background-image:radial-gradient(rgba(113,128,107,.08) .7px,transparent .7px); background-size:7px 7px; }
+        body::before { content:""; position:fixed; inset:0; z-index:-1; opacity:.28; pointer-events:none; background-image:radial-gradient(rgba(95,70,48,.08) .7px,transparent .7px); background-size:7px 7px; }
         main { display:flex; flex-direction:column; }
         #estudio{order:1} #disenos{order:2} #cotizar{order:3} #galeria{order:4} #cuidados{order:5} #agendar{order:6} #pago-directo{order:7} #gestion-citas{order:8}
         .bg-studio, .bg-panel { background-color:var(--ivory)!important; }
         .text-bone { color:var(--ink)!important; }
         .text-muted { color:var(--muted-ink)!important; }
-        .text-accent { color:var(--sage-deep)!important; }
+        .text-accent { color:var(--accent-brown)!important; }
         .border-white\/10, .border-white\/5 { border-color:var(--line)!important; }
-        .navbar.scrolled { background:rgba(250,248,242,.92); border-bottom:1px solid var(--line); box-shadow:0 8px 40px rgba(61,70,57,.06); }
+        .navbar.scrolled { background:rgba(250,248,242,.92); border-bottom:1px solid var(--line); box-shadow:0 8px 40px rgba(95,70,48,.06); }
         .navbar img, #pantalla-carga img, footer img { mix-blend-mode:multiply!important; }
         #pantalla-carga { background:var(--ivory); }
-        .spinner { border-color:rgba(113,128,107,.15); border-top-color:var(--sage-deep); }
-        header.bg-studio { background:linear-gradient(135deg,var(--paper) 0%,var(--ivory) 58%,#e5eadf 100%)!important; text-align:left; }
+        .spinner { border-color:rgba(95,70,48,.15); border-top-color:var(--accent-brown); }
+        header.bg-studio { background:linear-gradient(135deg,var(--paper) 0%,var(--ivory) 58%,#f7f1e8 100%)!important; text-align:left; }
         header .max-w-4xl { align-items:flex-start!important; margin-right:auto; margin-left:max(1.5rem,calc((100vw - 1200px)/2)); max-width:650px; }
-        .gold-accent-text { background:none; -webkit-text-fill-color:var(--sage-deep); color:var(--sage-deep); }
-        .action-card, .gallery-card { background:rgba(250,248,242,.82)!important; border-color:var(--line)!important; box-shadow:0 18px 60px rgba(65,73,61,.08); }
-        .gallery-overlay { background:linear-gradient(to top,rgba(41,45,41,.88),transparent); }
+        .gold-accent-text { background:none; -webkit-text-fill-color:var(--accent-brown); color:var(--accent-brown); }
+        .action-card, .gallery-card { background:rgba(250,248,242,.82)!important; border-color:var(--line)!important; box-shadow:0 18px 60px rgba(95,70,48,.08); }
+        .gallery-overlay { background:linear-gradient(to top,rgba(95,70,48,.88),transparent); }
         .gallery-overlay .text-bone { color:#fff!important; }
-        .btn-primary-action { background:var(--sage-deep)!important; color:#fff!important; border-radius:2px!important; }
+        .btn-primary-action { background:var(--accent-brown)!important; color:#fff!important; border-radius:2px!important; }
         input, select, textarea { background:#fff!important; color:var(--ink)!important; border-color:var(--line)!important; }
         .cal-day { background:rgba(255,255,255,.5); border-color:var(--line); color:var(--ink); }
-        .cal-day.cal-selected, .slot-btn.selected { background:var(--sage-deep)!important; color:#fff!important; border-color:var(--sage-deep)!important; }
+        .cal-day.cal-selected, .slot-btn.selected { background:var(--accent-brown)!important; color:#fff!important; border-color:var(--accent-brown)!important; }
         .toast { background:var(--paper); color:var(--ink); border-color:var(--line); }
         section { border-color:var(--line)!important; }
         .carousel-shell { position:relative; padding:0 58px; }
         .art-carousel { display:flex; gap:22px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth; scrollbar-width:none; padding:10px 2px 24px; }
         .art-carousel::-webkit-scrollbar { display:none; }
-        .empty-art-card { flex:0 0 min(72vw,340px); aspect-ratio:1; scroll-snap-align:start; display:flex; align-items:flex-end; padding:20px; color:var(--sage-deep); background:linear-gradient(145deg,rgba(255,255,255,.5),rgba(174,187,165,.11)); border:1px solid var(--line); box-shadow:0 18px 60px rgba(65,73,61,.07); }
-        .empty-art-card::before { content:""; position:absolute; inset:14px; border:1px solid rgba(113,128,107,.12); pointer-events:none; }
+        .empty-art-card { flex:0 0 min(72vw,340px); aspect-ratio:1; scroll-snap-align:start; display:flex; align-items:flex-end; padding:20px; color:var(--accent-brown); background:linear-gradient(145deg,rgba(255,255,255,.5),rgba(214,201,185,.11)); border:1px solid var(--line); box-shadow:0 18px 60px rgba(95,70,48,.07); }
+        .empty-art-card::before { content:""; position:absolute; inset:14px; border:1px solid rgba(95,70,48,.12); pointer-events:none; }
         .empty-art-card { position:relative; }
         .empty-art-card span { font-family:'Inter',sans-serif; font-size:9px; letter-spacing:.22em; text-transform:uppercase; }
-        .carousel-arrow { position:absolute; top:50%; z-index:3; width:42px; height:42px; border:1px solid var(--line); background:var(--paper); color:var(--sage-deep); display:grid; place-items:center; transform:translateY(-50%); transition:.25s ease; }
-        .carousel-arrow:hover { background:var(--sage-deep); color:#fff; }
+        .carousel-arrow { position:absolute; top:50%; z-index:3; width:42px; height:42px; border:1px solid var(--line); background:var(--paper); color:var(--accent-brown); display:grid; place-items:center; transform:translateY(-50%); transition:.25s ease; }
+        .carousel-arrow:hover { background:var(--accent-brown); color:#fff; }
         .carousel-prev { left:0; } .carousel-next { right:0; }
         .bank-card { border-radius:18px; }
         .bank-row { display:grid; grid-template-columns:130px 1fr 34px; gap:14px; align-items:center; min-height:54px; border-bottom:1px solid var(--line); }
         .bank-row:last-of-type { border-bottom:0; }
         .bank-row > span { color:var(--muted-ink); font-size:10px; letter-spacing:.14em; text-transform:uppercase; }
         .bank-row strong { color:var(--ink); font-size:13px; font-weight:600; overflow-wrap:anywhere; }
-        .bank-row button { width:32px; height:32px; display:grid; place-items:center; color:var(--sage-deep); border:1px solid var(--line); background:#fff; transition:.2s ease; }
-        .bank-row button:hover { color:#fff; background:var(--sage-deep); }
+        .bank-row button { width:32px; height:32px; display:grid; place-items:center; color:var(--accent-brown); border:1px solid var(--line); background:#fff; transition:.2s ease; }
+        .bank-row button:hover { color:#fff; background:var(--accent-brown); }
         /* Contraste corregido según las capturas de detalles */
         .navbar { background:rgba(250,248,242,.96)!important; border-bottom:1px solid var(--line); }
         #gestion-citas [class*="bg-studio/"] { background:rgba(250,248,242,.92)!important; }
@@ -318,157 +293,157 @@
         #admin-container [class*="bg-studio/"] { background:var(--paper)!important; }
         #admin-container > div { background:var(--ivory)!important; border-color:var(--line)!important; }
         #admin-container .text-bone { color:var(--ink)!important; }
-        #admin-container .text-muted { color:#626a61!important; }
-        #admin-container .admin-tab-btn { color:#687068!important; }
-        #admin-container .admin-tab-btn.active { color:var(--ink)!important; border-bottom-color:var(--sage-deep)!important; }
-        #admin-container table thead { color:#596158!important; }
+        #admin-container .text-muted { color:#76634f!important; }
+        #admin-container .admin-tab-btn { color:#76634f!important; }
+        #admin-container .admin-tab-btn.active { color:var(--ink)!important; border-bottom-color:var(--accent-brown)!important; }
+        #admin-container table thead { color:#76634f!important; }
         #admin-container #admin-day-slots-list,
         #admin-container .bg-panel { background:#fff!important; }
         #admin-container .cal-day { background:#fff!important; color:var(--ink)!important; border-color:var(--line)!important; }
-        #admin-container .cal-day.cal-selected { background:var(--sage-deep)!important; color:#fff!important; }
-        #admin-container label { color:#596158!important; }
-        #admin-container input::placeholder { color:#889087!important; opacity:1; }
+        #admin-container .cal-day.cal-selected { background:var(--accent-brown)!important; color:#fff!important; }
+        #admin-container label { color:#76634f!important; }
+        #admin-container input::placeholder { color:#76634f!important; opacity:1; }
         #receipt-modal .receipt-details-card { background:var(--paper)!important; border-color:var(--line)!important; color:var(--ink)!important; }
         #receipt-modal .receipt-details-card .text-bone { color:var(--ink)!important; }
-        #receipt-modal .receipt-details-card .text-muted { color:#626a61!important; }
+        #receipt-modal .receipt-details-card .text-muted { color:#76634f!important; }
         #receipt-modal .receipt-details-card [class*="border-white/"] { border-color:var(--line)!important; }
         #receipt-modal .receipt-countdown { background:#fff7f4!important; border-color:rgba(158,66,66,.3)!important; color:#9e4242!important; }
         #receipt-modal .receipt-countdown span { color:#762e2e!important; }
-        #receipt-modal input[type="file"] { background:#fff!important; color:#626a61!important; border-color:var(--line)!important; }
-        footer.bg-\[\#121614\] { background:var(--paper)!important; border-color:var(--line)!important; }
+        #receipt-modal input[type="file"] { background:#fff!important; color:#76634f!important; border-color:var(--line)!important; }
+        footer.bg-\[\#352b23\] { background:var(--paper)!important; border-color:var(--line)!important; }
         footer .text-bone { color:var(--ink)!important; }
-        footer .text-muted { color:var(--sage-deep)!important; }
+        footer .text-muted { color:var(--accent-brown)!important; }
 
         /* Navegación superior editorial */
         @media (min-width: 1024px) {
-            #navbar { width:100%!important; height:88px; padding:0 42px!important; flex-direction:row!important; align-items:center!important; justify-content:space-between; background:rgba(245,241,232,.96)!important; border-bottom:1px solid #20251f!important; color:#20251f; }
+            #navbar { width:100%!important; height:88px; padding:0 42px!important; flex-direction:row!important; align-items:center!important; justify-content:space-between; background:rgba(245,241,232,.96)!important; border-bottom:1px solid #352b23!important; color:#352b23; }
             #navbar > div:first-child { display:none; }
-            #navbar > a { color:#20251f!important; font-family:'Playfair Display',serif!important; font-size:24px!important; line-height:1!important; letter-spacing:.04em!important; margin:0!important; text-align:left; white-space:nowrap; }
-            #navbar > a::after { content:'BOTANICAL TATTOO'; display:block; margin-top:8px; font-family:'Inter',sans-serif; font-size:7px; letter-spacing:.25em; color:#71806b; }
+            #navbar > a { color:#352b23!important; font-family:'Playfair Display',serif!important; font-size:24px!important; line-height:1!important; letter-spacing:.04em!important; margin:0!important; text-align:left; white-space:nowrap; }
+            #navbar > a::after { content:'BOTANICAL TATTOO'; display:block; margin-top:8px; font-family:'Inter',sans-serif; font-size:7px; letter-spacing:.25em; color:#817264; }
             #navbar > div.hidden { display:flex!important; width:auto; flex-direction:row; align-items:center; gap:24px; }
             #public-nav-links { flex-direction:row; align-items:center!important; gap:22px!important; width:auto; }
-            #public-nav-links > a { width:auto; padding:8px 0; color:#52594f!important; border:0; font-size:8px; }
+            #public-nav-links > a { width:auto; padding:8px 0; color:#76634f!important; border:0; font-size:8px; }
             #public-nav-links > a::before { display:none; }
-            #public-nav-links > button { width:auto; margin:0; justify-content:center; border-radius:999px!important; border-color:var(--line)!important; color:#52594f!important; }
+            #public-nav-links > button { width:auto; margin:0; justify-content:center; border-radius:999px!important; border-color:var(--line)!important; color:#76634f!important; }
             #public-nav-links > .sync-indicator, #public-nav-links > span.w-px { display:none!important; }
             #auth-nav-slot { margin:0; padding-left:22px; border-left:1px solid var(--line); }
-            #auth-nav-slot button { color:#71806b!important; font-size:8px; letter-spacing:.12em; }
+            #auth-nav-slot button { color:#817264!important; font-size:8px; letter-spacing:.12em; }
             #landing-container { margin-left:0!important; width:100%; }
             #admin-container { width:100%; max-width:1440px!important; margin-left:auto!important; margin-right:auto!important; }
             #login-container { width:100%; max-width:560px!important; margin-left:auto!important; margin-right:auto!important; padding-left:24px!important; padding-right:24px!important; }
         }
-        #landing-container header { min-height:100vh; min-height:100dvh; justify-content:flex-start!important; background:#e9eadf!important; border-bottom:1px solid #20251f; }
-        #landing-container header::before { content:''; position:absolute; width:min(38vw,520px); aspect-ratio:1; right:3vw; top:18%; border:1px solid rgba(32,37,31,.14); border-radius:50%; box-shadow:0 0 0 34px rgba(174,187,165,.055); }
-        #landing-container header::after { content:'EST. 2026 · CONCEPCIÓN'; position:absolute; right:4vw; top:125px; font-family:'Inter',sans-serif; font-size:7px; letter-spacing:.28em; color:rgba(32,37,31,.48); }
+        #landing-container header { min-height:100vh; min-height:100dvh; justify-content:flex-start!important; background:#f7f1e8!important; border-bottom:1px solid #352b23; }
+        #landing-container header::before { content:''; position:absolute; width:min(38vw,520px); aspect-ratio:1; right:3vw; top:18%; border:1px solid rgba(95,70,48,.14); border-radius:50%; box-shadow:0 0 0 34px rgba(214,201,185,.055); }
+        #landing-container header::after { content:'EST. 2026 · CONCEPCIÓN'; position:absolute; right:4vw; top:125px; font-family:'Inter',sans-serif; font-size:7px; letter-spacing:.28em; color:rgba(95,70,48,.48); }
         #landing-container header .max-w-4xl { width:min(760px,72vw); margin-left:clamp(28px,8vw,120px)!important; padding-top:8vh; }
         #landing-container header h1 { font-family:'Playfair Display',serif!important; font-size:clamp(64px,9vw,138px)!important; line-height:.9!important; letter-spacing:-.05em!important; text-transform:none!important; text-align:left; max-width:760px; padding:.08em .08em .16em 0; }
         #landing-container header h1 span { display:block; margin-left:14%; margin-top:-.08em; font-size:.7em; line-height:1.05; padding-right:.1em; }
         .page-ready .hero-title-mask.in-view { overflow:visible!important; }
         #landing-container header p { text-align:left; max-width:520px; }
         #landing-container header .rounded-xl { border-radius:0!important; }
-        .hero-video-stage { position:absolute; inset:0; z-index:0; overflow:hidden; background:#dfe3d8; }
+        .hero-video-stage { position:absolute; inset:0; z-index:0; overflow:hidden; background:#f7f1e8; }
         .hero-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; opacity:0; transform:scale(1.025); transition:opacity 1.6s cubic-bezier(.4,0,.2,1),transform 7s ease; }
         .hero-video.active { opacity:1; transform:scale(1); }
-        .hero-video-veil { position:absolute; inset:0; z-index:2; pointer-events:none; background:linear-gradient(90deg,rgba(174,187,165,.34) 0%,rgba(174,187,165,.22) 38%,rgba(174,187,165,.09) 68%,rgba(174,187,165,.03) 100%); }
+        .hero-video-veil { position:absolute; inset:0; z-index:2; pointer-events:none; background:linear-gradient(90deg,rgba(214,201,185,.34) 0%,rgba(214,201,185,.22) 38%,rgba(214,201,185,.09) 68%,rgba(214,201,185,.03) 100%); }
         #landing-container main > section { position:relative; padding-top:110px!important; padding-bottom:110px!important; }
-        #landing-container main > section::before { position:absolute; top:44px; left:clamp(24px,6vw,90px); font-family:'Inter',sans-serif; font-size:9px; letter-spacing:.25em; color:var(--sage-deep); }
+        #landing-container main > section::before { position:absolute; top:44px; left:clamp(24px,6vw,90px); font-family:'Inter',sans-serif; font-size:9px; letter-spacing:.25em; color:var(--accent-brown); }
         #estudio::before{content:'01 — LA ARTISTA'} #disenos::before{content:'02 — DISEÑOS'} #cotizar::before{content:'03 — COTIZACIÓN'} #galeria::before{content:'04 — ARCHIVO'} #cuidados::before{content:'05 — CUIDADOS'} #agendar::before{content:'06 — RESERVA'} #pago-directo::before{content:'07 — ABONO'} #gestion-citas::before{content:'08 — CLIENTES'}
-        #estudio { background:#b8c3b0!important; color:#20251f!important; }
-        #estudio::before { color:#455141!important; }
-        #estudio h2, #estudio p { color:#20251f!important; text-align:left; }
+        #estudio { background:#ece1d2!important; color:#352b23!important; }
+        #estudio::before { color:#76634f!important; }
+        #estudio h2, #estudio p { color:#352b23!important; text-align:left; }
         #estudio > div { max-width:1240px!important; display:grid; grid-template-columns:420px 1fr; grid-template-rows:auto auto auto; gap:18px 88px; align-items:center; text-align:left!important; }
-        #estudio .artist-profile-crop { grid-column:1; grid-row:1 / 4; width:420px; aspect-ratio:1; position:relative; overflow:hidden; border-radius:0; border:1px solid rgba(32,37,31,.35); background:#eef0e8; box-shadow:0 24px 60px rgba(32,37,31,.12); }
-        #estudio .artist-profile-crop::after { content:''; position:absolute; inset:12px; border:1px solid rgba(32,37,31,.2); border-radius:0; pointer-events:none; }
+        #estudio .artist-profile-crop { grid-column:1; grid-row:1 / 4; width:420px; aspect-ratio:1; position:relative; overflow:hidden; border-radius:0; border:1px solid rgba(95,70,48,.35); background:#f7f1e8; box-shadow:0 24px 60px rgba(95,70,48,.12); }
+        #estudio .artist-profile-crop::after { content:''; position:absolute; inset:12px; border:1px solid rgba(95,70,48,.2); border-radius:0; pointer-events:none; }
         #estudio .artist-profile-crop img { width:100%; height:100%; object-fit:cover; object-position:67% center; }
         #estudio > div > div:nth-child(2) { grid-column:2; grid-row:1; }
         #estudio > div > div:nth-child(3) { grid-column:2; grid-row:2; }
         #estudio > div > div:last-child { grid-column:2; grid-row:3; justify-self:start; }
-        #estudio a { border-radius:0!important; border-color:rgba(32,37,31,.35)!important; background:rgba(245,241,232,.16)!important; color:#20251f!important; }
-        #disenos, #pago-directo { background:#dce1d5!important; }
-        #cotizar, #galeria, #cuidados, #agendar, #gestion-citas { background:#f5f1e8!important; }
+        #estudio a { border-radius:0!important; border-color:rgba(95,70,48,.35)!important; background:rgba(245,241,232,.16)!important; color:#352b23!important; }
+        #disenos, #pago-directo { background:#ece1d2!important; }
+        #cotizar, #galeria, #cuidados, #agendar, #gestion-citas { background:#f7f1e8!important; }
         #disenos > div > div:first-child, #galeria > div > div:first-child, #cuidados > div > div:first-child, #pago-directo > div > div:first-child, #gestion-citas > div > div:first-child { text-align:left!important; margin-left:0; }
         #disenos h2, #galeria h2 { font-family:'Playfair Display',serif!important; text-transform:none!important; letter-spacing:-.02em!important; font-size:clamp(42px,6vw,78px)!important; line-height:1.06!important; }
         #disenos > div > div:first-child p, #galeria > div > div:first-child p { margin:34px 0 0!important; max-width:560px!important; line-height:1.8!important; }
         #disenos > div > div:first-child, #galeria > div > div:first-child { margin-bottom:64px!important; }
-        .empty-art-card { border-radius:0!important; background:transparent!important; border-color:#20251f!important; box-shadow:none!important; }
+        .empty-art-card { border-radius:0!important; background:transparent!important; border-color:#352b23!important; box-shadow:none!important; }
         .carousel-arrow { border-radius:50%!important; }
-        #cuidados .faq-item { border-bottom:1px solid #20251f; }
+        #cuidados .faq-item { border-bottom:1px solid #352b23; }
         #cuidados .faq-item button { padding:26px 0!important; }
         #cuidados .faq-item span { font-size:clamp(20px,3vw,32px)!important; }
         #agendar > div { max-width:1180px!important; }
-        #agendar .action-card { border-radius:0!important; box-shadow:none!important; border:1px solid #20251f!important; }
+        #agendar .action-card { border-radius:0!important; box-shadow:none!important; border:1px solid #352b23!important; }
         #agendar .cal-day, #agendar input, #agendar textarea { border-radius:0!important; }
-        #pago-directo .bank-card { max-width:none!important; border-radius:0!important; display:grid; grid-template-columns:1fr 1fr; column-gap:40px; box-shadow:none!important; border-color:#20251f!important; }
+        #pago-directo .bank-card { max-width:none!important; border-radius:0!important; display:grid; grid-template-columns:1fr 1fr; column-gap:40px; box-shadow:none!important; border-color:#352b23!important; }
         #pago-directo .bank-card > button { grid-column:1/-1; }
         #gestion-citas .rounded-2xl, #gestion-citas .rounded-3xl, #gestion-citas input, #gestion-citas button { border-radius:0!important; }
-        #landing-container footer { background:#20251f!important; padding:36px 6vw!important; }
+        #landing-container footer { background:#352b23!important; padding:36px 6vw!important; }
         #landing-container footer .text-bone, #landing-container footer .text-muted { color:#e8e8df!important; }
         /* Acabado de alta gama */
-        #navbar { box-shadow:0 14px 38px rgba(32,37,31,.045); }
+        #navbar { box-shadow:0 14px 38px rgba(95,70,48,.045); }
         #navbar .nav-link { letter-spacing:.16em; }
-        #navbar .nav-link::after { height:1px; background:#20251f; }
-        .hero-edition { position:absolute; right:3.2vw; bottom:5vh; z-index:4; display:flex; gap:18px; padding:10px 14px; background:#20251f; color:#e8eadf; font-size:7px; letter-spacing:.22em; text-transform:uppercase; }
-        .hero-edition span+span::before { content:'·'; margin-right:18px; color:#aebba5; }
+        #navbar .nav-link::after { height:1px; background:#352b23; }
+        .hero-edition { position:absolute; right:3.2vw; bottom:5vh; z-index:4; display:flex; gap:18px; padding:10px 14px; background:#352b23; color:#f7f1e8; font-size:7px; letter-spacing:.22em; text-transform:uppercase; }
+        .hero-edition span+span::before { content:'·'; margin-right:18px; color:#d6c9b9; }
         #landing-container header .inline-flex.rounded-full { border-radius:0!important; border:0!important; padding:0!important; background:transparent!important; box-shadow:none!important; backdrop-filter:none!important; -webkit-backdrop-filter:none!important; }
         #landing-container header .animate-pulse { display:none; }
         #landing-container header .btn-primary-action { min-width:190px; justify-content:space-between; padding:17px 22px!important; }
-        #landing-container header a[href="#disenos"] { border-radius:0!important; border-color:rgba(32,37,31,.35)!important; background:transparent!important; color:var(--ink)!important; padding:16px 22px!important; }
+        #landing-container header a[href="#disenos"] { border-radius:0!important; border-color:rgba(95,70,48,.35)!important; background:transparent!important; color:var(--ink)!important; padding:16px 22px!important; }
         #landing-container main > section > div { position:relative; z-index:1; }
         #landing-container main > section::after { content:''; position:absolute; top:0; right:6vw; width:1px; height:38px; background:currentColor; opacity:.18; }
         #landing-container main > section:nth-child(odd) { clip-path:polygon(0 0,calc(100% - 42px) 0,100% 42px,100% 100%,0 100%); }
         #landing-container main > section:nth-child(even) { clip-path:polygon(42px 0,100% 0,100% 100%,0 100%,0 42px); }
         #estudio h2 { font-size:clamp(44px,6vw,78px)!important; line-height:.95; letter-spacing:-.035em; }
-        #estudio p { font-size:15px!important; line-height:1.95!important; color:#303a2e!important; }
-        #estudio .text-accent { color:#455141!important; }
-        #estudio a:hover { background:#20251f!important; color:#f5f1e8!important; }
+        #estudio p { font-size:15px!important; line-height:1.95!important; color:#352b23!important; }
+        #estudio .text-accent { color:#76634f!important; }
+        #estudio a:hover { background:#352b23!important; color:#f7f1e8!important; }
         #estudio a { padding:18px 24px!important; min-width:230px; justify-content:space-between; }
         .art-carousel { gap:16px; }
         .empty-art-card { transition:background .35s ease,color .35s ease,transform .35s ease; }
-        .empty-art-card:hover { background:#20251f!important; color:#f5f1e8!important; transform:translateY(-6px); }
+        .empty-art-card:hover { background:#352b23!important; color:#f7f1e8!important; transform:translateY(-6px); }
         .empty-art-card::after { content:'↗'; position:absolute; top:19px; right:20px; font-size:18px; opacity:.45; }
-        .gallery-slide { position:relative; flex:0 0 min(72vw,340px); aspect-ratio:4/5; overflow:hidden; scroll-snap-align:start; background:#20251f; border:1px solid #20251f; cursor:pointer; }
+        .gallery-slide { position:relative; flex:0 0 min(72vw,340px); aspect-ratio:4/5; overflow:hidden; scroll-snap-align:start; background:#352b23; border:1px solid #352b23; cursor:pointer; }
         .gallery-slide img { width:100%; height:100%; object-fit:cover; transition:transform .8s cubic-bezier(.16,1,.3,1),filter .5s ease; }
-        .gallery-slide::after { content:''; position:absolute; inset:0; background:linear-gradient(to top,rgba(20,24,19,.76),transparent 45%); pointer-events:none; }
-        .gallery-slide span { position:absolute; left:18px; bottom:17px; z-index:2; color:#f5f1e8; font-size:8px; letter-spacing:.22em; text-transform:uppercase; }
+        .gallery-slide::after { content:''; position:absolute; inset:0; background:linear-gradient(to top,rgba(95,70,48,.76),transparent 45%); pointer-events:none; }
+        .gallery-slide span { position:absolute; left:18px; bottom:17px; z-index:2; color:#f7f1e8; font-size:8px; letter-spacing:.22em; text-transform:uppercase; }
         .gallery-slide:hover img { transform:scale(1.055); filter:saturate(.82) contrast(1.04); }
         #disenos .empty-art-card:nth-child(even), #galeria .empty-art-card:nth-child(odd) { transform:translateY(22px); }
         #disenos .empty-art-card:nth-child(even):hover, #galeria .empty-art-card:nth-child(odd):hover { transform:translateY(14px); }
-        .carousel-arrow { width:48px; height:48px; border-color:#20251f; background:transparent; }
+        .carousel-arrow { width:48px; height:48px; border-color:#352b23; background:transparent; }
         #cuidados > div { max-width:940px!important; }
         #cuidados .faq-content p { max-width:720px; font-size:14px!important; line-height:1.9!important; }
         #agendar .action-card { background:rgba(255,255,255,.35)!important; }
         #agendar h3 { font-size:22px!important; }
         #agendar label { letter-spacing:.16em; }
-        #agendar input, #agendar textarea { min-height:48px; border-color:rgba(32,37,31,.28)!important; }
-        #agendar input:focus, #agendar textarea:focus { box-shadow:inset 3px 0 0 var(--sage-deep); }
-        #agendar .cal-day { min-height:46px; border-color:rgba(32,37,31,.18)!important; }
+        #agendar input, #agendar textarea { min-height:48px; border-color:rgba(95,70,48,.28)!important; }
+        #agendar input:focus, #agendar textarea:focus { box-shadow:inset 3px 0 0 var(--accent-brown); }
+        #agendar .cal-day { min-height:46px; border-color:rgba(95,70,48,.18)!important; }
         #pago-directo .bank-card { background:rgba(245,241,232,.48)!important; padding:44px!important; }
         .bank-row { min-height:66px; }
         .bank-row button { border-radius:50%; }
         #gestion-citas > div { max-width:1120px!important; }
-        #gestion-citas .action-card { box-shadow:none!important; border:1px solid #20251f!important; }
+        #gestion-citas .action-card { box-shadow:none!important; border:1px solid #352b23!important; }
         #landing-container footer { border-top:0!important; }
         #landing-container footer::before { content:'HYDRA'; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); font-family:'Playfair Display',serif; font-size:clamp(42px,9vw,120px); color:rgba(255,255,255,.025); pointer-events:none; }
-        #landing-container footer::after { content:''; position:absolute; top:100%; left:0; width:100%; height:80px; background:#20251f; pointer-events:none; }
+        #landing-container footer::after { content:''; position:absolute; top:100%; left:0; width:100%; height:80px; background:#352b23; pointer-events:none; }
         #landing-container::before { content:''; position:fixed; inset:0; pointer-events:none; z-index:9999; opacity:.13; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E"); mix-blend-mode:multiply; }
 
         /* Dirección de arte final: editorial, sobria y coherente */
-        :root { --ivory:#f4f1e9; --paper:#fbf9f4; --sage:#b8c3b0; --sage-soft:#dfe5da; --sage-deep:#667460; --ink:#20251f; --muted-ink:#626960; --line:rgba(32,37,31,.18); }
-        #landing-container main > section { clip-path:none!important; border-top:1px solid rgba(32,37,31,.14)!important; }
+        :root { --ivory:#ece1d2; --paper:#f7f1e8; --beige:#e6dbcd; --beige-soft:#ece1d2; --accent-brown:#817264; --ink:#352b23; --muted-ink:#76634f; --line:rgba(95,70,48,.18); }
+        #landing-container main > section { clip-path:none!important; border-top:1px solid rgba(95,70,48,.14)!important; }
         #landing-container main > section::after { right:clamp(24px,5vw,72px); height:48px; opacity:.14; }
         #landing-container main > section > div { width:min(100%,1240px); margin-left:auto!important; margin-right:auto!important; }
         #landing-container main > section::before { left:max(24px,calc((100vw - 1240px)/2)); font-weight:600; }
-        #disenos, #pago-directo { background:var(--sage-soft)!important; }
+        #disenos, #pago-directo { background:var(--beige-soft)!important; }
         #galeria, #cuidados, #agendar, #gestion-citas { background:var(--ivory)!important; }
-        #estudio { background:#bdc8b6!important; }
+        #estudio { background:var(--ivory)!important; }
         #landing-container main h2, #pago-directo h3 { font-family:'Playfair Display',serif!important; color:var(--ink)!important; font-weight:400!important; letter-spacing:-.035em!important; line-height:1!important; }
         #cuidados h2, #agendar h2, #gestion-citas h2, #pago-directo h3 { font-size:clamp(40px,5vw,68px)!important; }
         #cuidados > div > div:first-child, #agendar > div > div:first-child, #pago-directo > div > div:first-child, #gestion-citas > div > div:first-child { text-align:left!important; }
         #cuidados > div > div:first-child .mx-auto, #agendar > div > div:first-child .mx-auto, #gestion-citas > div > div:first-child .mx-auto { margin-left:0!important; }
-        .btn-primary-action { min-height:50px; border:1px solid var(--sage-deep)!important; box-shadow:none!important; transition:background .3s ease,color .3s ease,transform .3s ease!important; }
+        .btn-primary-action { min-height:50px; border:1px solid var(--accent-brown)!important; box-shadow:none!important; transition:background .3s ease,color .3s ease,transform .3s ease!important; }
         .btn-primary-action:hover { background:var(--ink)!important; border-color:var(--ink)!important; transform:translateY(-2px); }
         #landing-container header h1 { color:var(--ink)!important; text-shadow:0 1px 22px rgba(244,241,233,.28); }
-        #landing-container header p { color:#293028!important; text-shadow:0 1px 14px rgba(244,241,233,.24); }
+        #landing-container header p { color:#352b23!important; text-shadow:0 1px 14px rgba(244,241,233,.24); }
         #landing-container header { justify-content:center!important; }
         #landing-container header .max-w-4xl { width:min(900px,88vw); max-width:900px!important; margin:auto!important; padding-top:88px; align-items:center!important; text-align:center!important; }
         #landing-container header h1 { width:100%; max-width:none; text-align:center!important; }
@@ -477,56 +452,56 @@
         #landing-container header .reveal-mask.inline-mask { margin-left:auto; margin-right:auto; }
         #landing-container header .reveal-item.flex { justify-content:center; }
         #landing-container header .inline-flex.rounded-full { justify-content:center!important; }
-        .hero-video-veil { background:rgba(190,201,181,.42); }
+        .hero-video-veil { background:rgba(247,241,232,.42); }
         #landing-container header a[href="#disenos"] { transition:background .3s ease,color .3s ease!important; }
         #landing-container header a[href="#disenos"]:hover { background:rgba(244,241,233,.84)!important; }
-        #estudio .artist-profile-crop { width:440px; border-color:rgba(32,37,31,.22); box-shadow:0 32px 70px rgba(32,37,31,.13); }
+        #estudio .artist-profile-crop { width:440px; border-color:rgba(95,70,48,.22); box-shadow:0 32px 70px rgba(95,70,48,.13); }
         #estudio .artist-profile-crop::after { border-color:rgba(244,241,233,.48); }
         #estudio > div { grid-template-columns:440px 1fr; gap:20px 96px; }
-        #estudio a { border-color:rgba(32,37,31,.24)!important; background:rgba(244,241,233,.24)!important; }
-        .empty-art-card, .gallery-slide { border:1px solid rgba(32,37,31,.22)!important; }
+        #estudio a { border-color:rgba(95,70,48,.24)!important; background:rgba(244,241,233,.24)!important; }
+        .empty-art-card, .gallery-slide { border:1px solid rgba(95,70,48,.22)!important; }
         #disenos .empty-art-card:nth-child(even), #galeria .empty-art-card:nth-child(odd), #disenos .empty-art-card:nth-child(even):hover, #galeria .empty-art-card:nth-child(odd):hover { transform:none; }
         .empty-art-card:hover { transform:translateY(-5px)!important; }
-        .gallery-slide { background:#d4dccf; }
+        .gallery-slide { background:var(--paper); }
         .gallery-slide:hover img { transform:scale(1.035); }
-        .carousel-arrow { width:46px; height:46px; border-radius:0!important; border-color:rgba(32,37,31,.28); background:rgba(251,249,244,.74); backdrop-filter:blur(8px); }
-        #cuidados .faq-item { border-color:rgba(32,37,31,.2); }
+        .carousel-arrow { width:46px; height:46px; border-radius:0!important; border-color:rgba(95,70,48,.28); background:rgba(251,249,244,.74); backdrop-filter:blur(8px); }
+        #cuidados .faq-item { border-color:rgba(95,70,48,.2); }
         #cuidados .faq-item button { transition:padding-left .25s ease,color .25s ease; }
-        #cuidados .faq-item button:hover { padding-left:10px!important; color:var(--sage-deep); }
-        #agendar .action-card, #gestion-citas .action-card, #pago-directo .bank-card { background:rgba(251,249,244,.72)!important; border:1px solid rgba(32,37,31,.2)!important; box-shadow:0 24px 70px rgba(32,37,31,.055)!important; }
-        #agendar input, #agendar textarea, #gestion-citas input { background:rgba(255,255,255,.72)!important; border-color:rgba(32,37,31,.2)!important; }
+        #cuidados .faq-item button:hover { padding-left:10px!important; color:var(--accent-brown); }
+        #agendar .action-card, #gestion-citas .action-card, #pago-directo .bank-card { background:rgba(251,249,244,.72)!important; border:1px solid rgba(95,70,48,.2)!important; box-shadow:0 24px 70px rgba(95,70,48,.055)!important; }
+        #agendar input, #agendar textarea, #gestion-citas input { background:rgba(255,255,255,.72)!important; border-color:rgba(95,70,48,.2)!important; }
         #agendar .cal-day { background:rgba(255,255,255,.58); }
         #pago-directo .bank-card { padding:clamp(28px,4vw,48px)!important; }
-        .bank-row { border-color:rgba(32,37,31,.16); }
+        .bank-row { border-color:rgba(95,70,48,.16); }
         .bank-row button { border-radius:0; background:transparent; }
-        #gestion-citas [class*="bg-studio/"] { border-radius:0!important; border-color:rgba(32,37,31,.14)!important; box-shadow:none!important; }
+        #gestion-citas [class*="bg-studio/"] { border-radius:0!important; border-color:rgba(95,70,48,.14)!important; box-shadow:none!important; }
         #landing-container footer { padding:48px 6vw!important; }
         #landing-container footer::after { display:none; }
         button, a { -webkit-tap-highlight-color:transparent; }
-        button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline:2px solid var(--sage-deep); outline-offset:3px; }
+        button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline:2px solid var(--accent-brown); outline-offset:3px; }
         @media(prefers-reduced-motion:reduce){ *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important} }
         @media(min-width:768px){ .empty-art-card,.gallery-slide{flex-basis:calc((100% - 44px)/3)} }
         @media(max-width:640px){ .carousel-shell{padding:0}.carousel-arrow{top:auto;bottom:-34px}.carousel-prev{left:calc(50% - 50px)}.carousel-next{right:calc(50% - 50px)}.bank-row{grid-template-columns:1fr 34px;gap:6px 12px;padding:12px 0}.bank-row>span{grid-column:1/-1}.bank-row strong{grid-column:1}.bank-row button{grid-column:2;grid-row:2} }
-        @media(max-width:1023px){ #navbar{padding:14px 18px!important}#navbar>a{font-size:20px!important;margin-bottom:6px!important}#landing-container header .max-w-4xl{width:100%;margin:auto!important;align-items:flex-start!important;text-align:left;padding:110px 24px 40px}#landing-container header h1{font-size:clamp(58px,17vw,92px)!important}#landing-container header::after{display:none}.hero-edition{display:none}#estudio>div{display:block}#estudio .artist-profile-crop{width:min(88vw,400px);margin:0 0 48px}#estudio>div>div:last-child{margin-top:35px}#pago-directo .bank-card{display:block;padding:24px!important}#landing-container main>section{padding-top:90px!important;padding-bottom:80px!important;clip-path:none!important}#disenos .empty-art-card:nth-child(even),#galeria .empty-art-card:nth-child(odd){transform:none}#mobileMenu{background:#20251f!important}#mobileMenu .text-bone,#mobileMenu a{color:#f5f1e8!important}}
+        @media(max-width:1023px){ #navbar{padding:14px 18px!important}#navbar>a{font-size:20px!important;margin-bottom:6px!important}#landing-container header .max-w-4xl{width:100%;margin:auto!important;align-items:flex-start!important;text-align:left;padding:110px 24px 40px}#landing-container header h1{font-size:clamp(58px,17vw,92px)!important}#landing-container header::after{display:none}.hero-edition{display:none}#estudio>div{display:block}#estudio .artist-profile-crop{width:min(88vw,400px);margin:0 0 48px}#estudio>div>div:last-child{margin-top:35px}#pago-directo .bank-card{display:block;padding:24px!important}#landing-container main>section{padding-top:90px!important;padding-bottom:80px!important;clip-path:none!important}#disenos .empty-art-card:nth-child(even),#galeria .empty-art-card:nth-child(odd){transform:none}#mobileMenu{background:#352b23!important}#mobileMenu .text-bone,#mobileMenu a{color:#f7f1e8!important}}
 
         /* Catálogo seleccionable y cotizador */
         .catalog-toolbar { display:flex; align-items:center; justify-content:space-between; gap:18px; margin-bottom:28px; }
-        .catalog-count { font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--sage-deep); }
+        .catalog-count { font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--accent-brown); }
         .design-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px; }
         .design-card { position:relative; border:1px solid var(--line); background:rgba(250,248,242,.8); overflow:hidden; transition:transform .3s ease,box-shadow .3s ease; }
-        .design-card:hover { transform:translateY(-4px); box-shadow:0 20px 50px rgba(61,70,57,.12); }
+        .design-card:hover { transform:translateY(-4px); box-shadow:0 20px 50px rgba(95,70,48,.12); }
         .design-card img { width:100%; aspect-ratio:1; object-fit:cover; display:block; cursor:zoom-in; }
         .design-card-footer { padding:13px; display:flex; align-items:center; justify-content:space-between; gap:10px; border-top:1px solid var(--line); }
         .design-code { font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted-ink); }
-        .design-add { padding:9px 12px; background:var(--sage-deep); color:#fff; font-size:9px; letter-spacing:.12em; text-transform:uppercase; transition:.2s ease; }
+        .design-add { padding:9px 12px; background:var(--accent-brown); color:#fff; font-size:9px; letter-spacing:.12em; text-transform:uppercase; transition:.2s ease; }
         .design-add:hover,.design-add.added { background:var(--ink); }
         .quote-layout { display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); gap:54px; align-items:start; }
         .quote-facts { display:grid; gap:1px; margin-top:32px; border:1px solid var(--line); }
         .quote-fact { background:rgba(255,255,255,.48); padding:18px; }
         .quote-fact strong { display:block; font-family:'Playfair Display',serif; font-size:21px; font-weight:500; margin-bottom:4px; }
         .selected-designs { display:flex; flex-wrap:wrap; gap:8px; min-height:46px; padding:10px; background:#fff; border:1px solid var(--line); }
-        .content-image-preview { width:100%; max-width:180px; aspect-ratio:1; object-fit:cover; border:1px solid var(--line); background:#e7eadf; display:block; margin-top:10px; }
-        .selected-chip { display:inline-flex; align-items:center; gap:8px; background:#e6eadf; color:var(--ink); padding:7px 9px; font-size:10px; }
+        .content-image-preview { width:100%; max-width:180px; aspect-ratio:1; object-fit:cover; border:1px solid var(--line); background:#f7f1e8; display:block; margin-top:10px; }
+        .selected-chip { display:inline-flex; align-items:center; gap:8px; background:#f7f1e8; color:var(--ink); padding:7px 9px; font-size:10px; }
         .quote-form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
         .quote-field-full { grid-column:1/-1; }
         #cotizar input,#cotizar select,#cotizar textarea { width:100%; min-height:48px; padding:12px 14px; border:1px solid var(--line); border-radius:0!important; font-size:12px; }
@@ -552,31 +527,31 @@
         /* Deja libre el extremo derecho para el botón de tres rayas. */
         #public-nav-links { transform:translateX(-64px); }
         @media(max-width:700px){#public-nav-links{transform:translateX(-20px);}}
-        .home-rotator { position:absolute; inset:0; z-index:5; display:grid; place-items:center; pointer-events:none; color:#20251f; }
+        .home-rotator { position:absolute; inset:0; z-index:5; display:grid; place-items:center; pointer-events:none; color:#352b23; }
         .home-rotator-slide { position:absolute; width:min(760px,86vw); text-align:center; opacity:0; transform:translateY(16px); pointer-events:none; transition:opacity .8s ease,transform .8s ease; }
         .home-rotator-slide.active { opacity:1; transform:translateY(0); pointer-events:auto; z-index:2; }
         .home-rotator-slide[data-route] { cursor:pointer; }
-        .home-rotator-kicker { font-size:10px; letter-spacing:.3em; text-transform:uppercase; color:#455141; font-weight:600; }
+        .home-rotator-kicker { font-size:10px; letter-spacing:.3em; text-transform:uppercase; color:#76634f; font-weight:600; }
         .home-rotator-title { margin-top:14px; font:400 clamp(42px,8vw,94px)/.95 'Playfair Display',serif; letter-spacing:-.04em; }
         .home-rotator-copy { max-width:500px; margin:22px auto 0; font:italic 17px/1.6 'Playfair Display',serif; }
-         .home-rotator-slide a { pointer-events:auto; display:inline-flex; margin-top:28px; padding:13px 22px; border:1px solid rgba(32,37,31,.3); color:#20251f; font-size:9px; letter-spacing:.18em; text-transform:uppercase; transition:.25s ease; }
-        .home-rotator-slide a:hover { color:#f5f1e8; background:#20251f; }
+         .home-rotator-slide a { pointer-events:auto; display:inline-flex; margin-top:28px; padding:13px 22px; border:1px solid rgba(95,70,48,.3); color:#352b23; font-size:9px; letter-spacing:.18em; text-transform:uppercase; transition:.25s ease; }
+        .home-rotator-slide a:hover { color:#f7f1e8; background:#352b23; }
         .corner-controls { position:absolute; inset:0; z-index:8; pointer-events:none; transition:opacity .35s ease; }
         .corner-controls.hidden-controls { opacity:0; }
-        .corner-controls button { pointer-events:auto; position:absolute; width:42px; height:42px; border:1px solid rgba(32,37,31,.3); background:rgba(245,241,232,.54); color:#20251f; backdrop-filter:blur(8px); transition:.25s ease; }
-        .corner-controls button:hover { color:#f5f1e8; background:#20251f; }
+        .corner-controls button { pointer-events:auto; position:absolute; width:42px; height:42px; border:1px solid rgba(95,70,48,.3); background:rgba(245,241,232,.54); color:#352b23; backdrop-filter:blur(8px); transition:.25s ease; }
+        .corner-controls button:hover { color:#f7f1e8; background:#352b23; }
         .corner-prev { left:24px; top:50%; transform:translateY(-50%); } .corner-next { right:24px; top:50%; transform:translateY(-50%); }
         .corner-controls button:hover { transform:translateY(-50%) scale(1.05); }
-        .corner-hint { position:absolute; right:78px; bottom:40px; font-size:8px; letter-spacing:.18em; text-transform:uppercase; color:rgba(32,37,31,.6); }
+        .corner-hint { position:absolute; right:78px; bottom:40px; font-size:8px; letter-spacing:.18em; text-transform:uppercase; color:rgba(95,70,48,.6); }
         .home-rotator-progress { position:absolute; left:50%; bottom:34px; z-index:9; display:flex; gap:7px; transform:translateX(-50%); }
-        .home-rotator-progress i { width:28px; height:2px; background:rgba(32,37,31,.2); transition:.3s ease; }
-        .home-rotator-progress i.active { background:#20251f; }
+        .home-rotator-progress i { width:28px; height:2px; background:rgba(95,70,48,.2); transition:.3s ease; }
+        .home-rotator-progress i.active { background:#352b23; }
         @media(max-width:700px){.home-rotator-copy{font-size:15px;padding:0 20px}.corner-hint{display:none}.corner-prev{left:16px}.corner-next{right:16px}}
         #home-menu { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--paper); }
         #home-menu a { min-height:112px; padding:22px 18px; display:flex; flex-direction:column; justify-content:space-between; border-right:1px solid var(--line); color:var(--ink); transition:.25s ease; }
         #home-menu a:last-child { border-right:0; }
-        #home-menu a:hover { background:#dce1d5; }
-        #home-menu small { font-size:9px; letter-spacing:.18em; color:var(--sage-deep); }
+        #home-menu a:hover { background:#f7f1e8; }
+        #home-menu small { font-size:9px; letter-spacing:.18em; color:var(--accent-brown); }
         #home-menu strong { font-family:'Playfair Display',serif; font-size:19px; font-weight:400; }
         @media(max-width:900px){#home-menu{grid-template-columns:repeat(3,1fr)}#home-menu a:nth-child(3){border-right:0}#home-menu a{border-bottom:1px solid var(--line)}}
         @media(max-width:520px){#home-menu{grid-template-columns:repeat(2,1fr)}#home-menu a:nth-child(2n){border-right:0}#home-menu a:nth-child(3){border-right:1px solid var(--line)}}
@@ -587,22 +562,22 @@
         @media(max-width:640px){
             #landing-container header { justify-content:center!important; padding:88px 0 28px!important; }
             #landing-container header .max-w-4xl { width:100%!important; margin:auto!important; padding:24px 22px!important; align-items:center!important; text-align:center!important; }
-            #landing-container header h1 { width:100%; max-width:none; font-size:clamp(64px,21vw,88px)!important; line-height:.88!important; text-align:center!important; color:#182018!important; text-shadow:0 2px 18px rgba(244,241,233,.8),0 0 2px rgba(244,241,233,.95); }
+            #landing-container header h1 { width:100%; max-width:none; font-size:clamp(64px,21vw,88px)!important; line-height:.88!important; text-align:center!important; color:#352b23!important; text-shadow:0 2px 18px rgba(244,241,233,.8),0 0 2px rgba(244,241,233,.95); }
             #landing-container header h1 span { margin-left:0!important; margin-top:.02em; }
-            #landing-container header p { margin-left:auto!important; margin-right:auto!important; text-align:center!important; color:#182018!important; text-shadow:0 1px 12px rgba(244,241,233,.9); }
-            #landing-container header .inline-flex.rounded-full { justify-content:center!important; color:#263025!important; }
+            #landing-container header p { margin-left:auto!important; margin-right:auto!important; text-align:center!important; color:#352b23!important; text-shadow:0 1px 12px rgba(244,241,233,.9); }
+            #landing-container header .inline-flex.rounded-full { justify-content:center!important; color:#352b23!important; }
             #landing-container header .reveal-mask.inline-mask { margin-left:auto; margin-right:auto; }
             #landing-container header .reveal-item.flex { justify-content:center; }
-            .hero-video-veil { background:rgba(190,201,181,.48); }
+            .hero-video-veil { background:rgba(247,241,232,.48); }
         }
 
         /* Fondo simple, textos rectos y accesos permanentes. */
-        #landing-container > header { background:#f4f0e6!important; min-height:72vh!important; }
+        #landing-container > header { background:#f7f1e8!important; min-height:72vh!important; }
         #landing-container > header::before, #landing-container > header::after,
         #home-rotator, #corner-controls, #home-rotator-progress, .hero-edition { display:none!important; }
         body:not(.route-page) #landing-container > header > .relative.z-10.max-w-4xl { opacity:1!important; visibility:visible!important; display:flex!important; }
         #landing-container header p { font-family:Arial,sans-serif!important; font-style:normal!important; letter-spacing:.02em!important; line-height:1.7!important; }
-        :root { --page-background:#e5e7d9; }
+        :root { --page-background:#ece1d2; }
         body, #landing-container > header, #landing-container main > section,
         #admin-container, #login-container { background:var(--page-background)!important; }
         .admin-entry { margin-bottom:24px; padding:20px; background:var(--paper); border:1px solid var(--line); border-radius:16px; }
@@ -615,28 +590,20 @@
         #site-footer { position:relative; background:var(--paper); color:var(--ink); border-top:1px solid var(--line); padding:28px clamp(20px,5vw,72px); }
         .site-footer-inner { max-width:1240px; margin:auto; display:flex; align-items:center; justify-content:space-between; gap:20px 32px; flex-wrap:wrap; }
         #site-footer a { display:inline-flex; align-items:center; gap:10px; min-height:44px; font-size:13px; }
-        #site-footer a:hover { color:#4d5941; text-decoration:underline; text-underline-offset:4px; }
+        #site-footer a:hover { color:#76634f; text-decoration:underline; text-underline-offset:4px; }
         #site-footer p { font-size:12px; line-height:1.6; color:var(--muted-ink); }
         #site-footer .footer-credit { margin-left:auto; font-size:12px; flex-wrap:wrap; gap:5px; }
         .footer-credit span { font-weight:600; }
         @media(max-width:640px) { .site-footer-inner { flex-direction:column; align-items:flex-start; gap:12px; } #site-footer .footer-credit { align-self:flex-end; } }
-        #booking-summary { background:#f4f0e6; color:#454b40; border:1px solid #c8cdbd; font-size:13px; line-height:1.6; }
+        #booking-summary { background:#f7f1e8; color:#352b23; border:1px solid #d6c9b9; font-size:13px; line-height:1.6; }
         #booking-summary > div { gap:16px; }
-        #booking-summary strong { color:#293323!important; text-align:right; }
-        #booking-summary > div:last-child { border-color:#c8cdbd; padding-top:10px; margin-top:10px; }
+        #booking-summary strong { color:#352b23!important; text-align:right; }
+        #booking-summary > div:last-child { border-color:#d6c9b9; padding-top:10px; margin-top:10px; }
     </style>
-<link rel="stylesheet" href="assets/page-editor.css">
+<link rel="stylesheet" href="assets/page-editor.css?v=menu-6">
 </head>
 
-<body>
-
-<!-- PANTALLA DE CARGA -->
-<div id="pantalla-carga">
-    <div class="spinner"></div>
-    <h2 class="font-cinzel text-xl tracking-[0.2em] text-bone uppercase font-light">Hydra Tattoo</h2>
-    <p id="loading-status" class="text-muted text-xs mt-2 font-mono">Cargando experiencia...</p>
-</div>
-<script>window.setTimeout(function(){var loader=document.getElementById('pantalla-carga');if(loader)loader.classList.add('ocultar-carga');},2500);window.addEventListener('error',function(){var loader=document.getElementById('pantalla-carga');if(loader)loader.classList.add('ocultar-carga');});window.addEventListener('unhandledrejection',function(){var loader=document.getElementById('pantalla-carga');if(loader)loader.classList.add('ocultar-carga');});</script>
+<body class="route-page">
 
 <!-- TOASTS -->
 <div id="toast-container"></div>
@@ -678,15 +645,15 @@
 
     </div>
 
-    <button id="mobileBtn" type="button" onclick="toggleMobileMenu()" class="md:hidden absolute right-5 top-6 text-muted hover:text-accent focus:outline-none transition-colors p-2 text-2xl">
-        <i class="fa-solid fa-bars"></i>
+    <button id="mobileBtn" type="button" onclick="toggleMobileMenu()" aria-label="Abrir menú" aria-controls="mobileMenu" aria-expanded="false" class="md:hidden absolute right-5 top-6 text-muted hover:text-accent focus:outline-none transition-colors p-2 text-2xl">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
     </button>
 </nav>
 
 <!-- Mobile Menu -->
-<div id="mobileMenu" class="fixed inset-0 bg-studio/98 backdrop-blur-xl z-50 hidden flex-col justify-center items-center gap-6 font-serif text-xl text-bone p-6">
-    <button type="button" onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-muted hover:text-bone text-2xl p-2 cursor-pointer">
-        <i class="fa-solid fa-xmark"></i>
+<div id="mobileMenu" role="navigation" aria-label="Menú principal" class="fixed inset-0 bg-studio/98 backdrop-blur-xl z-50 hidden flex-col justify-center items-center gap-6 font-serif text-xl text-bone p-6">
+    <button type="button" onclick="toggleMobileMenu()" aria-label="Cerrar menú" class="menu-close text-muted hover:text-bone text-2xl p-2 cursor-pointer">
+        <span aria-label="Cerrar menú">×</span>
     </button>
     <a href="#estudio" onclick="navigateTo('artist'); toggleMobileMenu();" class="hover:text-accent mobile-link transition-colors py-2 cursor-pointer">La artista</a>
     <a href="#disenos" onclick="navigateTo('designs'); toggleMobileMenu();" class="hover:text-accent mobile-link transition-colors py-2 cursor-pointer">Diseños disponibles</a>
@@ -709,86 +676,9 @@
 <div id="landing-container">
 
     <!-- PORTADA DE ALTA GAMA -->
-    <header class="relative min-h-screen flex items-center justify-center text-center pt-24 pb-12 overflow-hidden bg-studio">
 
-        <div id="home-rotator" class="home-rotator" aria-live="polite">
-          <article class="home-rotator-slide active"><span class="home-rotator-kicker">Hydra Tattoo · Concepción</span><h1 class="home-rotator-title">Conoce a Claudia</h1><p class="home-rotator-copy">Tatuaje botánico, ornamental y fine line. Piezas femeninas, delicadas y atemporales.</p><a href="#estudio" onclick="navigateTo('artist')">Ver perfil de Claudia</a></article>
-          <article class="home-rotator-slide" data-route="designs" onclick="openDesignsPage(event)"><span class="home-rotator-kicker">02 · Diseños disponibles</span><h2 class="home-rotator-title">Elige tu pieza</h2><p class="home-rotator-copy">Explora el catálogo y encuentra un diseño que fluya contigo.</p><a href="#disenos" onclick="openDesignsPage(event)">Ver diseños disponibles</a></article>
-          <article class="home-rotator-slide"><span class="home-rotator-kicker">03 · Cotización</span><h2 class="home-rotator-title">Tu idea, tu piel</h2><p class="home-rotator-copy">Cuéntame tu idea, zona, tamaño y color para preparar tu cotización.</p><a href="#cotizar" onclick="navigateTo('quote')">Solicitar cotización</a></article>
-          <article class="home-rotator-slide"><span class="home-rotator-kicker">04 · Agenda</span><h2 class="home-rotator-title">Reserva tu hora</h2><p class="home-rotator-copy">Selecciona una fecha disponible y continúa con tu comprobante de abono.</p><a href="#agendar" onclick="navigateTo('agenda')">Agendar hora</a></article>
-          <article class="home-rotator-slide"><span class="home-rotator-kicker">05 · Galería</span><h2 class="home-rotator-title">Trabajos realizados</h2><p class="home-rotator-copy">Conoce algunas piezas creadas por Claudia y descubre su manera de trabajar.</p><a href="#galeria" onclick="navigateTo('gallery')">Ver galería de fotos</a></article>
-          <article class="home-rotator-slide"><span class="home-rotator-kicker">06 · Cuidados</span><h2 class="home-rotator-title">Acompaña tu tatuaje</h2><p class="home-rotator-copy">Revisa las indicaciones para cuidar tu piel durante la cicatrización.</p><a href="#cuidados" onclick="navigateTo('care')">Ver cuidados</a></article>
-        </div>
-        <div id="corner-controls" class="corner-controls" aria-label="Controles de portada">
-          <button type="button" class="corner-prev" onclick="changeHomeSlide(-1)" aria-label="Opción anterior"><i class="fa-solid fa-arrow-left"></i></button>
-          <button type="button" class="corner-next" onclick="changeHomeSlide(1)" aria-label="Siguiente opción"><i class="fa-solid fa-arrow-right"></i></button>
-          <span class="corner-hint">Toca para ocultar controles</span>
-        </div>
-        <div id="home-rotator-progress" class="home-rotator-progress" aria-hidden="true"><i class="active"></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="hero-edition" aria-hidden="true"><span>Fine line</span><span>Blackwork</span><span>Concepción · 2026</span></div>
 
-        <div class="relative z-10 max-w-4xl px-6 flex flex-col items-center">
-            <div class="reveal-mask inline-mask mb-4">
-                <span class="reveal-item delay-1 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-md text-accent text-[9px] md:text-[10px] tracking-[0.25em] uppercase font-semibold">
-                    <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
-                    Concepción, Chile
-                </span>
-            </div>
 
-            <div class="reveal-mask inline-mask mb-3 hero-title-mask">
-                <h1 class="reveal-item delay-2 font-cinzel text-4xl sm:text-6xl md:text-7xl font-normal tracking-[0.12em] uppercase text-bone">
-                    HYDRA <span class="gold-accent-text italic font-serif">Tattoo</span>
-                </h1>
-            </div>
-
-            <div class="reveal-mask inline-mask mb-6">
-                <div class="reveal-item delay-2 flex items-center gap-3 opacity-60">
-                    <div class="w-10 md:w-16 h-px bg-gradient-to-r from-transparent to-accent"></div>
-                    <i class="fa-solid fa-seedling text-accent text-[9px]"></i>
-                    <div class="w-10 md:w-16 h-px bg-gradient-to-l from-transparent to-accent"></div>
-                </div>
-            </div>
-
-            <div class="reveal-mask inline-mask max-w-xl mb-10">
-                <p class="reveal-item delay-3 font-serif italic text-sm sm:text-base md:text-lg text-bone tracking-wide leading-relaxed">
-                    "Delicadeza que nace de la naturaleza y encuentra su forma en tu piel."
-                </p>
-                <p class="reveal-item delay-3 font-sans text-muted text-xs mt-2 font-light tracking-widest uppercase">
-                    Piezas botánicas creadas para habitar el cuerpo con armonía.
-                </p>
-            </div>
-
-            <div class="reveal-mask inline-mask">
-                <div class="reveal-item delay-3 flex flex-col sm:flex-row items-center gap-4">
-                    <a href="#agendar" onclick="navigateTo('agenda')"
-                       class="btn-primary-action px-8 py-3.5 rounded-xl text-xs font-sans font-semibold uppercase tracking-[0.2em] text-white border border-accent/40 shadow-2xl flex items-center gap-2">
-                        <span>Reservar Cita</span>
-                        <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                    </a>
-                    <a href="#disenos" onclick="navigateTo('designs')"
-                       class="px-8 py-3.5 rounded-xl text-xs font-sans font-semibold uppercase tracking-[0.2em] text-bone bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 backdrop-blur-md transition-all">
-                        Ver diseños disponibles
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
-            <span class="text-[8px] tracking-[0.25em] text-muted uppercase font-sans">Explorar</span>
-            <div class="w-4 h-7 border border-white/20 rounded-full flex justify-center p-1">
-                <div class="w-1 h-1.5 bg-accent rounded-full animate-bounce"></div>
-            </div>
-        </div>
-    </header>
-
-    <nav id="home-menu" aria-label="Explorar Hydra Tattoo">
-      <a href="#estudio" onclick="navigateTo('artist')"><small>01</small><strong>La artista</strong></a>
-      <a href="#disenos" onclick="navigateTo('designs')"><small>02</small><strong>Diseños disponibles</strong></a>
-      <a href="#cotizar" onclick="navigateTo('quote')"><small>03</small><strong>Cotizar</strong></a>
-      <a href="#galeria" onclick="navigateTo('gallery')"><small>04</small><strong>Galería</strong></a>
-      <a href="#cuidados" onclick="navigateTo('care')"><small>05</small><strong>Cuidados</strong></a>
-      <a href="#agendar" onclick="navigateTo('agenda')"><small>06</small><strong>Mis citas / comprobante</strong></a>
-    </nav>
 
     <main>
       <!-- SECCIÓN GALERÍA DE ALTA GAMA -->
@@ -796,8 +686,8 @@
         <div class="max-w-7xl mx-auto px-6">
           <div class="text-center mb-12">
             <span class="text-accent text-[10px] tracking-[0.3em] uppercase font-semibold block mb-2">Archivo Hydra</span>
-            <h2 class="font-cinzel text-2xl md:text-4xl text-bone tracking-widest font-normal uppercase">Galería</h2>
-            <p class="text-muted text-sm max-w-xl mx-auto mt-5">Una selección de trabajos realizados por Claudia: piezas delicadas, personales y creadas para acompañar el cuerpo.</p>
+            <h2 class="font-cinzel text-2xl md:text-4xl text-bone tracking-widest font-normal uppercase" data-text-key="text-15">Galería</h2>
+            <p class="text-muted text-sm max-w-xl mx-auto mt-5" data-text-key="text-16">Una selección de trabajos realizados por Claudia: piezas delicadas, personales y creadas para acompañar el cuerpo.</p>
           </div>
           <div class="carousel-shell">
             <button type="button" class="carousel-arrow carousel-prev" onclick="scrollCarousel('galeria-track',-1)" aria-label="Ver trabajos anteriores"><i class="fa-solid fa-arrow-left"></i></button>
@@ -819,19 +709,20 @@
       </section>
 
       <!-- DISEÑOS / FLASHES -->
-      <section id="disenos" class="py-24 md:py-32 bg-studio relative border-y border-[rgba(255,255,255,0.02)]">
+      <section id="disenos" class="route-visible py-24 md:py-32 bg-studio relative border-y border-[rgba(255,255,255,0.02)]">
         <div class="max-w-7xl mx-auto px-6">
           <div class="text-center mb-12">
             <span class="text-accent text-[10px] tracking-[0.3em] uppercase font-semibold block mb-2">Piezas únicas</span>
-            <h2 class="font-cinzel text-2xl md:text-4xl text-bone tracking-widest font-normal uppercase">Diseños disponibles</h2>
-            <p class="text-muted text-sm max-w-xl mx-auto mt-5">Explora el catálogo de piezas botánicas, ornamentales y animales. Cada diseño tiene un tamaño mínimo según su nivel de detalle y puede ajustarse en <em>freehand</em> para fluir con tu cuerpo.</p>
+            <h2 class="font-cinzel text-2xl md:text-4xl text-bone tracking-widest font-normal uppercase" data-text-key="text-17">Diseños disponibles</h2>
+            <p class="text-muted text-sm max-w-xl mx-auto mt-5" data-text-key="text-18">Explora el catálogo de piezas botánicas, ornamentales y animales. Cada diseño tiene un tamaño mínimo según su nivel de detalle y puede ajustarse en <em>freehand</em> para fluir con tu cuerpo.</p>
           </div>
           <div class="catalog-toolbar">
+            <label class="catalog-sort">Ordenar por<select id="catalog-sort" onchange="catalogPage = 1; renderDesignCatalog()"><option value="name-asc">Nombre A-Z</option><option value="name-desc">Nombre Z-A</option><option value="price-asc">Precio menor a mayor</option><option value="price-desc">Precio mayor a menor</option></select></label>
             <span id="catalog-count" class="catalog-count">97 diseños disponibles</span>
             <a href="#cotizar" onclick="navigateTo('quote')" class="design-add" style="padding:12px 16px">Ver mi selección <span id="selection-count">(0)</span></a>
           </div>
           <div id="design-grid" class="design-grid" aria-live="polite"></div>
-          <div class="text-center mt-10"><button id="load-more-designs" type="button" onclick="loadMoreDesigns()" class="px-7 py-4 border border-[var(--line)] text-[10px] uppercase tracking-[.18em] hover:bg-[var(--ink)] hover:text-white transition">Ver más diseños</button></div>
+          <nav class="catalog-pagination" aria-label="Páginas de diseños"><button id="catalog-prev" type="button" onclick="changeCatalogPage(-1)">← Anterior</button><span id="catalog-page" role="status"></span><button id="catalog-next" type="button" onclick="changeCatalogPage(1)">Siguiente →</button></nav>
         </div>
       </section>
 
@@ -840,8 +731,8 @@
         <div class="max-w-7xl mx-auto px-6 quote-layout">
           <div>
             <span class="text-accent text-[10px] tracking-[0.3em] uppercase font-semibold block mb-3">Cotización personalizada</span>
-            <h2 class="font-serif text-4xl md:text-6xl text-bone font-light leading-tight">Cuéntame tu idea</h2>
-            <p class="text-muted text-sm leading-loose mt-6">Puedes agregar uno o más diseños del catálogo o pedir una pieza creada desde tu idea, una referencia o directamente en <em>freehand</em>. Los diseños disponibles son modificables.</p>
+            <h2 class="font-serif text-4xl md:text-6xl text-bone font-light leading-tight" data-text-key="text-19">Cuéntame tu idea</h2>
+            <p class="text-muted text-sm leading-loose mt-6" data-text-key="text-20">Puedes agregar uno o más diseños del catálogo o pedir una pieza creada desde tu idea, una referencia o directamente en <em>freehand</em>. Los diseños disponibles son modificables.</p>
             <div class="quote-facts">
               <div class="quote-fact"><strong>Desde $30.000</strong><span class="text-xs text-muted">Valor mínimo de tatuaje.</span></div>
               <div class="quote-fact"><strong>Diseño único</strong><span class="text-xs text-muted">Personalizado y adaptado a tu anatomía.</span></div>
@@ -862,10 +753,10 @@
               <div><label for="quote-size">Tamaño aproximado *</label><input id="quote-size" required type="text" placeholder="Ej: 12 cm"></div>
               <div><label for="quote-style">Estilo</label><select id="quote-style"><option>Botánico trazo fino</option><option>Ornamental</option><option>Fine line</option><option>Lettering</option><option>Animal</option><option>Otro / por definir</option></select></div>
               <div><label for="quote-color">Color *</label><select id="quote-color" required><option>Solo negro</option><option>Solo rojo</option><option>Negro y rojo</option><option>Color / por conversar</option></select></div>
-              <div class="quote-field-full"><label for="quote-reference">Foto de referencia (opcional)</label><input id="quote-reference" type="file" accept="image/*"><p class="text-[9px] text-muted mt-2">La referencia se tendrá en cuenta al revisar tu solicitud.</p></div>
+              <div class="quote-field-full"><label for="quote-reference">Foto de referencia (opcional)</label><input id="quote-reference" type="file" accept="image/*"><p class="text-[9px] text-muted mt-2" data-text-key="text-21">La referencia se tendrá en cuenta al revisar tu solicitud.</p></div>
             </div>
             <button type="submit" class="btn-primary-action w-full mt-6 py-4 text-[10px] font-semibold uppercase tracking-[.18em]">Solicitar cotización</button>
-            <div id="quote-success" class="hidden mt-4 p-4 border border-emerald-600/30 bg-emerald-50 text-emerald-800 text-xs leading-relaxed" role="status">Tu solicitud fue recibida. Claudia revisará tus datos y se pondrá en contacto contigo.</div>
+            <div id="quote-success" class="hidden mt-4 p-4 border border-stone-600/30 bg-stone-50 text-stone-800 text-xs leading-relaxed" role="status">Tu solicitud fue recibida. Claudia revisará tus datos y se pondrá en contacto contigo.</div>
           </form>
         </div>
       </section>
@@ -878,10 +769,10 @@
             </div>
             <div class="reveal-mask mb-4">
                 <span class="reveal-item delay-1 text-accent text-[10px] tracking-[0.3em] uppercase font-semibold block mb-3">La artista</span>
-                <h2 class="reveal-item delay-1 font-serif text-3xl md:text-4xl text-bone font-light">Claudia Medel · Hydra Tattoo</h2>
+                <h2 class="reveal-item delay-1 font-serif text-3xl md:text-4xl text-bone font-light" data-text-key="text-22">Claudia Medel · Hydra Tattoo</h2>
             </div>
             <div class="reveal-mask mb-12">
-                <p class="reveal-item delay-2 font-sans text-muted text-sm md:text-base leading-relaxed md:leading-loose max-w-3xl mx-auto font-light mt-4">
+                <p class="reveal-item delay-2 font-sans text-muted text-sm md:text-base leading-relaxed md:leading-loose max-w-3xl mx-auto font-light mt-4" data-text-key="text-23">
                     Tengo 28 años y llevo 4 años dedicándome al tatuaje. Mi especialidad es el tatuaje botánico, ornamental y <em>fine line</em>. Me inspiran la naturaleza, las flores silvestres, las hojas, las enredaderas y las texturas orgánicas para crear piezas femeninas, delicadas y atemporales, con trazo fino y atención en cada detalle.
                     <br><br>
                     Cada tatuaje lo trabajo de forma personalizada y única para ti. Puedo crear el diseño desde tu idea, una imagen de referencia o en <em>freehand</em>, dibujando directamente sobre tu piel para que la composición fluya con tu cuerpo de manera natural. También realizo <em>lettering</em> de trazo fino, frases y palabras con caligrafía sutil.
@@ -906,25 +797,25 @@
         <div class="max-w-3xl mx-auto px-6">
           <div class="text-center mb-12">
             <span class="text-accent text-[10px] tracking-[0.3em] uppercase font-semibold block mb-3">Acompañar el proceso</span>
-            <h2 class="font-serif text-3xl md:text-4xl text-bone font-light">Cuidados de tu tatuaje</h2>
-            <p class="text-muted text-sm mt-4">Sigue siempre las indicaciones personalizadas entregadas al terminar tu sesión.</p>
+            <h2 class="font-serif text-3xl md:text-4xl text-bone font-light" data-text-key="text-24">Cuidados de tu tatuaje</h2>
+            <p class="text-muted text-sm mt-4" data-text-key="text-25">Sigue siempre las indicaciones personalizadas entregadas al terminar tu sesión.</p>
           </div>
           <div class="space-y-2">
             <div class="faq-item">
               <button type="button" class="w-full text-left py-5 flex justify-between items-center group" onclick="toggleFaq(this)"><span class="font-serif text-lg text-bone group-hover:text-accent transition">Primeras 24 horas</span><i class="fa-solid fa-angle-down text-accent transition-transform"></i></button>
-              <div class="faq-content"><p class="pb-6 text-muted text-sm leading-relaxed">Mantén la protección durante el tiempo indicado por la artista. Antes de tocar la zona, lava bien tus manos. Retira la cobertura con suavidad, limpia con agua tibia y jabón neutro sin perfume, y seca dando pequeños toques con papel limpio.</p></div>
+              <div class="faq-content"><p class="pb-6 text-muted text-sm leading-relaxed" data-text-key="text-26">Mantén la protección durante el tiempo indicado por la artista. Antes de tocar la zona, lava bien tus manos. Retira la cobertura con suavidad, limpia con agua tibia y jabón neutro sin perfume, y seca dando pequeños toques con papel limpio.</p></div>
             </div>
             <div class="faq-item">
               <button type="button" class="w-full text-left py-5 flex justify-between items-center group" onclick="toggleFaq(this)"><span class="font-serif text-lg text-bone group-hover:text-accent transition">Durante la cicatrización</span><i class="fa-solid fa-angle-down text-accent transition-transform"></i></button>
-              <div class="faq-content"><p class="pb-6 text-muted text-sm leading-relaxed">Lava la zona de forma delicada una o dos veces al día. Aplica una capa muy fina del producto recomendado, sin saturar la piel. Es normal que aparezca descamación leve: no rasques, no frotes y no retires costras.</p></div>
+              <div class="faq-content"><p class="pb-6 text-muted text-sm leading-relaxed" data-text-key="text-27">Lava la zona de forma delicada una o dos veces al día. Aplica una capa muy fina del producto recomendado, sin saturar la piel. Es normal que aparezca descamación leve: no rasques, no frotes y no retires costras.</p></div>
             </div>
             <div class="faq-item">
               <button type="button" class="w-full text-left py-5 flex justify-between items-center group" onclick="toggleFaq(this)"><span class="font-serif text-lg text-bone group-hover:text-accent transition">Qué debes evitar</span><i class="fa-solid fa-angle-down text-accent transition-transform"></i></button>
-              <div class="faq-content"><p class="pb-6 text-muted text-sm leading-relaxed">Evita piscinas, mar, saunas, baños prolongados, ejercicio que genere roce intenso y exposición directa al sol mientras la piel cicatriza. Usa ropa limpia y holgada sobre la zona.</p></div>
+              <div class="faq-content"><p class="pb-6 text-muted text-sm leading-relaxed" data-text-key="text-28">Evita piscinas, mar, saunas, baños prolongados, ejercicio que genere roce intenso y exposición directa al sol mientras la piel cicatriza. Usa ropa limpia y holgada sobre la zona.</p></div>
             </div>
             <div class="faq-item border-none">
               <button type="button" class="w-full text-left py-5 flex justify-between items-center group" onclick="toggleFaq(this)"><span class="font-serif text-lg text-bone group-hover:text-accent transition">Cuidado a largo plazo</span><i class="fa-solid fa-angle-down text-accent transition-transform"></i></button>
-              <div class="faq-content"><p class="pb-6 text-muted text-sm leading-relaxed">Cuando la piel esté completamente recuperada, hidrátala con regularidad y utiliza protector solar de factor alto. Si notas dolor creciente, calor intenso, secreción o una reacción fuera de lo habitual, consulta con un profesional de salud y avisa a la artista.</p></div>
+              <div class="faq-content"><p class="pb-6 text-muted text-sm leading-relaxed" data-text-key="text-29">Cuando la piel esté completamente recuperada, hidrátala con regularidad y utiliza protector solar de factor alto. Si notas dolor creciente, calor intenso, secreción o una reacción fuera de lo habitual, consulta con un profesional de salud y avisa a la artista.</p></div>
             </div>
           </div>
         </div>
@@ -934,10 +825,10 @@
       <section id="agendar" class="py-20 md:py-32 bg-panel relative border-y border-[rgba(255,255,255,0.02)]">
         <div class="max-w-5xl mx-auto px-4 md:px-6 text-center">
           <div class="reveal-mask mb-8 md:mb-12">
-              <h2 class="reveal-item delay-1 font-serif text-2xl md:text-3xl text-bone font-light mb-3">Agenda & Contacto</h2>
-              <p class="reveal-item delay-2 font-sans text-accent text-[10px] md:text-xs tracking-[0.25em] uppercase mb-2 font-semibold">Concepción, Chile</p>
+              <h2 class="reveal-item delay-1 font-serif text-2xl md:text-3xl text-bone font-light mb-3" data-text-key="text-30">Agenda & Contacto</h2>
+              <p class="reveal-item delay-2 font-sans text-accent text-[10px] md:text-xs tracking-[0.25em] uppercase mb-2 font-semibold" data-text-key="text-31">Concepción, Chile</p>
               <div class="w-12 h-px bg-accent/30 mx-auto my-4 md:my-6"></div>
-              <p class="reveal-item delay-3 font-sans text-muted text-xs mx-auto max-w-lg leading-relaxed">
+              <p class="reveal-item delay-3 font-sans text-muted text-xs mx-auto max-w-lg leading-relaxed" data-text-key="text-32">
                   Selecciona la fecha y el bloque de horario disponible. Al reservar tendrás <strong class="text-accent">15 minutos</strong> para pagar y subir tu comprobante.
               </p>
           </div>
@@ -948,7 +839,7 @@
                       <!-- COLUMNA CALENDARIO VISUAL CLIENTE -->
                       <div class="md:col-span-7 action-card rounded-3xl p-5 md:p-8 shadow-2xl">
                           <div class="flex items-center justify-between mb-5 pb-3 border-b border-white/5">
-                              <h3 class="font-serif text-base md:text-lg text-bone flex items-center gap-2">
+                              <h3 class="font-serif text-base md:text-lg text-bone flex items-center gap-2" data-text-key="text-33">
                                   <span class="text-xs font-mono bg-accent/20 text-accent px-2 py-0.5 rounded border border-accent/20">01</span>
                                   Selecciona Fecha y Hora
                               </h3>
@@ -973,12 +864,12 @@
                               </div>
                               <div id="client-calendar-grid" class="grid grid-cols-7 gap-1.5 sm:gap-2"></div>
                               <div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 mt-4 text-[9px] text-muted justify-center">
-                                  <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#4ade80]"></span>Disponible</span>
+                                  <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#8a7864]"></span>Disponible</span>
                                   <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#facc15]"></span>Últimas horas</span>
                                   <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#f87171]"></span>Sin cupos</span>
                                   <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#6b7280]"></span>No disponible</span>
                               </div>
-                              <p id="client-day-note" class="hidden mt-3 text-[11px] text-accent bg-accent/10 border border-accent/20 rounded-lg px-3 py-2 leading-relaxed text-center font-mono"></p>
+                              <p id="client-day-note" class="hidden mt-3 text-[11px] text-accent bg-accent/10 border border-accent/20 rounded-lg px-3 py-2 leading-relaxed text-center font-mono" data-text-key="text-34"></p>
                           </div>
 
                           <div>
@@ -993,7 +884,7 @@
                       <div class="md:col-span-5 action-card rounded-3xl p-5 md:p-8 shadow-2xl flex flex-col justify-between">
                           <div>
                               <div class="flex items-center justify-between mb-5 pb-3 border-b border-white/5">
-                                  <h3 class="font-serif text-base md:text-lg text-bone flex items-center gap-2">
+                                  <h3 class="font-serif text-base md:text-lg text-bone flex items-center gap-2" data-text-key="text-35">
                                       <span class="text-xs font-mono bg-accent/20 text-accent px-2 py-0.5 rounded border border-accent/20">02</span>
                                       Tus Datos de Cita
                                   </h3>
@@ -1058,8 +949,8 @@
         <div class="max-w-4xl mx-auto px-6">
           <div class="text-center mb-9">
             <span class="text-accent text-[10px] tracking-[0.3em] uppercase font-semibold block mb-3">Abono sugerido de $30.000 CLP</span>
-            <h3 class="font-serif text-2xl md:text-3xl text-bone font-light">Datos para transferencia</h3>
-            <p class="text-sm text-muted leading-relaxed max-w-xl mx-auto mt-4">Realiza la transferencia y sube tu comprobante dentro de los 15 minutos posteriores a la reserva.</p>
+            <h3 class="font-serif text-2xl md:text-3xl text-bone font-light" data-text-key="text-36">Datos para transferencia</h3>
+            <p class="text-sm text-muted leading-relaxed max-w-xl mx-auto mt-4" data-text-key="text-37">Realiza la transferencia y sube tu comprobante dentro de los 15 minutos posteriores a la reserva.</p>
           </div>
           <div class="bank-card action-card p-6 md:p-8 max-w-2xl mx-auto">
             <div class="bank-row"><span>Titular</span><strong id="bank-holder">Claudia Medel</strong><button type="button" onclick="copyBankValue('bank-holder','Titular')" aria-label="Copiar titular"><i class="fa-regular fa-copy"></i></button></div>
@@ -1081,7 +972,7 @@
                 <span class="font-mono text-[10px] uppercase tracking-[0.25em] text-accent font-bold block mb-2">
                     ✦ Autogestión ✦
                 </span>
-                <h2 class="font-serif text-3xl md:text-4xl text-bone font-light mb-4">Portal de Clientes</h2>
+                <h2 class="font-serif text-3xl md:text-4xl text-bone font-light mb-4" data-text-key="text-38">Portal de Clientes</h2>
                 <div class="w-12 h-px bg-accent/30 mx-auto"></div>
             </div>
 
@@ -1089,8 +980,8 @@
 
                 <!-- POLÍTICAS EXPLICADAS -->
                 <div class="lg:col-span-6 space-y-5">
-                    <h3 class="font-serif text-xl text-bone font-medium border-b border-white/10 pb-2">Políticas de Gestión</h3>
-                    <p class="font-sans text-muted text-xs leading-relaxed font-light">
+                    <h3 class="font-serif text-xl text-bone font-medium border-b border-white/10 pb-2" data-text-key="text-39">Políticas de Gestión</h3>
+                    <p class="font-sans text-muted text-xs leading-relaxed font-light" data-text-key="text-40">
                         Entendemos que pueden surgir imprevistos. Para mantener el orden del estudio y respetar el tiempo de todos, estas son nuestras normativas:
                     </p>
 
@@ -1100,7 +991,7 @@
                             <h4 class="font-serif text-sm text-bone font-medium mb-1.5 flex items-center gap-2">
                                 <i class="fa-solid fa-magnifying-glass text-accent text-xs"></i> Consultar Estado
                             </h4>
-                            <p class="text-[11px] text-muted leading-relaxed">Al buscar tu cita podrás ver si está Pendiente, en Revisión o Confirmada. También sabrás exactamente cuánto tiempo te queda para subir el comprobante.</p>
+                            <p class="text-[11px] text-muted leading-relaxed" data-text-key="text-41">Al buscar tu cita podrás ver si está Pendiente, en Revisión o Confirmada. También sabrás exactamente cuánto tiempo te queda para subir el comprobante.</p>
                         </div>
 
                         <div class="bg-studio/60 border border-white/5 p-4 rounded-2xl shadow-sm relative overflow-hidden">
@@ -1108,7 +999,7 @@
                             <h4 class="font-serif text-sm text-bone font-medium mb-1.5 flex items-center gap-2">
                                 <i class="fa-solid fa-ban text-danger text-xs"></i> Cancelación y Abono
                             </h4>
-                            <p class="text-[11px] text-muted leading-relaxed">El abono cubre el tiempo de diseño y bloquea tu fecha. <strong>No es reembolsable</strong> bajo ninguna circunstancia si cancelas definitivamente o si no asistes a tu sesión.</p>
+                            <p class="text-[11px] text-muted leading-relaxed" data-text-key="text-42">El abono cubre el tiempo de diseño y bloquea tu fecha. <strong>No es reembolsable</strong> bajo ninguna circunstancia si cancelas definitivamente o si no asistes a tu sesión.</p>
                         </div>
                     </div>
                 </div>
@@ -1117,7 +1008,7 @@
                 <div class="lg:col-span-6 space-y-6">
                     <div class="action-card rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden">
                         <div class="relative z-10">
-                            <h3 class="font-serif text-lg text-bone flex items-center gap-2 font-medium mb-4 pb-3 border-b border-white/10">
+                            <h3 class="font-serif text-lg text-bone flex items-center gap-2 font-medium mb-4 pb-3 border-b border-white/10" data-text-key="text-43">
                                 <i class="fa-solid fa-calendar-check text-accent"></i> Buscar mi Cita
                             </h3>
                             <form onsubmit="searchPageClientAgendas(event)" class="space-y-4">
@@ -1132,7 +1023,7 @@
                             </form>
 
                             <div id="page-client-bookings-results" class="space-y-3 max-h-[350px] overflow-y-auto pt-5 mt-5 border-t border-white/5">
-                                <p class="text-xs text-muted italic text-center py-6 font-mono border border-dashed border-white/10 rounded-2xl bg-studio/40">
+                                <p class="text-xs text-muted italic text-center py-6 font-mono border border-dashed border-white/10 rounded-2xl bg-studio/40" data-text-key="text-44">
                                     Inicia la búsqueda para ver tu historial.
                                 </p>
                             </div>
@@ -1150,7 +1041,7 @@
 <!-- MODAL DE ÉXITO DE RESERVA -->
 <div id="success-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="action-card rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl border border-white/10 space-y-5">
-        <div class="text-emerald-400 text-4xl mb-1"><i class="fa-solid fa-circle-check"></i></div>
+        <div class="text-stone-400 text-4xl mb-1"><i class="fa-solid fa-circle-check"></i></div>
         <h3 class="font-serif text-2xl text-bone font-medium">¡Cita Pre-Reservada!</h3>
         <p class="text-[11px] md:text-xs text-muted leading-relaxed">
             Tu reserva ha sido guardada temporalmente. Tienes <strong class="text-accent">15 minutos</strong> para subir tu comprobante de abono, de lo contrario la hora se liberará.
@@ -1256,7 +1147,7 @@
             <div>
                 <div class="flex items-center gap-2 mb-2 flex-wrap">
                     <span class="text-accent text-[10px] tracking-widest uppercase font-semibold font-mono">Control Administrativo</span>
-                    <span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[9px] px-2 py-0.5 rounded-full font-mono">Base de reservas</span>
+                    <span class="bg-stone-500/20 text-stone-400 border border-stone-500/30 text-[9px] px-2 py-0.5 rounded-full font-mono">Base de reservas</span>
                     <span id="admin-sync-status" class="sync-indicator text-[9px]"><i class="fa-solid fa-cloud"></i> <span>Sincronizado</span></span>
                 </div>
                 <h1 class="font-serif text-2xl md:text-3xl text-bone font-light">Gestión General de Agenda</h1>
@@ -1367,7 +1258,8 @@
               <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Tamaño mínimo</label><input id="content-design-min-size" placeholder="Ej: 8 cm" class="w-full bg-studio border border-white/10 rounded-xl px-3 py-3 text-bone text-xs"></div>
                <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Imagen seleccionada</label><img id="content-design-preview" class="content-image-preview" alt="Vista previa del diseño"></div>
                <div><label class="block text-[9px] text-muted uppercase tracking-wider mb-1.5">Seleccionar imagen desde almacenamiento</label><button type="button" class="storage-image-button" onclick="document.getElementById('content-design-file').click()">+ Añadir imagen</button><input id="content-design-file" type="file" accept="image/jpeg,image/png,image/webp,image/gif" onchange="previewContentFile(this,'content-design-preview')" class="storage-file-input"></div>
-              <label class="flex items-center gap-2 text-xs text-bone self-end pb-3"><input id="content-design-available" type="checkbox" checked> Disponible para reservar</label>
+              <label class="flex items-center gap-2 text-xs text-bone self-end pb-3"><input id="content-design-available" type="checkbox" checked> Diseño visible para usuarios</label>
+              <label>Descripción e información adicional<textarea id="content-design-description" rows="4" class="w-full bg-studio border rounded-xl p-3"></textarea></label>
               <button class="btn-primary-action py-3 rounded-xl text-[10px] uppercase tracking-widest">Guardar diseño</button>
             </form>
             <div class="border-t border-white/10 pt-8"><h3 class="font-serif text-xl text-bone">Editar foto de galería</h3><p class="text-[11px] text-muted mt-2">Reemplaza la foto y el texto de cualquier trabajo publicado.</p>
@@ -1603,8 +1495,9 @@
     }
     async function saveContentConfig() {
         if (!currentUser) return false;
-        config.content = { ...config.content, designs: designOverrides, gallery: galleryOverrides };
-        if (!await saveState()) { showToast('No se pudo publicar el contenido. Intenta guardar nuevamente.', 'error'); return false; }
+        const previousContent = config.content;
+        config.content = { ...config.content, designs: structuredClone(designOverrides), gallery: structuredClone(galleryOverrides) };
+        if (!await saveState()) { config.content = previousContent; showToast('No se pudo publicar el contenido. Intenta guardar nuevamente.', 'error'); return false; }
         localStorage.setItem('hydrart_design_overrides', JSON.stringify(designOverrides));
         localStorage.setItem('hydrart_gallery_overrides', JSON.stringify(galleryOverrides));
         renderDesignCatalog();
@@ -1705,7 +1598,8 @@
     // CATÁLOGO DE DISEÑOS Y COTIZADOR
     let DESIGN_TOTAL = Math.max(97, ...Object.keys(designOverrides).map(code => Number(String(code).replace('HYD-', '')) || 0));
     const selectedDesigns = new Set();
-    let visibleDesigns = 20;
+    const DESIGNS_PER_PAGE = 8;
+    let catalogPage = 1;
 
     function designCode(number) {
         return `HYD-${String(number).padStart(3, '0')}`;
@@ -1714,18 +1608,29 @@
     function renderDesignCatalog() {
         const grid = document.getElementById('design-grid');
         if (!grid) return;
-        const countLabel = document.getElementById('catalog-count');
-        if (countLabel) countLabel.textContent = `${DESIGN_TOTAL} diseños disponibles`;
-        grid.innerHTML = Array.from({ length: DESIGN_TOTAL }, (_, index) => {
-            const number = index + 1;
-            const meta = getDesignMeta(number);
-            if (meta.deleted) return '';
+        DESIGN_TOTAL = Math.max(DESIGN_TOTAL, ...Object.keys(config.content?.designs || {}).map(code => Number(code.replace('HYD-', '')) || 0));
+        const items = Array.from({length: DESIGN_TOTAL}, (_, i) => ({number: i + 1, meta: getDesignMeta(i + 1)}))
+            .filter(({meta}) => !meta.deleted && (currentUser || meta.available));
+        const sort = document.getElementById('catalog-sort').value;
+        const collator = new Intl.Collator('es', {sensitivity: 'base', numeric: true});
+        const priceValue = value => Number(String(value).replace(/[^0-9]/g, '')) || 0;
+        items.sort((a, b) => {
+            const comparison = sort.startsWith('price') ? priceValue(a.meta.price) - priceValue(b.meta.price) : collator.compare(a.meta.title, b.meta.title);
+            return (sort.endsWith('desc') ? -comparison : comparison) || a.number - b.number;
+        });
+        const pages = Math.max(1, Math.ceil(items.length / DESIGNS_PER_PAGE));
+        catalogPage = Math.min(Math.max(1, catalogPage), pages);
+        document.getElementById('catalog-count').textContent = items.length + (currentUser ? ' diseños en el catálogo' : ' diseños disponibles');
+        document.getElementById('catalog-page').textContent = 'Página ' + catalogPage + ' de ' + pages;
+        document.getElementById('catalog-prev').disabled = catalogPage === 1;
+        document.getElementById('catalog-next').disabled = catalogPage === pages;
+        grid.innerHTML = items.slice((catalogPage - 1) * DESIGNS_PER_PAGE, catalogPage * DESIGNS_PER_PAGE).map(({number, meta}) => {
             const code = meta.code;
             const image = meta.image;
             return `<article class="design-card">
-                <button type="button" class="design-preview" onclick="openDesignDetail(${number})" aria-label="Ver detalle de ${escapeHTML(meta.title)}"><img src="${escapeHTML(image)}" alt="${escapeHTML(meta.title)}" loading="lazy"></button>
+                <button type="button" class="design-preview" onclick="openDesignDetail(${number})" aria-label="Ver detalle de ${escapeHTML(meta.title)}"><img src="${escapeHTML(image)}" alt="${escapeHTML(meta.title)}" loading="lazy" decoding="async" width="600" height="600"></button>
                 <div class="design-card-footer">
-                    <div><span class="design-code">${escapeHTML(meta.title)} · ${escapeHTML(meta.category)}</span><br><span class="text-[10px] text-muted">${escapeHTML(meta.price)} · ${escapeHTML(meta.minSize)}</span></div>
+                    <div class="design-summary"><span class="design-code">${escapeHTML(meta.category)}${!meta.available ? " · Oculto" : ""}</span><h3>${escapeHTML(meta.title)}</h3><p class="design-description">${escapeHTML(meta.description || "Consulta los detalles de esta pieza y sus opciones de personalización.")}</p><p class="design-price">${escapeHTML(meta.price)}</p></div>
                     <div class="design-actions">
                       ${currentUser ? `<button type="button" class="design-add" onclick="showDesignSheet(${number}, true)">Editar</button>` : ''}
                       <button type="button" class="design-add" onclick="openDesignDetail(${number})">Ver detalle</button>
@@ -1734,17 +1639,16 @@
                     </div>
                 </div>
             </article>`;
-        }).filter(Boolean).slice(0, visibleDesigns).join('');
-        const loadButton = document.getElementById('load-more-designs');
-        if (loadButton) loadButton.classList.toggle('hidden', visibleDesigns >= DESIGN_TOTAL);
+        }).join('') || '<p class="catalog-empty">No hay diseños disponibles por ahora.</p>';
     }
-
-    function loadMoreDesigns() {
-        visibleDesigns = Math.min(DESIGN_TOTAL, visibleDesigns + 20);
+    function changeCatalogPage(delta) {
+        catalogPage += delta;
         renderDesignCatalog();
+        document.querySelector('.catalog-toolbar').scrollIntoView({block: 'start', behavior: 'smooth'});
     }
 
     function addNewDesignTemplate() {
+        if (!currentUser) return;
         let reusableNumber = 0;
         for (let number = 1; number <= DESIGN_TOTAL; number += 1) {
             const codeCandidate = designCode(number);
@@ -1843,10 +1747,9 @@
     document.addEventListener('DOMContentLoaded', () => {
         renderDesignCatalog();
         renderSelectedDesigns();
-        initHomeRotator();
         preventRouteAnchorJumps();
         const initialRoute = { '#estudio':'artist', '#disenos':'designs', '#cotizar':'quote', '#galeria':'gallery', '#cuidados':'care', '#agendar':'agenda' }[window.location.hash];
-        if (initialRoute) navigateTo(initialRoute);
+        navigateTo(initialRoute || 'designs');
     });
 
     async function copyTextToClipboard(text) {
@@ -1903,10 +1806,19 @@
         const mobileMenu = document.getElementById('mobileMenu');
         mobileMenu.classList.toggle('hidden');
         mobileMenu.classList.toggle('flex');
-        const icon = document.getElementById('mobileBtn').querySelector('i');
-        if(mobileMenu.classList.contains('hidden')) { icon.classList.replace('fa-xmark', 'fa-bars'); }
-        else { icon.classList.replace('fa-bars', 'fa-xmark'); }
+        const button = document.getElementById('mobileBtn');
+        const open = !mobileMenu.classList.contains('hidden');
+        button.setAttribute('aria-expanded', String(open));
+        button.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+        if (open) mobileMenu.querySelector('button').focus();
+        else button.focus();
     }
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && !document.getElementById('mobileMenu').classList.contains('hidden')) toggleMobileMenu();
+    });
+    document.addEventListener('click', event => {
+        if (!event.target.closest('#mobileMenu, #mobileBtn') && !document.getElementById('mobileMenu').classList.contains('hidden')) toggleMobileMenu();
+    });
 
     function showToast(message, type = 'success') {
         const container = document.getElementById('toast-container');
@@ -2080,7 +1992,8 @@
 
         if (submitBtn) { submitBtn.disabled = false; }
 
-        if (error || !data.session) {
+        if (error || !data.session || data.user?.email !== ADMIN_EMAIL) {
+            if (data?.session) await supabaseClient.auth.signOut();
             showToast("Credenciales incorrectas.", "error");
             return;
         }
@@ -2138,6 +2051,7 @@
     }
 
     function navigateTo(page) {
+        if (page === 'home') page = 'designs';
         const routes = { home: null, artist: 'estudio', designs: 'disenos', quote: 'cotizar', gallery: 'galeria', care: 'cuidados', agenda: 'agendar' };
         const target = routes[page];
         document.getElementById('landing-container').classList.remove('hidden');
@@ -2155,43 +2069,9 @@
         if (target) history.replaceState({ page }, '', `#${target}`);
         else {
             history.replaceState({}, '', window.location.pathname);
-            homeSlideIndex = 0;
-            renderHomeSlide();
-            scheduleHomeSlide();
         }
         window.scrollTo({ top: 0, behavior: 'smooth' });
         if (page === 'designs') renderDesignCatalog();
-    }
-
-    let homeSlideIndex = 0;
-    let homeSlideTimer = null;
-    function renderHomeSlide() {
-        const slides = document.querySelectorAll('.home-rotator-slide');
-        if (!slides.length) return;
-        slides.forEach((slide, index) => slide.classList.toggle('active', index === homeSlideIndex));
-        document.querySelectorAll('#home-rotator-progress i').forEach((dot, index) => dot.classList.toggle('active', index === homeSlideIndex));
-    }
-    function scheduleHomeSlide() { window.clearTimeout(homeSlideTimer); }
-    function changeHomeSlide(delta = 1, manual = true) {
-        const slides = document.querySelectorAll('.home-rotator-slide');
-        if (!slides.length) return;
-        homeSlideIndex = (homeSlideIndex + delta + slides.length) % slides.length;
-        renderHomeSlide();
-        if (manual) scheduleHomeSlide();
-    }
-    function toggleCornerControls() {
-        const controls = document.getElementById('corner-controls');
-        if (controls) controls.classList.toggle('hidden-controls');
-    }
-    function initHomeRotator() {
-        const header = document.querySelector('#landing-container > header');
-        if (!header) return;
-        renderHomeSlide();
-        scheduleHomeSlide();
-        header.addEventListener('click', event => {
-            if (event.target.closest('a,button')) return;
-            toggleCornerControls();
-        });
     }
 
     function preventRouteAnchorJumps() {
@@ -2561,7 +2441,7 @@
 
             let colorBorder = 'bg-amber-400';
             if (isCanceled) colorBorder = 'bg-danger';
-            else if (b.status === 'Confirmada') colorBorder = 'bg-emerald-400';
+            else if (b.status === 'Confirmada') colorBorder = 'bg-stone-400';
 
             let actionButtons = '';
 
@@ -2580,7 +2460,7 @@
                 <div class="flex-1 w-full pl-2">
                     <div class="font-mono text-xs font-bold text-bone">${formatDateReadable(b.date)} a las ${b.time}</div>
                     <div class="text-[11px] text-accent font-medium mt-1">${escapeHTML(b.clientName)} (${igDisplay})</div>
-                    <div class="text-[10px] font-mono text-muted mt-0.5"><i class="fa-solid fa-phone text-[9px] text-emerald-400"></i> ${escapeHTML(b.clientPhone || 'Sin teléfono')}</div>
+                    <div class="text-[10px] font-mono text-muted mt-0.5"><i class="fa-solid fa-phone text-[9px] text-stone-400"></i> ${escapeHTML(b.clientPhone || 'Sin teléfono')}</div>
                     <div class="text-[10px] ${isCanceled ? 'text-danger bg-danger/10 border-danger/20' : 'text-bone bg-panel border-white/10'} border font-bold mt-2 px-2.5 py-1 rounded-md inline-block shadow-sm">Estado: ${escapeHTML(b.status)}</div>
                 </div>
                 ${actionButtons}
@@ -2694,7 +2574,7 @@
                             Enviar Comprobante al Estudio
                         </button>
                     </div>
-                ` : '<p class="text-emerald-400 text-center font-mono text-xs pt-4 pb-2 font-bold bg-emerald-500/10 rounded-xl border border-emerald-500/20 mt-4"><i class="fa-solid fa-circle-check text-sm block mb-1"></i> Comprobante ya enviado. <br><span class="text-[10px] font-normal text-muted mt-1 block">En revisión por el Administrador.</span></p>'}
+                ` : '<p class="text-stone-400 text-center font-mono text-xs pt-4 pb-2 font-bold bg-stone-500/10 rounded-xl border border-stone-500/20 mt-4"><i class="fa-solid fa-circle-check text-sm block mb-1"></i> Comprobante ya enviado. <br><span class="text-[10px] font-normal text-muted mt-1 block">En revisión por el Administrador.</span></p>'}
             </div>
         `;
 
@@ -2919,8 +2799,12 @@
         if (gs) { const current = gs.value, total = Math.max(10, ...Object.keys(galleryOverrides).map(Number).filter(Number.isFinite)); gs.innerHTML = Array.from({length: total}, (_, i) => ({ number: i + 1, override: galleryOverrides[String(i + 1)] || {} })).filter(item => !item.override.deleted).map(item => `<option value="${item.number}">Trabajo ${String(item.number).padStart(2, '0')}</option>`).join(''); gs.value = [...gs.options].some(o => o.value === current) ? current : gs.options[0]?.value || ''; loadGalleryContentForm(); }
     }
     async function deleteDesignContent() {
+        if (!currentUser) return;
         const code = document.getElementById('content-design-code')?.value; if (!code || !confirm(`¿Ocultar ${code} del catálogo?`)) return;
-        designOverrides[code] = { ...(designOverrides[code] || {}), deleted: true, available: false }; await saveContentConfig(); renderEditableContentForms(); renderDesignCatalog(); showToast(`${code} ocultado del catálogo.`, 'success');
+        const previous = designOverrides[code];
+        designOverrides[code] = { ...previous, deleted: true, available: false };
+        if (!await saveContentConfig()) { if (previous) designOverrides[code] = previous; else delete designOverrides[code]; return; }
+        renderEditableContentForms(); renderDesignCatalog();
     }
     async function deleteGalleryContent() {
         const number = document.getElementById('content-gallery-code')?.value; if (!number || !confirm(`¿Ocultar la foto de galería ${number}?`)) return;
@@ -2935,6 +2819,7 @@
         document.getElementById('content-design-min-size').value = override.minSize || meta.minSize;
         document.getElementById('content-design-preview')?.setAttribute('data-existing-image', override.image || '');
         document.getElementById('content-design-available').checked = meta.available;
+        document.getElementById('content-design-description').value = meta.description;
         updateContentImagePreview('design');
     }
     async function uploadContentImage(file, key) {
@@ -2949,11 +2834,13 @@
     }
     async function saveDesignContent(event) {
         event.preventDefault(); const code = document.getElementById('content-design-code').value;
+        if (!currentUser || !code) return;
         const uploaded = await uploadContentImage(document.getElementById('content-design-file').files[0], code);
         const existingImage = designOverrides[code]?.image || getDesignMeta(Number(code.replace('HYD-', ''))).image;
         if (document.getElementById('content-design-file').files[0] && !uploaded) { showToast('No se pudo subir la imagen al almacenamiento.', 'error'); return; }
-        designOverrides[code] = { ...designOverrides[code], title: document.getElementById('content-design-title').value.trim(), category: document.getElementById('content-design-category').value.trim(), price: document.getElementById('content-design-price').value.trim(), minSize: document.getElementById('content-design-min-size').value.trim(), image: uploaded || existingImage, available: document.getElementById('content-design-available').checked };
-        await saveContentConfig();
+        const previous = designOverrides[code];
+        designOverrides[code] = { ...previous, title: document.getElementById('content-design-title').value.trim(), category: document.getElementById('content-design-category').value.trim(), price: document.getElementById('content-design-price').value.trim(), minSize: document.getElementById('content-design-min-size').value.trim(), image: uploaded || existingImage, description: document.getElementById('content-design-description').value.trim(), available: document.getElementById('content-design-available').checked };
+        if (!await saveContentConfig()) { if (previous) designOverrides[code] = previous; else delete designOverrides[code]; }
     }
     function loadGalleryContentForm() {
         const number = document.getElementById('content-gallery-code')?.value; if (!number) return;
@@ -3154,7 +3041,7 @@
             let statusBadge = "";
 
             if (b.status === 'Confirmada') {
-                statusBadge = '<span class="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-1.5 py-0.5 rounded-md text-[9px] font-mono font-bold">Confirmada</span>';
+                statusBadge = '<span class="bg-stone-500/20 text-stone-400 border border-stone-500/30 px-1.5 py-0.5 rounded-md text-[9px] font-mono font-bold">Confirmada</span>';
             } else if (b.status === 'Pendiente de Revisión') {
                 statusBadge = '<span class="bg-blue-500/20 text-blue-400 border border-blue-500/30 px-1.5 py-0.5 rounded-md text-[9px] font-mono font-bold">En Revisión</span>';
             } else if (b.status && b.status.includes('Cancelada')) {
@@ -3185,7 +3072,7 @@
                 </button>
             `).join('');
             const receiptButton = b.paymentReceiptUrl ? `
-                <button type="button" onclick="openLightbox('${b.paymentReceiptUrl}')" class="mt-1.5 ml-1 bg-emerald-500/20 hover:bg-emerald-500/40 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-md text-[9px] font-mono flex items-center gap-1 transition cursor-pointer font-bold w-fit">
+                <button type="button" onclick="openLightbox('${b.paymentReceiptUrl}')" class="mt-1.5 ml-1 bg-stone-500/20 hover:bg-stone-500/40 text-stone-400 border border-stone-500/30 px-2 py-0.5 rounded-md text-[9px] font-mono flex items-center gap-1 transition cursor-pointer font-bold w-fit">
                     <i class="fa-solid fa-receipt text-[9px]"></i> Ver Comprobante
                 </button>
             ` : '';
@@ -3193,7 +3080,7 @@
             const igLink = formatInstagramHandle(b.clientEmail);
             const phoneRaw = (b.clientPhone || '').replace(/\D/g, '');
             const phoneLink = phoneRaw
-                ? `<a href="https://wa.me/${phoneRaw}" target="_blank" rel="noopener noreferrer" class="text-emerald-400 font-mono text-[10px] hover:underline inline-flex items-center gap-1 font-bold">
+                ? `<a href="https://wa.me/${phoneRaw}" target="_blank" rel="noopener noreferrer" class="text-stone-400 font-mono text-[10px] hover:underline inline-flex items-center gap-1 font-bold">
                     <i class="fa-brands fa-whatsapp text-[10px]"></i> ${b.clientPhone}
                    </a>`
                 : `<span class="text-muted font-mono text-[10px]">Sin teléfono</span>`;
@@ -3368,7 +3255,7 @@
 
         if (selectedAdminDayState.active) {
             btnToggle.innerText = 'ACTIVO';
-            btnToggle.className = 'px-4 py-1.5 rounded-full text-[10px] font-mono font-bold uppercase transition cursor-pointer bg-emerald-500/20 text-emerald-400 border border-emerald-500/30';
+            btnToggle.className = 'px-4 py-1.5 rounded-full text-[10px] font-mono font-bold uppercase transition cursor-pointer bg-stone-500/20 text-stone-400 border border-stone-500/30';
         } else {
             btnToggle.innerText = 'INACTIVO';
             btnToggle.className = 'px-4 py-1.5 rounded-full text-[10px] font-mono font-bold uppercase transition cursor-pointer bg-danger/20 text-danger border border-danger/30';
@@ -3822,7 +3709,7 @@
                 <div class="flex items-center justify-between gap-2 bg-studio/60 border border-white/5 rounded-lg px-3 py-2">
                     <div class="min-w-0">
                         <div class="text-[11px] text-bone font-mono">${formatDateReadable(dateStr)}</div>
-                        <div class="text-[9px] font-mono ${isActive ? 'text-emerald-400' : 'text-danger'}">${isActive ? `Activo · ${slotCount} horas` : 'Inactivo'}</div>
+                        <div class="text-[9px] font-mono ${isActive ? 'text-stone-400' : 'text-danger'}">${isActive ? `Activo · ${slotCount} horas` : 'Inactivo'}</div>
                     </div>
                     <button type="button" onclick="removeAdminException('${dateStr}')" title="Restablecer día por defecto" class="text-danger hover:bg-danger/20 border border-danger/30 bg-danger/5 w-6 h-6 rounded flex items-center justify-center transition cursor-pointer shrink-0">
                         <i class="fa-solid fa-trash text-[10px]"></i>
@@ -3862,9 +3749,9 @@
     window.addEventListener('scroll', () => {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         if (scrollTop > 40) {
-            navbar.classList.add('bg-[#161b18]/95', 'backdrop-blur-md', 'border-b', 'border-white/5', 'py-3'); navbar.classList.remove('bg-transparent', 'py-5');
+            navbar.classList.add('bg-[#352b23]/95', 'backdrop-blur-md', 'border-b', 'border-white/5', 'py-3'); navbar.classList.remove('bg-transparent', 'py-5');
         } else {
-            navbar.classList.add('bg-transparent', 'py-5'); navbar.classList.remove('bg-[#161b18]/95', 'backdrop-blur-md', 'border-b', 'border-white/5', 'py-3');
+            navbar.classList.add('bg-transparent', 'py-5'); navbar.classList.remove('bg-[#352b23]/95', 'backdrop-blur-md', 'border-b', 'border-white/5', 'py-3');
         }
         navbar.classList.remove('-translate-y-full');
         lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;

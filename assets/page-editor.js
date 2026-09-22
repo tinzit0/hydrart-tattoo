@@ -36,15 +36,15 @@ function openContentSheet(markup) {
 }
 function showDesignSheet(number, editing = false) {
     const meta = getDesignMeta(number);
-    if (meta.deleted) return;
+    if (meta.deleted || (!currentUser && !meta.available)) return;
     const field = (key, label) => `<label>${label}<input name="${key}" value="${escapeHTML(meta[key])}" required></label>`;
     const info = editing && currentUser ? `<form id="design-page-form">
         ${field('title', 'Título')}${field('category', 'Categoría')}${field('price', 'Precio')}${field('minSize', 'Tamaño mínimo')}
         <label>Descripción o significado<textarea name="description" rows="5">${escapeHTML(meta.description)}</textarea></label>
-        <label>Imagen (URL)<input name="image" type="url" value="${escapeHTML(designOverrides[meta.code]?.image || '')}"></label>
-        <label><input type="checkbox" name="available" ${meta.available ? 'checked' : ''}> Disponible</label>
+        <label>Reemplazar imagen<input name="imageFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif"></label>
+        <label><input type="checkbox" name="available" ${meta.available ? 'checked' : ''}> Diseño visible (desmarcar para ocultar)</label>
         <p role="status" id="sheet-status"></p><button type="submit">Guardar cambios</button>
-        <button type="button" onclick="showDesignSheet(${number})">Cancelar</button></form>` :
+        <button type="button" onclick="showDesignSheet(${number})">Cancelar</button><button type="button" onclick="deleteDesignFromSheet(${number})">Eliminar diseño</button></form>` :
         `<p>${escapeHTML(meta.category)}</p><p>${escapeHTML(meta.price)} · ${escapeHTML(meta.minSize)}</p>
         <h3>Descripción y significado</h3><p>${escapeHTML(meta.description || 'Consulta a Claudia los detalles y el significado de este diseño.')}</p>
         <button type="button" ${meta.available ? '' : 'disabled'} onclick="closeContentSheet(); startBookingForDesign('${meta.code}')">${meta.available ? 'Agendar este diseño' : 'No disponible'}</button>
@@ -58,6 +58,13 @@ function showDesignSheet(number, editing = false) {
         button.disabled = true;
         const values = Object.fromEntries(new FormData(form));
         values.available = form.elements.available.checked;
+        const file = form.elements.imageFile.files[0];
+        delete values.imageFile;
+        if (file) {
+            const uploaded = await uploadContentImage(file, meta.code);
+            if (!uploaded) { document.getElementById('sheet-status').textContent = 'No se pudo subir la imagen. Reintenta.'; button.disabled = false; return; }
+            values.image = uploaded;
+        }
         const previous = designOverrides[meta.code];
         designOverrides[meta.code] = { ...previous, ...values };
         try {
@@ -89,14 +96,16 @@ function showNewDesignSheet() {
       <label>Imagen del diseño<input type="file" name="image" accept="image/jpeg,image/png,image/webp,image/gif" required></label>
       <label>Título<input name="title" required placeholder="Ej: Rama de olivo"></label><label>Categoría<input name="category" placeholder="Botánico / ornamental"></label>
       <label>Precio<input name="price" placeholder="Desde $30.000"></label><label>Tamaño mínimo<input name="minSize" placeholder="Consultar tamaño mínimo"></label>
-      <label>Descripción o significado<textarea name="description" rows="4"></textarea></label><p id="sheet-status" role="status"></p><button type="submit">Guardar diseño</button><button type="button" onclick="closeContentSheet()">Cancelar</button></form>`);
+      <label>Descripción o significado<textarea name="description" rows="4"></textarea></label><label><input type="checkbox" name="available" checked> Diseño visible</label><p id="sheet-status" role="status"></p><button type="submit">Guardar diseño</button><button type="button" onclick="closeContentSheet()">Cancelar</button></form>`);
     document.getElementById('new-design-form').onsubmit = async event => {
         event.preventDefault(); const form = event.currentTarget, button = form.querySelector('[type=submit]'); button.disabled = true;
+        if (!currentUser) { button.disabled = false; return; }
         const file = form.elements.image.files[0], number = DESIGN_TOTAL + 1, code = designCode(number), uploaded = await uploadContentImage(file, code);
         if (!uploaded) { document.getElementById('sheet-status').textContent = 'No se pudo subir la imagen al almacenamiento.'; button.disabled = false; return; }
-        designOverrides[code] = { title: form.elements.title.value.trim(), category: form.elements.category.value.trim() || 'Por definir', price: form.elements.price.value.trim() || 'Desde $30.000', minSize: form.elements.minSize.value.trim() || 'Consultar tamaño mínimo', description: form.elements.description.value.trim(), image: uploaded, available: true };
+        designOverrides[code] = { title: form.elements.title.value.trim(), category: form.elements.category.value.trim() || 'Por definir', price: form.elements.price.value.trim() || 'Desde $30.000', minSize: form.elements.minSize.value.trim() || 'Consultar tamaño mínimo', description: form.elements.description.value.trim(), image: uploaded, available: form.elements.available.checked };
         DESIGN_TOTAL = number;
         if (await saveContentConfig()) { closeContentSheet(); renderDesignCatalog(); showToast(`${code} añadido al catálogo.`, 'success'); }
+        else { delete designOverrides[code]; DESIGN_TOTAL = number - 1; document.getElementById('sheet-status').textContent = 'No se pudo publicar el diseño. Reintenta.'; }
         button.disabled = false;
     };
 }
@@ -122,7 +131,7 @@ function refreshPageEditing() {
     if (!editablePageNodes.size) {
         document.querySelectorAll('#landing-container h1, #landing-container h2, #landing-container h3, #landing-container p').forEach((node, index) => {
             if (node.closest('form, #design-grid, #galeria-track, #agendar, #pago-directo, #gestion-citas, #selected-designs') || node.id) return;
-            const key = `text-${index}`;
+            const key = node.dataset.textKey || `text-${index}`;
             editablePageNodes.set(key, { node, original: node.innerHTML });
         });
     }
@@ -155,4 +164,12 @@ function editPageText(key) {
         else { config.content = previous; document.getElementById('sheet-status').textContent = 'No se pudo publicar. Intenta nuevamente.'; }
         button.disabled = false;
     };
+}
+
+async function deleteDesignFromSheet(number) {
+    if (!currentUser || !confirm('¿Eliminar este diseño del catálogo?')) return;
+    const code = designCode(number), previous = designOverrides[code];
+    designOverrides[code] = {...previous, deleted: true, available: false};
+    if (await saveContentConfig()) { closeContentSheet(); renderEditableContentForms(); }
+    else { if (previous) designOverrides[code] = previous; else delete designOverrides[code]; }
 }

@@ -15,8 +15,49 @@ try{
  page.on('pageerror',e=>errors.push(e.message));
  await page.goto('http://127.0.0.1:5174'); await page.waitForTimeout(3500);
  if(await page.locator('video').count()) throw Error('Background video remains');
- if(!await page.locator('.hero-title-mask').isVisible()) throw Error('Home title hidden');
- if(await page.locator('header p').first().evaluate(el=>getComputedStyle(el).fontStyle) !== 'normal') throw Error('Italic subtitle');
+ if(await page.locator('#landing-container > header').count()) throw Error('Landing still exists');
+ if(!await page.locator('#disenos').isVisible()) throw Error('Catalog is not initial view');
+ if(await page.locator('#admin-container').isVisible() || await page.locator('#login-container').isVisible())throw Error('Public view exposes admin panels');
+ if(await page.locator('.design-card').count()!==8) throw Error('Expected eight designs');
+ for(const width of [1440,768,390]) {
+   await page.setViewportSize({width,height:1000});
+   if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw Error('Catalog overflow at '+width);
+   if(width!==768)await page.screenshot({path:path.join(require('os').tmpdir(),'hydrart-catalog-'+width+'.png'),fullPage:true});
+ }
+ await page.setViewportSize({width:1280,height:900});
+ await page.locator('#catalog-next').click();
+ if(!await page.locator('#catalog-page').innerText().then(t=>t.includes('2 de'))) throw Error('Pagination failed');
+ await page.locator('#catalog-sort').selectOption('name-desc');
+ if(!await page.locator('#catalog-page').innerText().then(t=>t.includes('1 de'))) throw Error('Sorting must reset page');
+ await page.locator('#catalog-sort').selectOption('name-asc');
+ // Isolate catalog data to exercise ordering, visibility and partial/empty pages.
+ await page.evaluate(()=>{
+   window.catalogBackup={content:structuredClone(config.content),overrides:structuredClone(designOverrides),total:DESIGN_TOTAL};
+   config.content.designs={};
+   for(let n=1;n<=DESIGN_TOTAL;n++)designOverrides[designCode(n)]={deleted:true};
+   const names=['Árbol','Casa','Montaña','Paisaje','Rama','Sol','Tierra','Viento','Zorro'];
+   names.forEach((title,i)=>designOverrides[designCode(i+1)]={title,price:'$'+((9-i)*5000).toLocaleString('es-CL'),available:true});
+   designOverrides['HYD-010']={title:'Oculto',available:false};
+   renderDesignCatalog();
+ });
+ const firstTitle=()=>page.locator('.design-summary h3').first().innerText();
+ if(await firstTitle()!=='Árbol')throw Error('Spanish A-Z ordering');
+ await page.locator('#catalog-next').click();
+ if(await page.locator('.design-card').count()!==1 || !await page.locator('#catalog-next').isDisabled())throw Error('Last page or hidden filtering');
+ for(const [sort,expected] of [['name-desc','Zorro'],['price-asc','Zorro'],['price-desc','Árbol']]){
+   await page.locator('#catalog-sort').selectOption(sort);
+   if(await firstTitle()!==expected || await page.locator('.design-card').count()!==8)throw Error('Ordering: '+sort);
+ }
+ await page.evaluate(()=>{currentUser={email:ADMIN_EMAIL};renderDesignCatalog();});
+ if(!await page.locator('#catalog-count').innerText().then(t=>t.startsWith('10 ')))throw Error('Admin cannot see hidden designs');
+ await page.evaluate(()=>{currentUser=null;Object.values(designOverrides).forEach(v=>v.available=false);renderDesignCatalog();});
+ if(await page.locator('.design-card').count() || !await page.locator('#catalog-next').isDisabled())throw Error('Empty catalog pagination');
+ await page.evaluate(()=>{
+   config.content=catalogBackup.content;
+   Object.keys(designOverrides).forEach(key=>delete designOverrides[key]);
+   Object.assign(designOverrides,catalogBackup.overrides);DESIGN_TOTAL=catalogBackup.total;catalogPage=1;
+ });
+ await page.locator('#catalog-sort').selectOption('name-asc');
  await page.evaluate(()=>navigateTo('designs'));
  await page.locator('.design-preview').first().click();
  await page.getByRole('heading',{name:'Descripción y significado'}).waitFor();
@@ -36,8 +77,12 @@ try{
  await page.locator('[name=price]').fill('$55.000');
  await page.locator('textarea[name=description]').fill('Descripción de prueba <segura>');
  await page.getByRole('button',{name:'Guardar cambios',exact:true}).click();
- await page.getByText('Descripción de prueba <segura>',{exact:true}).waitFor();
+ await page.locator('dialog').getByText('Descripción de prueba <segura>',{exact:true}).waitFor();
  await page.getByRole('button',{name:'Cerrar',exact:true}).click();
+ await page.locator('#disenos .page-edit-button').first().click();
+ await page.locator('[name=text]').fill('Nuestros Diseños');
+ await page.getByRole('button',{name:'Guardar cambios',exact:true}).click();
+ if(!await page.locator('#disenos h2').innerText().then(t=>t==='Nuestros Diseños'))throw Error('Catalog title edit');
  await page.evaluate(()=>navigateTo('artist'));
  await page.locator('#estudio .page-edit-button').first().click();
  await page.locator('[name=text]').fill('Titular de prueba');
@@ -48,6 +93,11 @@ try{
  const rect=await page.locator('#navbar').boundingBox(); if(Math.abs(rect.y)>1)throw Error('Navbar hidden: '+JSON.stringify(rect));
  await page.setViewportSize({width:390,height:844});
  await page.evaluate(()=>navigateTo('designs'));
+ if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw Error('Mobile page overflow');
+ await page.locator('#mobileBtn').click();
+ if(!await page.locator('#mobileMenu').isVisible())throw Error('Mobile menu does not open');
+ await page.locator('#mobileMenu a').filter({hasText:'Diseños disponibles'}).click();
+ if(await page.locator('#mobileMenu').isVisible())throw Error('Mobile menu does not close');
  await page.locator('.design-preview').first().click();
  if(await page.locator('dialog').evaluate(el=>el.scrollWidth>el.clientWidth))throw Error('Dialog overflow');
  await page.getByRole('button',{name:'Cerrar',exact:true}).click();
@@ -126,6 +176,6 @@ try{
  });
  if(await page.locator('#client-slots-container button').count())throw Error('Cancelled manual slot became public availability');
  if(errors.length)throw Error(errors.join('\n'));
- console.log('PASS: simple home, public detail, booking selection, admin editing, manual booking persistence, occupied slot, search, duplicate protection, mobile layout; no JS errors.');
+ console.log('PASS: catalog home, eight-design pagination, sort reset, public detail, booking selection, admin editing, manual booking persistence, occupied slot, search, duplicate protection, mobile layout; no JS errors.');
 } finally {await browser?.close();server.close();}
 })().catch(e=>{console.error(e);process.exitCode=1});

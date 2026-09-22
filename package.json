@@ -1,0 +1,11 @@
+{
+  "name": "hydrart-tattoo",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -c tailwind.config.cjs -i assets/tailwind-input.css -o assets/tailwind.css --minify",
+    "test": "node verify-site.cjs"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
+  }
+}
