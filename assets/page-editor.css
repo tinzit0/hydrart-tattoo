@@ -28,12 +28,13 @@
 .design-actions .design-book { background:transparent!important; }
 input[type=checkbox], input[type=radio] { accent-color:#817264; }
 .text-stone-400 { color:#817264!important; }
-:root { --page-background:#ece1d2; --ivory:#ece1d2; --paper:#f7f1e8; --beige-soft:#e6dbcd; --ink:#302b25; --muted-ink:#6c6256; --line:rgba(87,68,44,.22); }
+/* Background sampled from the paper in the available design illustrations. */
+:root { --page-background:#eeebe4; --ivory:#eeebe4; --paper:#f7f5f0; --beige-soft:#e8e5de; --ink:#302b25; --muted-ink:#6c6256; --line:rgba(87,68,44,.22); }
 body, #landing-container main > section, #admin-container, #login-container { background:var(--page-background)!important; }
 #navbar, #mobileMenu, #site-footer { background:var(--paper)!important; color:var(--ink)!important; }
 #mobileMenu a, #mobileMenu .text-bone { color:var(--ink)!important; }
 .action-card, .bank-card, .content-sheet, .selected-designs, .page-edit-button { background:var(--paper)!important; }
-input:not([type=checkbox]):not([type=radio]), textarea, select, .content-sheet input:not([type=checkbox]), .content-sheet textarea { background:#faf5ed!important; color:var(--ink); }
+input:not([type=checkbox]):not([type=radio]), textarea, select, .content-sheet input:not([type=checkbox]), .content-sheet textarea { background:var(--paper)!important; color:var(--ink); }
 #disenos::before { content:'DISEÑOS'; }
 #disenos > div > div:first-child { margin-bottom:32px!important; }
 #disenos > div > div:first-child p { margin-top:18px!important; }
@@ -41,7 +42,7 @@ input:not([type=checkbox]):not([type=radio]), textarea, select, .content-sheet i
 .catalog-sort { display:flex; align-items:center; gap:12px; font-size:13px; }
 .catalog-sort select { padding:12px; border:1px solid var(--line); border-radius:6px; min-height:44px; max-width:100%; }
 .design-card { display:flex; flex-direction:column; border-radius:10px; background:var(--paper); }
-.design-card img { height:auto; object-fit:contain; background:#f7f1e8; }
+.design-card img { height:auto; object-fit:contain; background:var(--paper); }
 .design-card-footer { flex:1; display:flex; flex-direction:column; align-items:stretch; gap:18px; padding:18px; }
 .design-summary { flex:1; min-width:0; }
 .design-summary h3 { margin:10px 0; font:24px/1.25 Georgia,serif; overflow-wrap:anywhere; }
@@ -54,7 +55,7 @@ button:disabled { opacity:.45; cursor:not-allowed; }
 :focus-visible { outline:2px solid #817264; outline-offset:4px; }
 .catalog-empty { grid-column:1/-1; padding:32px; text-align:center; }
 #admin-container .bg-panel, #admin-container .cal-day, .bank-row button { background:var(--paper)!important; }
-#receipt-modal input[type=file] { background:#faf5ed!important; }
+#receipt-modal input[type=file] { background:var(--paper)!important; }
 @media(max-width:520px) { .catalog-sort { width:100%; flex-wrap:wrap; } .catalog-sort select { flex:1; } .catalog-pagination { gap:10px; font-size:12px; } .catalog-pagination button { padding:12px; } }
 @media(max-width:767px) {
     #navbar { height:76px!important; flex-direction:row!important; justify-content:space-between!important; }
